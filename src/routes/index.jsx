@@ -9,6 +9,10 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../views/Auth/Login";
 //import view forbidden
 import Forbidden from "../views/Auth/Forbidden";
+//import privateRoute
+import PrivateRoutes from "./PrivateRoutes";
+//import Dashboard
+import Dashboard from "../views/Admin/Dashboard";
 
 export default function RoutesIndex() {
   return (
@@ -18,6 +22,16 @@ export default function RoutesIndex() {
 
       {/* route "/forbidden" */}
       <Route path="/forbidden" element={<Forbidden />} />
+
+      {/* route "/admin/dashboard" */}
+      <Route
+        path="/admin/dashboard"
+        element={
+          <PrivateRoutes>
+            <Dashboard />
+          </PrivateRoutes>
+        }
+      />
     </Routes>
   );
 }

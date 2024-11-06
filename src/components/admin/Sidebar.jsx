@@ -1,10 +1,11 @@
 //import Link
 import { Link, useLocation } from "react-router-dom";
-//import permission
-import hasAnyPermission from "../../utils/Permissions";
 
-//import cookies
+//import js cookie
 import Cookies from "js-cookie";
+
+//import permissions
+import hasAnyPermission from "../../utils/Permissions";
 
 export default function Sidebar() {
   //assigning location variable
@@ -16,11 +17,11 @@ export default function Sidebar() {
   //Javascript split method to get the name of the path in array
   const activeRoute = pathname.split("/");
 
-  //get data user from cookie
+  //get data user from cookies
   const user = JSON.parse(Cookies.get("user"));
 
   return (
-    <nav className="sb-sidebar accordion sb-sidenav-dark" id="sidenavAccordion">
+    <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
       <div className="sb-sidenav-menu">
         <div className="nav">
           <div className="sb-sidenav-menu-heading"></div>
@@ -38,46 +39,44 @@ export default function Sidebar() {
             Dashboard
           </Link>
 
-          {hasAnyPermission(["categories.index"]) ||
+          {(hasAnyPermission(["categories.index"]) ||
             hasAnyPermission(["posts.index"]) ||
             hasAnyPermission(["pages.index"]) ||
-            (hasAnyPermission(["products.index"]) && (
-              <>
-                <div className="sb-sidebar-menu-heading">
-                  Content Management
+            hasAnyPermission(["products.index"])) && (
+            <>
+              <div className="sb-sidenav-menu-heading">CONTENT MANAGEMENT</div>
+              <a
+                className={
+                  "nav-link collapsed " +
+                  (activeRoute[2] === "categories"
+                    ? " active-sidebar"
+                    : activeRoute[2] === "posts"
+                    ? " active-sidebar"
+                    : activeRoute[2] === "pages"
+                    ? " active-sidebar"
+                    : activeRoute[2] === "products"
+                    ? " active-sidebar"
+                    : "")
+                }
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseLayouts"
+                aria-expanded="false"
+                aria-controls="collapseLayouts"
+              >
+                <div className="sb-nav-link-icon">
+                  <i className="fas fa-pencil"></i>
                 </div>
-                <a
-                  href="#"
-                  className={
-                    "nav-link collapsed " +
-                    (activeRoute[2] === "categories"
-                      ? " active-sidebar"
-                      : activeRoute[2] === "posts"
-                      ? " active-sidebar"
-                      : activeRoute[2] === "pages"
-                      ? " active-sidebar"
-                      : activeRoute[2] === "products"
-                      ? " active-sidebar"
-                      : "")
-                  }
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseLayouts"
-                  aria-expanded="false"
-                  aria-controls="collapseLayouts"
-                >
-                  <div className="sb-nav-link-icon">
-                    <i className="fas fa-pencil"></i>
-                  </div>
-                  Contents
-                  <div className="sb-sidenav-collapse-arrow">
-                    <i
-                      className="fas fa-angle-down"
-                      style={{ color: "color: rgb(65 60 60)" }}
-                    ></i>
-                  </div>
-                </a>
-              </>
-            ))}
+                Contents
+                <div className="sb-sidenav-collapse-arrow">
+                  <i
+                    className="fas fa-angle-down"
+                    style={{ color: "color: rgb(65 60 60)" }}
+                  ></i>
+                </div>
+              </a>
+            </>
+          )}
 
           <div
             className={
@@ -151,46 +150,45 @@ export default function Sidebar() {
             </nav>
           </div>
 
-          {hasAnyPermission(["photos.index"]) &&
-            hasAnyPermission(["sliders.index"]) && (
-              <>
-                <div className="sb-sidenav-menu-heading">Media Management</div>
-                <a
-                  href="#"
-                  className={
-                    "nav-link collapsed " +
-                    (activeRoute[2] === "photos"
-                      ? " active-sidebar"
-                      : activeRoute[2] === "sliders"
-                      ? " active-sidbar"
-                      : "")
-                  }
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseMedias"
-                  aria-expanded="false"
-                  aria-controls="collapseMedias"
-                >
-                  <div className="sb-nav-link-icon">
-                    <i className="fas fa-images"></i>
-                  </div>
-                  Media
-                  <div className="sb-sidenav-collapse-arrow">
-                    <i
-                      className="fas fa-angle-down"
-                      style={{ color: "color: rgb(65 60 60)" }}
-                    ></i>
-                  </div>
-                </a>
-              </>
-            )}
-
+          {(hasAnyPermission(["photos.index"]) ||
+            hasAnyPermission(["sliders.index"])) && (
+            <>
+              <div className="sb-sidenav-menu-heading">MEDIA MANAGEMENT</div>
+              <a
+                className={
+                  "nav-link collapsed " +
+                  (activeRoute[2] === "photos"
+                    ? " active-sidebar"
+                    : activeRoute[2] === "sliders"
+                    ? " active-sidebar"
+                    : "")
+                }
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseMedias"
+                aria-expanded="false"
+                aria-controls="collapseMedias"
+              >
+                <div className="sb-nav-link-icon">
+                  <i className="fas fa-images"></i>
+                </div>
+                Media
+                <div className="sb-sidenav-collapse-arrow">
+                  <i
+                    className="fas fa-angle-down"
+                    style={{ color: "color: rgb(65 60 60)" }}
+                  ></i>
+                </div>
+              </a>
+            </>
+          )}
           <div
             className={
               "collapse " +
               (activeRoute[2] === "photos"
                 ? " show"
                 : activeRoute[2] === "sliders"
-                ? "show"
+                ? " show"
                 : "")
             }
             id="collapseMedias"
@@ -218,6 +216,7 @@ export default function Sidebar() {
                       ? "nav-link active-sidebar"
                       : "nav-link"
                   }
+                  to="/admin/sliders"
                 >
                   Sliders
                 </Link>
@@ -227,7 +226,7 @@ export default function Sidebar() {
 
           {hasAnyPermission(["aparaturs.index"]) && (
             <>
-              <div className="sb-sidebar-menu-heading">Other</div>
+              <div className="sb-sidenav-menu-heading">OTHERS</div>
               <Link
                 className={
                   activeRoute[2] === "aparaturs"
@@ -244,54 +243,53 @@ export default function Sidebar() {
             </>
           )}
 
-          {hasAnyPermission(["roles.index"]) ||
-            hasAnyPermission(["users.index"]) ||
-            (hasAnyPermission(["permissions.index"]) && (
-              <>
-                <div className="sb-sidebar-menu-heading">Users Management</div>
-                <a
-                  href="#"
-                  className={
-                    "nav-link collapsed " +
-                    (activeRoute[2] === "roles"
-                      ? " active-sidebar"
-                      : activeRoute[2] === "permissions"
-                      ? " active-sidebar"
-                      : activeRoute[2] === "users"
-                      ? " active-sidebar"
-                      : "")
-                  }
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseLayouts"
-                  aria-expanded="false"
-                  aria-controls="collapseLayouts"
-                >
-                  <div className="sb-nav-link-icon">
-                    <i className="fas fa-pencil"></i>
-                  </div>
-                  Users
-                  <div className="sb-sidenav-collapse-arrow">
-                    <i
-                      className="fas fa-angle-down"
-                      style={{ color: "color: rgb(65 60 60)" }}
-                    ></i>
-                  </div>
-                </a>
-              </>
-            ))}
-
+          {(hasAnyPermission(["roles.index"]) ||
+            hasAnyPermission(["permissions.index"]) ||
+            hasAnyPermission(["users.index"])) && (
+            <>
+              <div className="sb-sidenav-menu-heading">USERS MANAGEMENT</div>
+              <a
+                className={
+                  "nav-link collapsed " +
+                  (activeRoute[2] === "roles"
+                    ? " active-sidebar"
+                    : activeRoute[2] === "permissions"
+                    ? " active-sidebar"
+                    : activeRoute[2] === "users"
+                    ? " active-sidebar"
+                    : "")
+                }
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseUsers"
+                aria-expanded="false"
+                aria-controls="collapseUsers"
+              >
+                <div className="sb-nav-link-icon">
+                  <i className="fas fa-user-circle"></i>
+                </div>
+                Users
+                <div className="sb-sidenav-collapse-arrow">
+                  <i
+                    className="fas fa-angle-down"
+                    style={{ color: "color: rgb(65 60 60)" }}
+                  ></i>
+                </div>
+              </a>
+            </>
+          )}
           <div
             className={
               "collapse " +
               (activeRoute[2] === "roles"
                 ? " show"
                 : activeRoute[2] === "permissions"
-                ? "show"
+                ? " show"
                 : activeRoute[2] === "users"
-                ? "show"
+                ? " show"
                 : "")
             }
-            id="collapseMedias"
+            id="collapseUsers"
             aria-labelledby="headingOne"
             data-bs-parent="#sidenavAccordion"
           >
@@ -316,6 +314,7 @@ export default function Sidebar() {
                       ? "nav-link active-sidebar"
                       : "nav-link"
                   }
+                  to="/admin/permissions"
                 >
                   Permissions
                 </Link>
@@ -328,6 +327,7 @@ export default function Sidebar() {
                       ? "nav-link active-sidebar"
                       : "nav-link"
                   }
+                  to="/admin/users"
                 >
                   Users
                 </Link>
@@ -336,7 +336,6 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-
       <div className="sb-sidenav-footer">
         <div className="small">Logged in as:</div>
         {user.email}
