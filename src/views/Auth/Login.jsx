@@ -25,7 +25,7 @@ export default function Login() {
 
   //define state
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  let [password, setPassword] = useState("");
 
   //define state errors
   const [errors, setErrors] = useState([]);
@@ -61,6 +61,8 @@ export default function Login() {
       .catch((error) => {
         //set response error to state
         setErrors(error.response.data);
+        //set password empty
+        setPassword("");
       });
   };
 
