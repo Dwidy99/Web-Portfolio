@@ -15,6 +15,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "../views/Admin/Dashboard";
 //import Permissions
 import PermissionsIndex from "../views/Admin/Permissions/Index";
+import RolesIndex from "../views/Admin/Roles/Index";
 
 export default function RoutesIndex() {
   return (
@@ -41,6 +42,16 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <PermissionsIndex />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/roles" */}
+      <Route
+        path="/admin/roles"
+        element={
+          <PrivateRoutes>
+            <RolesIndex />
           </PrivateRoutes>
         }
       />
