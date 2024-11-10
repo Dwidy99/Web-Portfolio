@@ -12,6 +12,12 @@ import hasAnyPermissions from "../../../utils/Permissions";
 import Pagination from "../../../components/general/Pagination";
 import { Link } from "react-router-dom";
 
+//import confirmAlert
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+//import toast js
+import toast from "react-hot-toast";
+
 export default function RolesIndex() {
   //title page
   document.title = "Roles - Desa Digital";
@@ -69,6 +75,40 @@ export default function RolesIndex() {
 
     //call fetch "fetchData"
     fetchData(1, e.target.value);
+  };
+
+  //function "deleteRole"
+  const deleteRole = (id) => {
+    //show confirm alert
+    confirmAlert({
+      title: "Are you sure?",
+      message: "want to delete this data ?",
+      buttons: [
+        {
+          label: "YES",
+          onClick: async () => {
+            await Api.delete(`/api/admin/roles/${id}`, {
+              //header
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }).then((response) => {
+              //show toast
+              toast.success(response.data.message, {
+                position: "top-center",
+                duration: 4000,
+              });
+              //call function "fetchData"
+              fetchData();
+            });
+          },
+        },
+        {
+          label: "NO",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (
@@ -160,7 +200,10 @@ export default function RolesIndex() {
                                   )}
 
                                   {hasAnyPermissions(["roles.delete"]) && (
-                                    <button className="btn btn-danger btn-sm">
+                                    <button
+                                      className="btn btn-danger btn-sm"
+                                      onClick={() => deleteRole(role.id)}
+                                    >
                                       <i className="fa fa-trash"></i>
                                     </button>
                                   )}
