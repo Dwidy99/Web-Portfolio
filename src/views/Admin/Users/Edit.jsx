@@ -37,7 +37,6 @@ export default function UsersEdit() {
 
   //set token
   const token = Cookies.get("token");
-  console.log("ok");
 
   //function "fetchDataPermissionData"
   const fetchDataRoles = async () => {

@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 //import Link
 import { Link } from "react-router-dom";
+//import confirmAlert
+import { confirmAlert } from "react-confirm-alert";
 
 // import LayoutAdmin
 import LayoutAdmin from "../../../layouts/Admin";
@@ -15,7 +17,8 @@ import Pagination from "../../../components/general/Pagination";
 
 //import Cookies js
 import Cookies from "js-cookie";
-//import
+//import toast js
+import toast from "react-hot-toast";
 
 export default function UsersIndex() {
   // title page
@@ -73,6 +76,41 @@ export default function UsersIndex() {
 
     //call function "fetchData"
     fetchData(1, e.target.value);
+  };
+
+  //function "deleteUser"
+  const deleteUser = (id) => {
+    //show confirm alert
+    confirmAlert({
+      title: "Are you sure?",
+      message: "want to delete this data ?",
+      buttons: [
+        {
+          label: "YES",
+          onClick: async () => {
+            await Api.delete(`/api/admin/users/${id}`, {
+              //header
+              headers: {
+                //header + Bearer
+                Authorization: `Bearer ${token}`,
+              },
+            }).then((response) => {
+              toast.success(response.data.message, {
+                position: "top-center",
+                duration: 5000,
+              });
+
+              //function fetchData
+              fetchData();
+            });
+          },
+        },
+        {
+          label: "NO",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (
@@ -164,7 +202,10 @@ export default function UsersIndex() {
                                   )}
 
                                   {hasAnyPermissions(["users.delete"]) && (
-                                    <button className="btn btn-danger btn-sm">
+                                    <button
+                                      className="btn btn-danger btn-sm"
+                                      onClick={() => deleteUser(user.id)}
+                                    >
                                       <i className="fa fa-trash"></i>
                                     </button>
                                   )}
