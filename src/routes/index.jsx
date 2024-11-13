@@ -11,20 +11,22 @@ import Login from "../views/Auth/Login";
 import Forbidden from "../views/Auth/Forbidden";
 //import privateRoute
 import PrivateRoutes from "./PrivateRoutes";
+
 //import Dashboard
 import Dashboard from "../views/Admin/Dashboard";
 //import Permissions
 import PermissionsIndex from "../views/Admin/Permissions/Index";
 // import RolesIndex
 import RolesIndex from "../views/Admin/Roles/Index";
-// import RolesCreate
 import RolesCreate from "../views/Admin/Roles/Create";
 import RolesEdit from "../views/Admin/Roles/Edit";
 // import UsersIndex
 import UsersIndex from "../views/Admin/Users/Index";
 import UsersCreate from "../views/Admin/Users/Create";
 import UsersEdit from "../views/Admin/Users/Edit";
+// import Categories
 import CategoriesIndex from "../views/Admin/Categories/Index";
+import CategoriesCreate from "../views/Admin/Categories/Create";
 
 export default function RoutesIndex() {
   return (
@@ -121,6 +123,16 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <CategoriesIndex />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/categories/create" */}
+      <Route
+        path="/admin/categories/create"
+        element={
+          <PrivateRoutes>
+            <CategoriesCreate />
           </PrivateRoutes>
         }
       />
