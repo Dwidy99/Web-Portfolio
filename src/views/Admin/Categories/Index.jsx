@@ -15,6 +15,8 @@ import hasAnyPermissions from "../../../utils/Permissions";
 import Api from "../../../services/Api";
 //import pagination
 import Pagination from "../../../components/general/Pagination";
+import { confirmAlert } from "react-confirm-alert";
+import toast from "react-hot-toast";
 
 export default function CategoriesIndex() {
   //title page
@@ -72,6 +74,41 @@ export default function CategoriesIndex() {
 
     //set value to state "fetchData"
     fetchData(1, e.target.value);
+  };
+
+  const deleteCategory = (id) => {
+    //show confirm alrt
+    confirmAlert({
+      title: "Are you sure?",
+      message: "want to delete this data?",
+      buttons: [
+        {
+          label: "YES",
+          onClick: async () => {
+            await Api.delete(`/api/admin/categories/${id}`, {
+              //headers
+              headers: {
+                //header + token
+                Authorization: `Bearer ${token}`,
+              },
+            }).then((response) => {
+              //show toast js
+              toast.success(response.data.message, {
+                position: "top-center",
+                duration: 5000,
+              });
+
+              //call function "fetchData"
+              fetchData();
+            });
+          },
+        },
+        {
+          label: "NO",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (
@@ -150,7 +187,12 @@ export default function CategoriesIndex() {
                                   )}
 
                                   {hasAnyPermissions(["categories.delete"]) && (
-                                    <button className="btn btn-danger btn-sm">
+                                    <button
+                                      className="btn btn-danger btn-sm"
+                                      onClick={() =>
+                                        deleteCategory(categories.id)
+                                      }
+                                    >
                                       <i className="fa fa-trash"></i>
                                     </button>
                                   )}
