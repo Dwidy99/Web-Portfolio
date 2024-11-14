@@ -30,6 +30,7 @@ import CategoriesCreate from "../views/Admin/Categories/Create";
 import CategoriesEdit from "../views/Admin/Categories/Edit";
 // import Posts
 import PostsIndex from "../views/Admin/Posts/Index";
+import PostsCreate from "../views/Admin/Posts/Create";
 
 export default function RoutesIndex() {
   return (
@@ -156,6 +157,16 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <PostsIndex />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/posts/create" */}
+      <Route
+        path="/admin/posts/create"
+        element={
+          <PrivateRoutes>
+            <PostsCreate />
           </PrivateRoutes>
         }
       />
