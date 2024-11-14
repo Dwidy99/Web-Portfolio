@@ -126,7 +126,7 @@ export default function UsersCreate() {
           <div className="row">
             <div className="col-md-12">
               <Link
-                to="/users"
+                to="/admin/users"
                 className="btn btn-md btn-primary border-0 shadow-sm mb-3"
                 type="button"
               >
