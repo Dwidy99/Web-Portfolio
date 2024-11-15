@@ -14,6 +14,8 @@ import hasAnyPermissions from "../../../utils/Permissions";
 
 //import Cookies js
 import Cookies from "js-cookie";
+import { confirmAlert } from "react-confirm-alert";
+import toast from "react-hot-toast";
 
 export default function PostsIndex() {
   //Page title
@@ -71,6 +73,42 @@ export default function PostsIndex() {
 
     //call function "fetchData"
     fetchData(1, e.target.value);
+  };
+
+  //function "deletePosts"
+  const deletePost = (id) => {
+    //show confirm alert
+    confirmAlert({
+      title: "Are you sure?",
+      message: "want to delete this data ?",
+      buttons: [
+        {
+          label: "YES",
+          onClick: async () => {
+            await Api.delete(`/api/admin/posts/${id}`, {
+              //headers
+              headers: {
+                //headers + token
+                Authorization: `Bearer ${token}`,
+              },
+            }).then((response) => {
+              //show toast
+              toast.success(response.data.message, {
+                position: "top-center",
+                duration: 6000,
+              });
+
+              //function fetchData
+              fetchData();
+            });
+          },
+        },
+        {
+          label: "NO",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (
@@ -157,7 +195,10 @@ export default function PostsIndex() {
                                   )}
 
                                   {hasAnyPermissions(["posts.delete"]) && (
-                                    <button className="btn btn-danger btn-sm">
+                                    <button
+                                      className="btn btn-danger btn-sm"
+                                      onClick={() => deletePost(posts.id)}
+                                    >
                                       <i className="fa fa-trash"></i>
                                     </button>
                                   )}
