@@ -32,8 +32,9 @@ import CategoriesEdit from "../views/Admin/Categories/Edit";
 import PostsIndex from "../views/Admin/Posts/Index";
 import PostsCreate from "../views/Admin/Posts/Create";
 import PostEdit from "../views/Admin/Posts/Edit";
-import PagesIndex from "../views/Admin/Pages/Index";
 // import Pages
+import PagesIndex from "../views/Admin/Pages/Index";
+import PagesCreate from "../views/Admin/Pages/Create";
 
 export default function RoutesIndex() {
   return (
@@ -190,6 +191,16 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <PagesIndex />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/pages/create" */}
+      <Route
+        path="/admin/pages/create"
+        element={
+          <PrivateRoutes>
+            <PagesCreate />
           </PrivateRoutes>
         }
       />
