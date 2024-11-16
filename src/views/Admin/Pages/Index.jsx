@@ -15,6 +15,8 @@ import hasAnyPermissions from "../../../utils/Permissions";
 
 //improt Cookies js
 import Cookies from "js-cookie";
+import { confirmAlert } from "react-confirm-alert";
+import toast from "react-hot-toast";
 
 export default function PagesIndex() {
   //title Page
@@ -73,6 +75,41 @@ export default function PagesIndex() {
 
     //call method "fetchdate"
     fetchData(1, e.target.value);
+  };
+
+  //function "deletePage"
+  const deletePage = (id) => {
+    confirmAlert({
+      title: "Delete Data Page",
+      message: "Are you sure ?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: async () => {
+            await Api.delete(`/api/admin/pages/${id}`, {
+              //headers
+              headers: {
+                //headers + token
+                Authorization: `Bearer ${token}`,
+              },
+            }).then((response) => {
+              //show toast
+              toast.success(response.data.message, {
+                position: "top-center",
+                duration: 6000,
+              });
+
+              //function "fetchData"
+              fetchData();
+            });
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (
@@ -151,7 +188,10 @@ export default function PagesIndex() {
                                   )}
 
                                   {hasAnyPermissions(["pages.delete"]) && (
-                                    <button className="btn btn-danger btn-sm me-2">
+                                    <button
+                                      className="btn btn-danger btn-sm me-2"
+                                      onClick={() => deletePage(page.id)}
+                                    >
                                       <i className="fa fa-trash"></i>
                                     </button>
                                   )}
