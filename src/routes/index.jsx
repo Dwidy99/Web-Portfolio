@@ -40,7 +40,9 @@ import PagesEdit from "../views/Admin/Pages/Edit";
 import ProductsIndex from "../views/Admin/Products/Index";
 import ProductsCreate from "../views/Admin/Products/Create";
 import ProductsEdit from "../views/Admin/Products/Edit";
+// import Photos
 import PhotosIndex from "../views/Admin/Photos/Index";
+import PhotosCreate from "../views/Admin/Photos/Create";
 
 export default function RoutesIndex() {
   return (
@@ -257,6 +259,16 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <PhotosIndex />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route */}
+      <Route
+        path="/admin/photos/create"
+        element={
+          <PrivateRoutes>
+            <PhotosCreate />
           </PrivateRoutes>
         }
       />
