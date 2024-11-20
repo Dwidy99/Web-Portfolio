@@ -38,6 +38,8 @@ import PagesCreate from "../views/Admin/Pages/Create";
 import PagesEdit from "../views/Admin/Pages/Edit";
 // import Products
 import ProductsIndex from "../views/Admin/Products/Index";
+import ProductsCreate from "../views/Admin/Products/Create";
+import ProductsEdit from "../views/Admin/Products/Edit";
 
 export default function RoutesIndex() {
   return (
@@ -224,6 +226,26 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <ProductsIndex />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/products/create" */}
+      <Route
+        path="/admin/products/create"
+        element={
+          <PrivateRoutes>
+            <ProductsCreate />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "admin/products/edit" */}
+      <Route
+        path="/admin/products/edit/:id"
+        element={
+          <PrivateRoutes>
+            <ProductsEdit />
           </PrivateRoutes>
         }
       />
