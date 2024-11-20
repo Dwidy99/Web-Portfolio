@@ -154,7 +154,7 @@ export default function ProductsIndex() {
                                 <td className="text-center">
                                   {hasAnyPermissions(["products.edit"]) && (
                                     <Link
-                                      to={`/admin/products/edit/${products.id}`}
+                                      to={`/admin/products/edit/${product.id}`}
                                       className="btn btn-primary btn-sm me-2"
                                     >
                                       <i className="fa fa-pencil-alt"></i>
