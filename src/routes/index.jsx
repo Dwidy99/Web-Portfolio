@@ -43,6 +43,8 @@ import ProductsEdit from "../views/Admin/Products/Edit";
 // import Photos
 import PhotosIndex from "../views/Admin/Photos/Index";
 import PhotosCreate from "../views/Admin/Photos/Create";
+import SlidersIndex from "../views/Admin/Sliders/Index";
+// import Sliders
 
 export default function RoutesIndex() {
   return (
@@ -269,6 +271,16 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <PhotosCreate />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/sliders" */}
+      <Route
+        path="/admin/sliders"
+        element={
+          <PrivateRoutes>
+            <SlidersIndex />
           </PrivateRoutes>
         }
       />
