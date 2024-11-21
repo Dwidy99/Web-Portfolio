@@ -15,6 +15,9 @@ import Pagination from "../../../components/general/Pagination";
 import Cookies from "js-cookie";
 import hasAnyPermissions from "../../../utils/Permissions";
 
+//import component create
+import PhotosCreate from "./Create";
+
 export default function PhotosIndex() {
   //page title
   document.title = "Photos - Desa Digital";
@@ -77,33 +80,25 @@ export default function PhotosIndex() {
       <main>
         <div className="container-fluid mb-5 mt-5">
           <div className="row">
-            <div className="col-md-8">
-              <div className="row">
-                {hasAnyPermissions(["posts.create"]) && (
-                  <div className="col-md-3 col-12 mb-12">
-                    <Link
-                      to="/admin/posts/create"
-                      className="btn btn-md btn-primary border-primary border-0 shadow w-100"
-                      type="button"
-                    >
-                      <i className="fa fa-plus-circle"></i> Add new
-                    </Link>
-                  </div>
-                )}
+            <div className="col-md-12">
+              {hasAnyPermissions(["photos.create"]) && (
+                <PhotosCreate fetchData={fetchData} />
+              )}
+            </div>
+          </div>
 
-                <div className="col-md-9 col-12 mb-2">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => searchData(e)}
-                      placeholder="search here.."
-                    />
-                    <span className="input-group-text border-0 shadow-sm">
-                      <i className="fa fa-search"></i>
-                    </span>
-                  </div>
-                </div>
+          <div className="row mt-4">
+            <div className="col-md-9 col-12 mb-2">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(e) => searchData(e)}
+                  placeholder="search here.."
+                />
+                <span className="input-group-text border-0 shadow-sm">
+                  <i className="fa fa-search"></i>
+                </span>
               </div>
             </div>
           </div>
