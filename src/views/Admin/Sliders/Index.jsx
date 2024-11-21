@@ -16,6 +16,8 @@ import Cookies from "js-cookie";
 //import hasAnyPermission
 import hasAnyPermissions from "../../../utils/Permissions";
 import SlidersCreate from "./Create";
+import { confirmAlert } from "react-confirm-alert";
+import toast from "react-hot-toast";
 
 export default function SlidersIndex() {
   //page title
@@ -63,6 +65,41 @@ export default function SlidersIndex() {
     //call funtion fetchData
     fetchData();
   }, []);
+
+  //function deleteSliders
+  const deleteSliders = (id) => {
+    confirmAlert({
+      title: "Delete Slider Data",
+      message: "Are you sure delete this slider ?",
+      buttons: [
+        {
+          label: "YES",
+          onClick: async () => {
+            await Api.delete(`/api/admin/sliders/${id}`, {
+              //header
+              headers: {
+                //header + token
+                Authorization: `Bearer ${token}`,
+              },
+            }).then((response) => {
+              //show toast
+              toast.success(response.data.message, {
+                position: "top-center",
+                duration: 5000,
+              });
+
+              //call function "fetchData"
+              fetchData();
+            });
+          },
+        },
+        {
+          label: "NO",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
 
   return (
     <LayoutAdmin>
@@ -123,7 +160,10 @@ export default function SlidersIndex() {
                                   )}
 
                                   {hasAnyPermissions(["sliders.delete"]) && (
-                                    <button className="btn btn-danger btn-sm">
+                                    <button
+                                      className="btn btn-danger btn-sm"
+                                      onClick={() => deleteSliders(slider.id)}
+                                    >
                                       <i className="fa fa-trash"></i>
                                     </button>
                                   )}

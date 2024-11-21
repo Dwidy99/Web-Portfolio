@@ -38,6 +38,9 @@ export default function SlidersCreate(props) {
       },
     })
       .then((response) => {
+        // Reset error messages
+        setErrors("");
+
         //show toast
         toast.success(response.data.message, {
           position: "top-center",
@@ -54,7 +57,12 @@ export default function SlidersCreate(props) {
         setImage("");
       })
       .catch((err) => {
-        setErrors(err.response.data);
+        //set errors from response
+        if (err.response && err.response.data) {
+          setErrors(err.response.data);
+        } else {
+          setErrors("Something went wrong.");
+        }
       });
   };
 
