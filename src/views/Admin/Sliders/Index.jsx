@@ -15,6 +15,7 @@ import Pagination from "../../../components/general/Pagination";
 import Cookies from "js-cookie";
 //import hasAnyPermission
 import hasAnyPermissions from "../../../utils/Permissions";
+import SlidersCreate from "./Create";
 
 export default function SlidersIndex() {
   //page title
@@ -67,7 +68,15 @@ export default function SlidersIndex() {
     <LayoutAdmin>
       <main>
         <div className="container-fluid mb-5 mt-5">
-          <div className="row mt-1">
+          <div className="row">
+            <div className="col-md-12">
+              {hasAnyPermissions(["sliders.create"]) && (
+                <SlidersCreate fetchData={fetchData} />
+              )}
+            </div>
+          </div>
+
+          <div className="row mt-4">
             <div className="col-md-12">
               <div className="card border-0 rounded shadow-sm border-sm border-top-success">
                 <div className="card-body">
