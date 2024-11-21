@@ -17,6 +17,8 @@ import hasAnyPermissions from "../../../utils/Permissions";
 
 //import component create
 import PhotosCreate from "./Create";
+import { confirmAlert } from "react-confirm-alert";
+import toast from "react-hot-toast";
 
 export default function PhotosIndex() {
   //page title
@@ -73,6 +75,41 @@ export default function PhotosIndex() {
 
     //call function "fetchData"
     fetchData(1, e.target.value);
+  };
+
+  //function "deleteData"
+  const deletePhoto = async (id) => {
+    confirmAlert({
+      title: "Delete Photo ?",
+      message: "Are You Sure Delete Data ?",
+      buttons: [
+        {
+          label: "YES",
+          onClick: async () => {
+            await Api.delete(`/api/admin/photos/${id}`, {
+              //header
+              headers: {
+                //header + token
+                Authorization: `Bearer ${token}`,
+              },
+            }).then((response) => {
+              //show toast
+              toast.success(response.data.message, {
+                position: "top-center",
+                duration: 6000,
+              });
+
+              //fetchData
+              fetchData();
+            });
+          },
+        },
+        {
+          label: "NO",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (
@@ -135,7 +172,7 @@ export default function PhotosIndex() {
                                 <td className="text-center">
                                   <img
                                     src={photo.image}
-                                    width={"150px"}
+                                    width={"100px"}
                                     className="rounded"
                                   />
                                 </td>
@@ -151,7 +188,10 @@ export default function PhotosIndex() {
                                   )}
 
                                   {hasAnyPermissions(["photos.delete"]) && (
-                                    <button className="btn btn-danger btn-sm">
+                                    <button
+                                      className="btn btn-danger btn-sm"
+                                      onClick={() => deletePhoto(photo.id)}
+                                    >
                                       <i className="fa fa-trash"></i>
                                     </button>
                                   )}
