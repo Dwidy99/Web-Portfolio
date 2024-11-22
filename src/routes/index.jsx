@@ -47,6 +47,7 @@ import PhotosCreate from "../views/Admin/Photos/Create";
 import SlidersIndex from "../views/Admin/Sliders/Index";
 import SlidersCreate from "../views/Admin/Sliders/Create";
 import AparatursIndex from "../views/Admin/Aparaturs/Index";
+import AparatursEdit from "../views/Admin/Aparaturs/Edit";
 
 export default function RoutesIndex() {
   return (
@@ -293,6 +294,16 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <AparatursIndex />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/aparturs/edit/:id" */}
+      <Route
+        path="/admin/aparaturs/edit/:id"
+        element={
+          <PrivateRoutes>
+            <AparatursEdit />
           </PrivateRoutes>
         }
       />
