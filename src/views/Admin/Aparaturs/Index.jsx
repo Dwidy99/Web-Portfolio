@@ -15,6 +15,8 @@ import Pagination from "../../../components/general/Pagination";
 
 //import Cookies js
 import Cookies from "js-cookie";
+import { confirmAlert } from "react-confirm-alert";
+import toast from "react-hot-toast";
 
 export default function AparatursIndex() {
   //Page Title
@@ -72,6 +74,41 @@ export default function AparatursIndex() {
 
     //call function "fetchData" with argument
     fetchData(1, e.target.value);
+  };
+
+  //function "deleteAparatur"
+  const deleteAparatur = (id) => {
+    confirmAlert({
+      title: "Delete Data Aparatur",
+      message: "Are you sure delete this data ?",
+      buttons: [
+        {
+          label: "YES",
+          onClick: async () => {
+            await Api.delete(`/api/admin/aparaturs/${id}`, {
+              //header
+              headers: {
+                //header + token
+                Authorization: `Bearer ${token}`,
+              },
+            }).then((response) => {
+              //show toast
+              toast.success(response.data.message, {
+                position: "top-center",
+                duration: 5000,
+              });
+
+              //fetchData
+              fetchData();
+            });
+          },
+        },
+        {
+          label: "NO",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (
@@ -158,7 +195,12 @@ export default function AparatursIndex() {
                                   )}
 
                                   {hasAnyPermissions(["posts.delete"]) && (
-                                    <button className="btn btn-danger btn-sm">
+                                    <button
+                                      className="btn btn-danger btn-sm"
+                                      onClick={() =>
+                                        deleteAparatur(aparatur.id)
+                                      }
+                                    >
                                       <i className="fa fa-trash"></i>
                                     </button>
                                   )}
