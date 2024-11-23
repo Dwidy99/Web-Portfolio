@@ -1,10 +1,12 @@
-//LayoutAdmin
+//import LayoutAdmin
 import LayoutWeb from "../../layouts/Web";
+//import Slider
+import Slider from "../../components/web/Slider";
 
 export default function Home() {
   return (
     <LayoutWeb>
-      <h1>Hamalam Home</h1>
+      <Slider />
     </LayoutWeb>
   );
 }
