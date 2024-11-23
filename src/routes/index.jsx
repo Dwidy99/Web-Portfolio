@@ -50,6 +50,10 @@ import AparatursIndex from "../views/Admin/Aparaturs/Index";
 import AparatursEdit from "../views/Admin/Aparaturs/Edit";
 import AparatursCreate from "../views/Admin/Aparaturs/Create";
 
+// PUBLIC
+// import Home
+import Home from "../views/Home/Index";
+
 export default function RoutesIndex() {
   return (
     <Routes>
@@ -318,6 +322,11 @@ export default function RoutesIndex() {
           </PrivateRoutes>
         }
       />
+
+      {/* PUBLIC Route */}
+
+      {/* route "/" */}
+      <Route path="/" element={<Home />} />
     </Routes>
   );
 }
