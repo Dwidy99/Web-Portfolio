@@ -44,16 +44,16 @@ export default function Slider() {
       {loadingSlider ? (
         <Loading />
       ) : (
-        sliders.map((slider) => {
-          <Carousel.Item>
+        sliders.map((slider) => (
+          <Carousel.Item key={slider.id}>
             <img
               src={slider.image}
               className="d-block w-100"
               style={{ height: "500px", objectFit: "cover" }}
               alt="First slide"
             />
-          </Carousel.Item>;
-        })
+          </Carousel.Item>
+        ))
       )}
     </Carousel>
   );
