@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function CardPage(props) {
   return (
     <div className="col-md-4">
-      <Link to={`/page/${props.slug}`} className="text-decoration-none">
+      <Link to={`/pages/${props.slug}`} className="text-decoration-none">
         <div
           className="card border-0 shadow-sm rounded-3 text-center text-uppercase"
           key={props.key}
