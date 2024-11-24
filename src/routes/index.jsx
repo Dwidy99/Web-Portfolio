@@ -54,6 +54,7 @@ import AparatursCreate from "../views/Admin/Aparaturs/Create";
 // import Home
 import Home from "../views/Home/Index";
 import Aparaturs from "../components/web/Aparaturs";
+import WebPagesIndex from "../views/Pages/Index";
 
 export default function RoutesIndex() {
   return (
@@ -330,6 +331,8 @@ export default function RoutesIndex() {
       <Route path="/" element={<Home />} />
       {/* route "/aparaturs" */}
       <Route path="/aparaturs" element={<Aparaturs />} />
+      {/* route "/pages" */}
+      <Route path="/pages" element={<WebPagesIndex />} />
     </Routes>
   );
 }
