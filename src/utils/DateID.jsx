@@ -1,5 +1,5 @@
 export default function DateID(date) {
-  let e = date.getData();
+  let e = date.getDate();
   return `${e} ${
     [
       "Januari",
@@ -14,6 +14,6 @@ export default function DateID(date) {
       "Oktober",
       "November",
       "Desember",
-    ][date.getMatch()]
+    ][date.getMonth()]
   } ${date.getFullYear()}`;
 }
