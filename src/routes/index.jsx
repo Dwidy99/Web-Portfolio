@@ -56,6 +56,7 @@ import Home from "../views/Home/Index";
 import Aparaturs from "../components/web/Aparaturs";
 import WebPagesIndex from "../views/Pages/Index";
 import WebPagesShow from "../views/Pages/Show";
+import WebPhotosIndex from "../views/Photos/Index";
 
 export default function RoutesIndex() {
   return (
@@ -338,6 +339,9 @@ export default function RoutesIndex() {
       <Route path="/pages" element={<WebPagesIndex />} />
       {/* route "/pages/detail/:id" */}
       <Route path="/pages/:slug" element={<WebPagesShow />} />
+
+      {/* route "/photos" */}
+      <Route path="/photos" element={<WebPhotosIndex />} />
     </Routes>
   );
 }
