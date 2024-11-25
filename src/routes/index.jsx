@@ -57,6 +57,7 @@ import Aparaturs from "../components/web/Aparaturs";
 import WebPagesIndex from "../views/Pages/Index";
 import WebPagesShow from "../views/Pages/Show";
 import WebPhotosIndex from "../views/Photos/Index";
+import WebPostsIndex from "../views/Posts/Index";
 
 export default function RoutesIndex() {
   return (
@@ -342,6 +343,9 @@ export default function RoutesIndex() {
 
       {/* route "/photos" */}
       <Route path="/photos" element={<WebPhotosIndex />} />
+
+      {/* route "/posts" */}
+      <Route path="/posts" element={<WebPostsIndex />} />
     </Routes>
   );
 }
