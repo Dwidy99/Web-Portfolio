@@ -59,6 +59,7 @@ import WebPagesShow from "../views/Pages/Show";
 import WebPhotosIndex from "../views/Photos/Index";
 import WebPostsIndex from "../views/Posts/Index";
 import WebPostsShow from "../views/Posts/Show";
+import WebProductsIndex from "../views/Products/Index";
 
 export default function RoutesIndex() {
   return (
@@ -348,6 +349,9 @@ export default function RoutesIndex() {
       {/* route "/posts" */}
       <Route path="/posts" element={<WebPostsIndex />} />
       <Route path="/posts/:slug" element={<WebPostsShow />} />
+
+      {/* route "/products" */}
+      <Route path="/products" element={<WebProductsIndex />} />
     </Routes>
   );
 }

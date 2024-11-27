@@ -150,7 +150,7 @@ export default function Navbar() {
                   ? "nav-link active text-uppercase"
                   : "nav-link text-uppercase"
               }
-              to="/posts"
+              to="/products"
             >
               <i className="fa fa-shopping-bag"></i> PRODUCTS
             </Link>
