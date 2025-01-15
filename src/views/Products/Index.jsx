@@ -69,14 +69,14 @@ export default function WebProductsIndex() {
           {loadingProduct ? (
             <Loading />
           ) : products.length > 0 ? (
-            products.map((post) => (
+            products.map((product) => (
               <CardProduct
-                key={post.id}
-                image={post.image}
-                slug={post.slug}
-                title={post.title}
-                content={post.content}
-                date={post.create_at}
+                key={product.id}
+                image={product.image}
+                slug={product.slug}
+                title={product.title}
+                price={product.price}
+                phone={product.phone}
               />
             ))
           ) : (
