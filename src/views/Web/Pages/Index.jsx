@@ -1,15 +1,15 @@
 //import react
 import { useEffect, useState } from "react";
 //import LayoutWeb
-import LayoutWeb from "../../layouts/Web";
+import LayoutWeb from "../../../layouts/Web";
 //import CardPage
-import CardPage from "../../components/general/CardPage";
+import CardPage from "../../../components/general/CardPage";
 //import Api
-import Api from "../../services/Api";
+import Api from "../../../services/Api";
 //import Loading
-import Loading from "../../components/general/CardPage";
+import Loading from "../../../components/general/CardPage";
 //import AlertDataEmpty
-import AlertDataEmpty from "../../components/general/AlertDataEmpty";
+import AlertDataEmpty from "../../../components/general/AlertDataEmpty";
 
 export default function WebPagesIndex() {
   //Page title

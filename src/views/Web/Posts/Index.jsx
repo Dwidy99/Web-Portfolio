@@ -5,7 +5,7 @@ import CardPost from "../../../components/general/CardPost";
 import Loading from "../../../components/general/Loading";
 import AlertDataEmpty from "../../../components/general/AlertDataEmpty";
 import Pagination from "../../../components/general/Pagination";
-import Api from "../../services/Api";
+import Api from "../../../services/Api";
 
 export default function WebPostsIndex() {
   //title page

@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 //import LayoutAdmin
 import LayoutWeb from "../../../layouts/Web";
 //import Slider
-import Slider from "../../../../components/web/Slider";
+import Slider from "../../../components/web/Slider";
 //import Loading
-import Loading from "../../../../components/general/Loading";
+import Loading from "../../../components/general/Loading";
 //import Api
-import Api from "../../../../services/Api";
+import Api from "../../../services/Api";
 //import AlertDataEmpty
-import AlertDataEmpty from "../../../../components/general/AlertDataEmpty";
+import AlertDataEmpty from "../../../components/general/AlertDataEmpty";
 //import CardProduct
-import CardProduct from "../../../../components/general/CardProduct";
+import CardProduct from "../../../components/general/CardProduct";
 
 export default function Home() {
   //init state products
