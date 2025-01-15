@@ -1,17 +1,17 @@
 //import react
 import { useEffect, useState } from "react";
 //import LayoutWeb
-import LayoutWeb from "../../layouts/Web";
+import LayoutWeb from "../../../layouts/Web";
 //import Loading
-import Loading from "../../components/general/Loading";
+import Loading from "../../../components/general/Loading";
 //import CardPhoto
-import CardPhoto from "../../components/general/CardPhoto";
+import CardPhoto from "../../../../components/general/CardPhoto";
 //import AlertDataEmpty
-import AlertDataEmpty from "../../components/general/AlertDataEmpty";
+import AlertDataEmpty from "../../../../components/general/AlertDataEmpty";
 //import Api
-import Api from "../../services/Api";
+import Api from "../../../../services/Api";
 //import Pagination
-import Pagination from "../../components/general/Pagination";
+import Pagination from "../../../../components/general/Pagination";
 
 export default function WebPhotosIndex() {
   //page title

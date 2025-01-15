@@ -1,12 +1,12 @@
 //import react
 import { useEffect, useState } from "react";
 //import LayoutWeb
-import LayoutWeb from "../../layouts/Web";
+import LayoutWeb from "../../../layouts/Web";
 //import Api
-import Api from "../../services/Api";
-import Loading from "../../components/general/Loading";
-import CardProduct from "../../components/general/CardProduct";
-import AlertDataEmpty from "../../components/general/AlertDataEmpty";
+import Api from "../../../services/Api";
+import Loading from "../../../components/general/Loading";
+import CardProduct from "../../../components/general/CardProduct";
+import AlertDataEmpty from "../../../components/general/AlertDataEmpty";
 import Pagination from "react-js-pagination";
 
 export default function WebProductsIndex() {

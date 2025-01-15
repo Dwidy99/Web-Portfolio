@@ -1,10 +1,10 @@
 //import LayoutWeb
 import { useEffect, useState } from "react";
-import LayoutWeb from "../../layouts/Web";
-import CardPost from "../../components/general/CardPost";
-import Loading from "../../components/general/Loading";
-import AlertDataEmpty from "../../components/general/AlertDataEmpty";
-import Pagination from "../../components/general/Pagination";
+import LayoutWeb from "../../../layouts/Web";
+import CardPost from "../../../components/general/CardPost";
+import Loading from "../../../components/general/Loading";
+import AlertDataEmpty from "../../../components/general/AlertDataEmpty";
+import Pagination from "../../../components/general/Pagination";
 import Api from "../../services/Api";
 
 export default function WebPostsIndex() {

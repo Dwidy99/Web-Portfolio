@@ -1,9 +1,9 @@
 //import LayoutWeb
 import { useEffect, useState } from "react";
-import LayoutWeb from "../../layouts/Web";
+import LayoutWeb from "../../../layouts/Web";
 import { useParams } from "react-router-dom";
-import Loading from "../../components/general/Loading";
-import Api from "../../services/Api";
+import Loading from "../../../components/general/Loading";
+import Api from "../../../services/Api";
 
 export default function WebProductsShow() {
   //init state

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import LayoutWeb from "../../layouts/Web";
+import LayoutWeb from "../../../layouts/Web";
 import { Link, useParams } from "react-router-dom";
-import Loading from "../../components/general/Loading";
-import DateID from "../../utils/DateID";
-import Api from "../../services/Api";
+import Loading from "../../../components/general/Loading";
+import DateID from "../../../utils/DateID";
+import Api from "../../../services/Api";
 
 export default function WebPostsShow() {
   //init state detail post

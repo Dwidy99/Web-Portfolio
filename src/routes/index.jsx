@@ -52,15 +52,15 @@ import AparatursCreate from "../views/Admin/Aparaturs/Create";
 
 // PUBLIC
 // import Home
-import Home from "../views/Home/Index";
+import Home from "../views/Web/Home/Index";
 import Aparaturs from "../components/web/Aparaturs";
-import WebPagesIndex from "../views/Pages/Index";
-import WebPagesShow from "../views/Pages/Show";
-import WebPhotosIndex from "../views/Photos/Index";
-import WebPostsIndex from "../views/Posts/Index";
-import WebPostsShow from "../views/Posts/Show";
-import WebProductsIndex from "../views/Products/Index";
-import WebProductsShow from "../views/Products/Show";
+import WebPagesIndex from "../views/Web/Pages/Index";
+import WebPagesShow from "../views/Web/Pages/Show";
+import WebPhotosIndex from "../views/Web/Photos/Index";
+import WebPostsIndex from "../views/Web/Posts/Index";
+import WebPostsShow from "../views/Web/Posts/Show";
+import WebProductsIndex from "../views/Web/Products/Index";
+import WebProductsShow from "../views/Web/Products/Show";
 
 export default function RoutesIndex() {
   return (

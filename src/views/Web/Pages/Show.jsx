@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 // import react-router-dom
 import { useParams } from "react-router-dom";
 // import LayoutWeb
-import LayoutWeb from "../../layouts/Web";
+import LayoutWeb from "../../../../layouts/Web";
 // import Api
-import Api from "../../services/Api";
+import Api from "../../../../services/Api";
 // import Loading Component
-import Loading from "../../components/general/Loading";
+import Loading from "../../../../components/general/Loading";
 
 export default function WebPagesShow() {
   // init state
