@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/web/img/media.gif";
+import logo from "../../assets/webPorto/img/media.gif";
 
 export default function Navbar() {
   const [isNavbarFixed, setIsNavbarFixed] = useState(false);

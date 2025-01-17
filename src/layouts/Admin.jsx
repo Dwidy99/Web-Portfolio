@@ -1,16 +1,9 @@
-//import css
 import "../assets/admin/css/styles.css";
 import "../assets/admin/css/custom.css";
-
-// import js
-import "../assets/admin/js/bootstrap.bundle.min.js";
-
-//import navbar
 import Navbar from "../components/admin/Navbar";
-//import sidebar
 import Sidebar from "../components/admin/Sidebar";
 
-export default function admin({ children }) {
+export default function Admin({ children }) {
   return (
     <>
       <Navbar />

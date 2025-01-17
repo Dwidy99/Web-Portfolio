@@ -46,14 +46,14 @@ import PhotosCreate from "../views/Admin/Photos/Create";
 // import Sliders
 import SlidersIndex from "../views/Admin/Sliders/Index";
 // import Aparaturs
-import AparatursIndex from "../views/Admin/Aparaturs/Index";
-import AparatursEdit from "../views/Admin/Aparaturs/Edit";
-import AparatursCreate from "../views/Admin/Aparaturs/Create";
+// import AparatursIndex from "../views/Admin/Aparaturs/Index";
+// import AparatursEdit from "../views/Admin/Aparaturs/Edit";
+// import AparatursCreate from "../views/Admin/Aparaturs/Create";
 
 // PUBLIC
 // import Home
 import Home from "../views/Web/Home/Index";
-import Aparaturs from "../components/web/Aparaturs";
+// import Aparaturs from "../components/web/Aparaturs";
 import WebPagesIndex from "../views/Web/Pages/Index";
 import WebPagesShow from "../views/Web/Pages/Show";
 import WebPhotosIndex from "../views/Web/Photos/Index";
@@ -61,6 +61,8 @@ import WebPostsIndex from "../views/Web/Posts/Index";
 import WebPostsShow from "../views/Web/Posts/Show";
 import WebProductsIndex from "../views/Web/Products/Index";
 import WebProductsShow from "../views/Web/Products/Show";
+
+import HomePorto from "../views/WebPorto/Home/Index";
 
 export default function RoutesIndex() {
   return (
@@ -302,42 +304,43 @@ export default function RoutesIndex() {
       />
 
       {/* route "/admin/aparaturs" */}
-      <Route
+      {/* <Route
         path="/admin/aparaturs"
         element={
           <PrivateRoutes>
             <AparatursIndex />
           </PrivateRoutes>
         }
-      />
+      /> */}
 
       {/* route "/admin/aparturs/edit/:id" */}
-      <Route
+      {/* <Route
         path="/admin/aparaturs/edit/:id"
         element={
           <PrivateRoutes>
             <AparatursEdit />
           </PrivateRoutes>
         }
-      />
+      /> */}
 
       {/* route "/admin/aparaturs" */}
-      <Route
+      {/* <Route
         path="/admin/aparaturs/create"
         element={
           <PrivateRoutes>
             <AparatursCreate />
           </PrivateRoutes>
         }
-      />
+      /> */}
 
       {/* PUBLIC Route */}
 
       {/* route "/" */}
       <Route path="/" element={<Home />} />
+      <Route path="/home" element={<HomePorto />} />
 
       {/* route "/aparaturs" */}
-      <Route path="/aparaturs" element={<Aparaturs />} />
+      {/* <Route path="/aparaturs" element={<Aparaturs />} /> */}
 
       {/* route "/pages" */}
       <Route path="/pages" element={<WebPagesIndex />} />
