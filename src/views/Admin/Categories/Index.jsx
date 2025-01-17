@@ -1,104 +1,72 @@
-//import useState
 import { useEffect, useState } from "react";
-//import react-router-dom
 import { Link } from "react-router-dom";
-
-//import LayoutAdmin
 import LayoutAdmin from "../../../layouts/Admin";
-
-//import Cookies js
 import Cookies from "js-cookie";
-//import hasAnyPermissions
 import hasAnyPermissions from "../../../utils/Permissions";
-
-//import Api
 import Api from "../../../services/Api";
-//import pagination
 import Pagination from "../../../components/general/Pagination";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
 
 export default function CategoriesIndex() {
-  //title page
   document.title = "Categories - Desa Digital";
 
-  //define state "categories"
+  // State untuk kategori dan pagination
   const [categories, setCategories] = useState([]);
-
-  //define state "pagination"
   const [pagination, setPagination] = useState({
     currentPage: 0,
     perPage: 0,
     total: 0,
   });
-
-  //define state "keywords"
   const [keywords, setKeywords] = useState("");
 
-  //token from Cookies
+  // Ambil token dari cookies
   const token = Cookies.get("token");
 
-  //function fetchData
+  // Fungsi untuk mengambil data kategori
   const fetchData = async (pageNumber = 1, keywords = "") => {
-    //define variabel
     const page = pageNumber ? pageNumber : pagination.currentPage;
 
     await Api.get(`/api/admin/categories?search=${keywords}&page=${page}`, {
-      //headers
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      //set data response to state "setCategories"
       setCategories(response.data.data.data);
-
-      //set data pagination to state "pagination"
-      setPagination(() => ({
+      console.log(response.data.data.data);
+      setPagination({
         currentPage: response.data.data.current_page,
         perPage: response.data.data.per_page,
         total: response.data.data.total,
-      }));
+      });
     });
   };
 
-  //useEffect
   useEffect(() => {
-    //call function "fetchData"
     fetchData();
   }, []);
 
-  //function "searchData"
+  // Fungsi untuk mencari kategori
   const searchData = async (e) => {
-    //set value to state "keywords"
     setKeywords(e.target.value);
-
-    //set value to state "fetchData"
     fetchData(1, e.target.value);
   };
 
+  // Fungsi untuk menghapus kategori
   const deleteCategory = (id) => {
-    //show confirm alrt
     confirmAlert({
       title: "Are you sure?",
-      message: "want to delete this data?",
+      message: "Want to delete this data?",
       buttons: [
         {
           label: "YES",
           onClick: async () => {
             await Api.delete(`/api/admin/categories/${id}`, {
-              //headers
               headers: {
-                //header + token
                 Authorization: `Bearer ${token}`,
               },
             }).then((response) => {
-              //show toast js
-              toast.success(response.data.message, {
-                position: "top-center",
-                duration: 5000,
-              });
-
-              //call function "fetchData"
+              toast.success(response.data.message, { position: "top-center" });
               fetchData();
             });
           },
@@ -146,6 +114,7 @@ export default function CategoriesIndex() {
               </div>
             </div>
           </div>
+
           <div className="row mt-1">
             <div className="col-md-12">
               <div className="card border-0 rounded shadow-sm border-sm border-top-success">
@@ -158,61 +127,69 @@ export default function CategoriesIndex() {
                             No.
                           </th>
                           <th className="border-0">Categories Name</th>
+                          <th className="border-0" style={{ width: "10%" }}>
+                            Icon
+                          </th>
                           <th className="border-0" style={{ width: "15%" }}>
                             Actions
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        {
-                          //cek apakah data ada?
-                          categories.length > 0 ? (
-                            //looping data "categories" dengan "map"
-                            categories.map((categories, index) => (
-                              <tr key={index}>
-                                <td className="fw-bold text-center">
-                                  {++index +
-                                    (pagination.currentPage - 1) *
-                                      pagination.perPage}
-                                </td>
-                                <td>{categories.name}</td>
-                                <td className="text-center">
-                                  {hasAnyPermissions(["categories.edit"]) && (
-                                    <Link
-                                      to={`/admin/categories/edit/${categories.id}`}
-                                      className="btn btn-primary btn-sm me-2"
-                                    >
-                                      <i className="fa fa-pencil-alt"></i>
-                                    </Link>
-                                  )}
+                        {categories.length > 0 ? (
+                          categories.map((category, index) => (
+                            <tr key={index}>
+                              <td className="fw-bold text-center">
+                                {++index +
+                                  (pagination.currentPage - 1) *
+                                    pagination.perPage}
+                              </td>
+                              <td>{category.name}</td>
+                              <td className="text-center">
+                                {/* Menampilkan gambar ikon */}
+                                {category.image ? (
+                                  <img
+                                    src={category.image}
+                                    alt={category.name}
+                                    style={{ width: "40px", height: "40px" }}
+                                  />
+                                ) : (
+                                  <span>No icon</span>
+                                )}
+                              </td>
+                              <td className="text-center">
+                                {hasAnyPermissions(["categories.edit"]) && (
+                                  <Link
+                                    to={`/admin/categories/edit/${category.id}`}
+                                    className="btn btn-primary btn-sm me-2"
+                                  >
+                                    <i className="fa fa-pencil-alt"></i>
+                                  </Link>
+                                )}
 
-                                  {hasAnyPermissions(["categories.delete"]) && (
-                                    <button
-                                      className="btn btn-danger btn-sm"
-                                      onClick={() =>
-                                        deleteCategory(categories.id)
-                                      }
-                                    >
-                                      <i className="fa fa-trash"></i>
-                                    </button>
-                                  )}
-                                </td>
-                              </tr>
-                            ))
-                          ) : (
-                            //tampilan pesan data belum tersedia
-                            <tr>
-                              <td colSpan={4}>
-                                <div
-                                  className="alert alert-danger border-0 rounded shadow-sm w-100 text-center"
-                                  role="alert"
-                                >
-                                  Data Not Available..
-                                </div>
+                                {hasAnyPermissions(["categories.delete"]) && (
+                                  <button
+                                    className="btn btn-danger btn-sm"
+                                    onClick={() => deleteCategory(category.id)}
+                                  >
+                                    <i className="fa fa-trash"></i>
+                                  </button>
+                                )}
                               </td>
                             </tr>
-                          )
-                        }
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={4}>
+                              <div
+                                className="alert alert-danger border-0 rounded shadow-sm w-100 text-center"
+                                role="alert"
+                              >
+                                Data Not Available..
+                              </div>
+                            </td>
+                          </tr>
+                        )}
                       </tbody>
                     </table>
                   </div>

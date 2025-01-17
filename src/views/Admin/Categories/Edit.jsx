@@ -1,89 +1,78 @@
-//import react-router-dom
 import { Link, useNavigate, useParams } from "react-router-dom";
-//import react
 import { useEffect, useState } from "react";
-
-//import LayoutAdmin
 import LayoutAdmin from "../../../layouts/Admin";
-
-//import toast js
 import toast from "react-hot-toast";
-//import Cookies js
 import Cookies from "js-cookie";
-
-//import Api
 import Api from "../../../services/Api";
 
 export default function CategoriesEdit() {
-  //title page
+  // title page
   document.title = "Update Category - Desa Digital";
 
-  //navigate
+  // navigate
   const navigate = useNavigate();
 
-  //define params
+  // define params
   const { id } = useParams();
 
-  //define state for form
+  // define state for form
   const [name, setName] = useState("");
+  const [image, setImage] = useState(null); // state untuk menyimpan gambar
   const [errors, setErrors] = useState([]);
+  const [categoryImage, setCategoryImage] = useState(""); // state untuk menyimpan image URL dari kategori
 
-  //define from cookies
+  // define from cookies
   const token = Cookies.get("token");
 
-  //function fetchDataCategory
+  // function fetchDataCategory
   const fetchDataCategory = async () => {
     await Api.get(`/api/admin/categories/${id}`, {
-      //headers
       headers: {
-        //headers + Token
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      //set response data to state
       setName(response.data.data.name);
+      setCategoryImage(response.data.data.image); // set image URL dari API ke state
     });
   };
 
-  //useEffect
+  // useEffect untuk fetch data kategori
   useEffect(() => {
-    //call function "fetchDataCategory"
     fetchDataCategory();
   }, []);
 
-  //fucntion "updateCategory"
+  // function updateCategory untuk mengedit kategori
   const updateCategory = async (e) => {
     e.preventDefault();
 
-    //sending data
-    await Api.post(
-      `/api/admin/categories/${id}`,
-      {
-        name: name,
-        _method: "PUT",
+    const formData = new FormData();
+    formData.append("name", name);
+    if (image) {
+      formData.append("image", image); // menambahkan file gambar ke form data
+    }
+    formData.append("_method", "PUT");
+
+    await Api.post(`/api/admin/categories/${id}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "multipart/form-data", // pastikan type form-data
       },
-      {
-        //headers
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "content-type": "multipart/form-data",
-        },
-      }
-    )
+    })
       .then((response) => {
-        //show toast js
         toast.success(response.data.message, {
           position: "top-center",
           duration: 5000,
         });
-
-        //navigate
         navigate("/admin/categories");
       })
       .catch((err) => {
-        // set errors
         setErrors(err.response.data);
       });
+  };
+
+  // function handle image change
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
   };
 
   return (
@@ -103,7 +92,7 @@ export default function CategoriesEdit() {
               <div className="card border-0 rounded shadow-sm border-top-success">
                 <div className="card-body">
                   <h6>
-                    <div className="fa fa-shield-alt"></div> Create Category
+                    <div className="fa fa-shield-alt"></div> Update Category
                   </h6>
                   <hr />
                   <form onSubmit={updateCategory}>
@@ -124,6 +113,41 @@ export default function CategoriesEdit() {
                     )}
                     <hr />
 
+                    {/* Display current image */}
+                    <div className="mb-3">
+                      <label className="form-label fw-bold">Current Icon</label>
+                      {categoryImage ? (
+                        <div>
+                          <img
+                            src={categoryImage}
+                            alt="Category Icon"
+                            style={{ width: "50px", height: "50px" }}
+                          />
+                        </div>
+                      ) : (
+                        <span>No icon available</span>
+                      )}
+                    </div>
+
+                    {/* Input for new image */}
+                    <div className="mb-3">
+                      <label htmlFor="image" className="form-label fw-bold">
+                        Change Icon (optional)
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                    {errors.image && (
+                      <div className="alert alert-danger">
+                        {errors.image[0]}
+                      </div>
+                    )}
+
+                    <hr />
                     <div>
                       <button
                         type="submit"
