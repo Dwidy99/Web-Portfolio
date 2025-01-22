@@ -278,6 +278,7 @@ export default function Sidebar() {
               </a>
             </>
           )}
+
           <div
             className={
               "collapse " +

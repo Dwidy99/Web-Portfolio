@@ -1,31 +1,40 @@
-import "../assets/admin/css/styles.css";
-import "../assets/admin/css/custom.css";
-import Navbar from "../components/admin/Navbar";
-import Sidebar from "../components/admin/Sidebar";
+// import "../assets/admin/css/styles.css";
+// import "../assets/admin/css/custom.css";
+import "../assets/admin/css/style.css";
+import "../assets/admin/css/satoshi.css";
+
+import Header from "../components/admin/Header";
+import Sidebar from "../components/admin/Sidebar/index";
+import { useState } from "react";
 
 export default function Admin({ children }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <>
-      <Navbar />
-      <div id="layoutSidenav" className="mt-5">
-        <div id="layoutSidenav_nav">
-          <Sidebar />
-        </div>
+    <div className="dark:bg-boxdark-2 dark:text-bodydark">
+      {/* <!-- ===== Page Wrapper Start ===== --> */}
+      <div className="flex h-screen overflow-hidden">
+        {/* <!-- ===== Sidebar Start ===== --> */}
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {/* <!-- ===== Sidebar End ===== --> */}
 
-        <div id="layoutSidenav_content">
-          {children}
+        {/* <!-- ===== Content Area Start ===== --> */}
+        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+          {/* <!-- ===== Header Start ===== --> */}
+          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          {/* <!-- ===== Header End ===== --> */}
 
-          <footer className="py-4 bg-light mt-auto">
-            <div className="container-fluid px-4">
-              <div className="d-flex align-item-center justify-content-end small">
-                <div className="text-muted">
-                  Copyright &copy; My Digital Profile.
-                </div>
-              </div>
+          {/* <!-- ===== Main Content Start ===== --> */}
+          <main>
+            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+              {children}
             </div>
-          </footer>
+          </main>
+          {/* <!-- ===== Main Content End ===== --> */}
         </div>
+        {/* <!-- ===== Content Area End ===== --> */}
       </div>
-    </>
+      {/* <!-- ===== Page Wrapper End ===== --> */}
+    </div>
   );
 }

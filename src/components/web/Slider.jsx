@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 //import Api service
 import Api from "../../services/Api";
 //import component Caraousel
-import { Carousel } from "react-bootstrap";
+import { Carousel } from "bootstrap";
 //import component Loading
 import Loading from "../general/Loading";
 

@@ -1,5 +1,5 @@
 //import react router dom
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 //======================================================
 // view admin
@@ -63,9 +63,24 @@ import WebProductsIndex from "../views/Web/Products/Index";
 import WebProductsShow from "../views/Web/Products/Show";
 
 import HomePorto from "../views/WebPorto/Home/Index";
+import { useEffect, useState } from "react";
+import Loading from "../components/general/Loading";
 
 export default function RoutesIndex() {
-  return (
+  const [loading, setLoading] = useState(true);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1000);
+  }, []);
+
+  return loading ? (
+    <Loading />
+  ) : (
     <Routes>
       {/* route "/login" */}
       <Route path="/login" element={<Login />} />
