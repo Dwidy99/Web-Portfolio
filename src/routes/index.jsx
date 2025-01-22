@@ -1,5 +1,7 @@
 //import react router dom
 import { Routes, Route, useLocation } from "react-router-dom";
+import "../assets/admin/css/style.css";
+import "../assets/admin/css/satoshi.css";
 
 //======================================================
 // view admin
@@ -50,6 +52,9 @@ import SlidersIndex from "../views/Admin/Sliders/Index";
 // import AparatursEdit from "../views/Admin/Aparaturs/Edit";
 // import AparatursCreate from "../views/Admin/Aparaturs/Create";
 
+//======================================================
+// view public
+//======================================================
 // PUBLIC
 // import Home
 import Home from "../views/Web/Home/Index";
@@ -64,22 +69,24 @@ import WebProductsShow from "../views/Web/Products/Show";
 
 import HomePorto from "../views/WebPorto/Home/Index";
 import { useEffect, useState } from "react";
-import Loading from "../components/general/Loading";
+import Loader from "../components/general/Loader";
 
 export default function RoutesIndex() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
 
+  // Reset scroll position on route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  // Simulasi loading selama 1 detik
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
+    setTimeout(() => setLoading(false), 1000); // Anda bisa menyesuaikan durasi di sini
   }, []);
 
   return loading ? (
-    <Loading />
+    <Loader />
   ) : (
     <Routes>
       {/* route "/login" */}

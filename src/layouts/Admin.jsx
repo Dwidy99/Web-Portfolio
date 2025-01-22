@@ -1,11 +1,7 @@
-// import "../assets/admin/css/styles.css";
-// import "../assets/admin/css/custom.css";
-import "../assets/admin/css/style.css";
-import "../assets/admin/css/satoshi.css";
+import { useState } from "react";
 
 import Header from "../components/admin/Header";
 import Sidebar from "../components/admin/Sidebar/index";
-import { useState } from "react";
 
 export default function Admin({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
