@@ -106,14 +106,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       {/* Sidebar Header */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <Link
-          className={`flex items-center p-2 text-sm font-medium rounded-md ${
+          className={`flex items-center p-2 font-extrabold text-lg tablet:text-sm rounded-md ${
             activeRoute[2] === "dashboard"
               ? "text-white bg-gray-700"
               : "text-gray-300 hover:text-white hover:bg-gray-700"
           }`}
           to="/admin/dashboard"
         >
-          <img src={Logo} alt="Logo" />
+          My Portfolio Website
         </Link>
 
         <button
@@ -155,11 +155,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 hover:bg-graydark ${
-                          open ? "bg-graydark" : ""
+                          open ? "" : ""
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
-                          toggleDropdown(1); // Open/close dropdown on click
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
                         }}
                       >
                         <GiPencilBrush />
@@ -172,7 +174,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       </NavLink>
                       <div
                         className={`translate transform overflow-hidden ${
-                          openDropdown === 1 ? "" : "hidden"
+                          !open && "hidden"
                         }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-9">
@@ -230,12 +232,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <>
                       <NavLink
                         to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 hover:bg-graydark ${
-                          open ? "bg-graydark" : ""
+                        className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          open ? "" : ""
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
-                          toggleDropdown(2); // Open/close dropdown on click
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
                         }}
                       >
                         <SiOpenmediavault />
@@ -248,7 +252,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       </NavLink>
                       <div
                         className={`translate transform overflow-hidden ${
-                          openDropdown === 2 ? "" : "hidden"
+                          !open && "hidden"
                         }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-9">
