@@ -76,7 +76,7 @@ export default function CategoriesCreate() {
   return (
     <LayoutAdmin className="dark:bg-boxdark">
       <Link
-        to="admin/categories"
+        to="/admin/categories/"
         type="submit"
         className="mx-2 my-3 inline-flex items-center justify-center rounded-md bg-lime-50 py-2 px-6 text-center text-sm font-medium text-black hover:bg-opacity-90 lg:px-6 xl:px-8 outline outline-2 outline-black"
       >

@@ -6,6 +6,7 @@ import hasAnyPermissions from "../../../utils/Permissions";
 import Api from "../../../services/Api";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
+import Pagination from "react-js-pagination";
 
 export default function CategoriesIndex() {
   document.title = "Categories - Desa Digital";
@@ -94,10 +95,10 @@ export default function CategoriesIndex() {
             {hasAnyPermissions(["categories.create"]) && (
               <Link
                 to="/admin/categories/create"
-                className="inline-flex items-center justify-center gap-2.5 bg-primary py-2.5 px-6 text-center font-medium text-white hover:bg-opacity-90 rounded-lg shadow-md"
+                className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-2.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
                 type="button"
               >
-                <i className="fa fa-plus-circle"></i> Add New
+                <i className="fa fa-plus-circle mr-2"></i> Add New
               </Link>
             )}
           </div>
@@ -139,7 +140,7 @@ export default function CategoriesIndex() {
                 Icon
               </h5>
             </div>
-            <div className="p-2.5 text-center xl:p-5">
+            <div className="p-2.5 text-center col-span-2 xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Actions
               </h5>
@@ -171,25 +172,25 @@ export default function CategoriesIndex() {
                     <span>No icon</span>
                   )}
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-center p-2.5 mx-2 xl:p-5">
+                <div className="grid grid-cols-2 gap-2 text-center p-2.5 col-span-2 mx-2 xl:p-5">
                   {hasAnyPermissions(["categories.edit"]) && (
                     <Link
                       to={`/admin/categories/edit/${category.id}`}
-                      className="flex flex-col items-center justify-center bg-meta-3 text-center text-white hover:bg-opacity-90 rounded-lg shadow-md py-2 px-4 text-xs"
+                      className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-3 py-1.5 px-3 text-center text-xs font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-6"
                       type="button"
                     >
-                      <i className="fa fa-pencil-alt text-sm mb-1"></i>
-                      <span className="text-xs">Edit</span>
+                      <i className="fa fa-pencil-alt text-xs mr-1"></i>
+                      Edit
                     </Link>
                   )}
 
                   {hasAnyPermissions(["categories.delete"]) && (
                     <button
-                      className="flex flex-col items-center justify-center bg-meta-1 text-center text-white hover:bg-opacity-90 rounded-lg shadow-md py-2 px-4 text-xs"
+                      className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-1 py-1.5 px-3 text-center text-xs font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-6"
                       type="button"
                       onClick={() => deleteCategory(category.id)}
                     >
-                      <i className="fa fa-trash"></i>Delete
+                      <i className="fa fa-trash mr-2"></i>Delete
                     </button>
                   )}
                 </div>
@@ -207,52 +208,19 @@ export default function CategoriesIndex() {
           )}
 
           {/* Pagination */}
-          <div className="flex justify-center mt-4">
-            <nav>
-              <ul className="flex list-none space-x-2">
-                {/* Previous Page Button */}
-                <li>
-                  <button
-                    onClick={() => handlePageChange(pagination.currentPage - 1)}
-                    disabled={pagination.currentPage === 1}
-                    className="px-4 py-2 bg-gray-300 text-black rounded-lg disabled:bg-gray-500"
-                  >
-                    Prev
-                  </button>
-                </li>
-                {/* Page Numbers */}
-                {Array.from(
-                  { length: Math.ceil(pagination.total / pagination.perPage) },
-                  (_, i) => (
-                    <li key={i}>
-                      <button
-                        onClick={() => handlePageChange(i + 1)}
-                        className={`px-4 py-2 rounded-lg ${
-                          pagination.currentPage === i + 1
-                            ? "bg-primary text-white"
-                            : "bg-gray-100 text-black"
-                        }`}
-                      >
-                        {i + 1}
-                      </button>
-                    </li>
-                  )
-                )}
-                {/* Next Page Button */}
-                <li>
-                  <button
-                    onClick={() => handlePageChange(pagination.currentPage + 1)}
-                    disabled={
-                      pagination.currentPage ===
-                      Math.ceil(pagination.total / pagination.perPage)
-                    }
-                    className="px-4 py-2 bg-gray-300 text-black rounded-lg disabled:bg-gray-500"
-                  >
-                    Next
-                  </button>
-                </li>
-              </ul>
-            </nav>
+          <div className="flex justify-end my-4">
+            <Pagination
+              activePage={pagination.currentPage}
+              itemsCountPerPage={pagination.perPage}
+              totalItemsCount={pagination.total}
+              pageRangeDisplayed={5}
+              onChange={handlePageChange}
+              innerClass="flex list-none space-x-2"
+              itemClass="inline-block"
+              linkClass="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300"
+              activeClass="bg-meta-5 text-white"
+              disabledClass="bg-gray-300 text-gray-500 cursor-not-allowed"
+            />
           </div>
         </div>
       </div>
