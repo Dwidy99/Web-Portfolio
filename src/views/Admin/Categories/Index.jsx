@@ -6,24 +6,24 @@ import hasAnyPermissions from "../../../utils/Permissions";
 import Api from "../../../services/Api";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
-import Pagination from "react-js-pagination";
+import Pagination from "../../../components/general/Pagination";
 
 export default function CategoriesIndex() {
   document.title = "Categories - Desa Digital";
 
-  // State untuk kategori dan pagination
+  // State for categories and pagination
   const [categories, setCategories] = useState([]);
   const [pagination, setPagination] = useState({
-    currentPage: 0,
-    perPage: 0,
+    currentPage: 1,
+    perPage: 10,
     total: 0,
   });
   const [keywords, setKeywords] = useState("");
 
-  // Ambil token dari cookies
+  // Get token from cookies
   const token = Cookies.get("token");
 
-  // Fungsi untuk mengambil data kategori
+  // Function to fetch categories data
   const fetchData = async (pageNumber = 1, keywords = "") => {
     const page = pageNumber ? pageNumber : pagination.currentPage;
 
@@ -45,13 +45,13 @@ export default function CategoriesIndex() {
     fetchData();
   }, []);
 
-  // Fungsi untuk mencari kategori
+  // Function for search input
   const searchData = async (e) => {
     setKeywords(e.target.value);
     fetchData(1, e.target.value);
   };
 
-  // Fungsi untuk menghapus kategori
+  // Function to delete a category
   const deleteCategory = (id) => {
     confirmAlert({
       title: "Are you sure?",
@@ -155,74 +155,54 @@ export default function CategoriesIndex() {
                     ? ""
                     : "border-b border-stroke dark:border-strokedark"
                 }`}
-                key={index}
+                key={category.id}
               >
-                <div className="fw-bold text-center p-2.5 xl:p-5">
-                  {++index + (pagination.currentPage - 1) * pagination.perPage}
+                <div className="p-2.5 xl:p-5">{index + 1}</div>
+                <div className="p-2.5 xl:p-5">
+                  <span className="font-medium">{category.name}</span>
                 </div>
-                <div className="p-2.5 xl:p-5">{category.name}</div>
-                <div className="flex items-center justify-center p-2.5 xl:p-5">
-                  {category.image ? (
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      style={{ width: "40px", height: "40px" }}
-                    />
-                  ) : (
-                    <span>No icon</span>
-                  )}
+                <div className="p-2.5 xl:p-5">
+                  {/* Adjusted image styling */}
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
+                  />
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-center p-2.5 col-span-2 mx-2 xl:p-5">
-                  {hasAnyPermissions(["categories.edit"]) && (
-                    <Link
-                      to={`/admin/categories/edit/${category.id}`}
-                      className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-3 py-1.5 px-3 text-center text-xs font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-6"
-                      type="button"
-                    >
-                      <i className="fa fa-pencil-alt text-xs mr-1"></i>
-                      Edit
-                    </Link>
-                  )}
+                <div className="flex justify-center col-span-2 p-2.5 xl:p-5 gap-2">
+                  {/* Edit Button */}
+                  <Link
+                    to={`/admin/categories/edit/${category.id}`}
+                    className="inline-flex items-center justify-center rounded-md bg-green-500 py-2 px-4 text-sm font-medium text-white hover:bg-green-600"
+                  >
+                    <i className="fa fa-edit mr-2"></i> Edit
+                  </Link>
 
+                  {/* Delete Button */}
                   {hasAnyPermissions(["categories.delete"]) && (
                     <button
-                      className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-1 py-1.5 px-3 text-center text-xs font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-6"
-                      type="button"
                       onClick={() => deleteCategory(category.id)}
+                      className="inline-flex items-center justify-center rounded-md bg-red-500 py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
                     >
-                      <i className="fa fa-trash mr-2"></i>Delete
+                      <i className="fa fa-trash mr-2"></i> Delete
                     </button>
                   )}
                 </div>
               </div>
             ))
           ) : (
-            <div className="text-center p-5">
-              <div
-                className="alert alert-danger border-0 rounded shadow-sm w-100"
-                role="alert"
-              >
-                Data Not Available..
-              </div>
-            </div>
+            <div>No data found!</div>
           )}
-
-          {/* Pagination */}
-          <div className="flex justify-end my-4">
-            <Pagination
-              activePage={pagination.currentPage}
-              itemsCountPerPage={pagination.perPage}
-              totalItemsCount={pagination.total}
-              pageRangeDisplayed={5}
-              onChange={handlePageChange}
-              innerClass="flex list-none space-x-2"
-              itemClass="inline-block"
-              linkClass="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300"
-              activeClass="bg-meta-5 text-white"
-              disabledClass="bg-gray-300 text-gray-500 cursor-not-allowed"
-            />
-          </div>
         </div>
+
+        {/* Pagination Component */}
+        <Pagination
+          className="flex justify-end my-4"
+          currentPage={pagination.currentPage}
+          totalCount={pagination.total}
+          pageSize={pagination.perPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </LayoutAdmin>
   );
