@@ -1,7 +1,7 @@
 //import react-router-dom
 import { Link, useNavigate } from "react-router-dom";
 //import react
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 //import LayoutAdmin
 import LayoutAdmin from "../../../layouts/Admin";
@@ -17,10 +17,14 @@ import Cookies from "js-cookie";
 import ReactQuill from "react-quill";
 //quill CSS
 import "react-quill/dist/quill.snow.css";
+import SelectGroupTwo from "../../../components/general/SelectGroupTwo";
 
-export default function PostsCreate() {
+export default function Create() {
   //page title
   document.title = "Create Posts - Desa Digital";
+
+  const formRef = useRef(null);
+  const quillRef = useRef(null);
 
   //navigate
   const navigate = useNavigate();
@@ -54,6 +58,8 @@ export default function PostsCreate() {
   useEffect(() => {
     //call fucntion "fetchData"
     fetchDataCategories();
+
+    quillRef.current.getEditor();
   }, []);
 
   //function "statePosts"
@@ -93,127 +99,142 @@ export default function PostsCreate() {
       });
   };
 
+  const handleReset = () => {
+    if (formRef.current) {
+      formRef.current.reset(); // Reset form fields
+    }
+    setTitle(""); // Reset name state
+    setImage(""); // Reset image state
+    setContent(""); // Reset image state
+    setCategoryID("");
+    setErrors([]); // Clear errors
+  };
+
   return (
     <LayoutAdmin>
-      <main>
-        <div className="container-fluid mb-5 mt-5">
-          <div className="row">
-            <div className="col-md-12">
-              <Link
-                to="/admin/posts"
-                className="btn btn-md btn-primary border-0 shadow-sm mb-3"
-                type="button"
-              >
-                <i className="fa fa-long-arrow-alt-left me-2"></i> Back
-              </Link>
-              <div className="card border-0 rounded shadow-sm border-top-success">
-                <div className="card-body">
-                  <h6>
-                    <i className="fa fa-user"></i> Create Posts
-                  </h6>
-                  <hr />
-                  <form onSubmit={storePosts}>
-                    <div className="row">
-                      <div className="mb-3">
-                        <label htmlFor="title" className="form-label fw-bold">
-                          Image
-                        </label>
-                        <input
-                          type="file"
-                          className="form-control"
-                          accept="image/*"
-                          onChange={(e) => setImage(e.target.files[0])}
-                        />
-                      </div>
-                      {errors.image && (
-                        <div className="alert alert-danger">
-                          {errors.image[0]}
-                        </div>
-                      )}
+      <Link
+        to="/admin/posts/"
+        type="submit"
+        className="mx-2 my-3 inline-flex items-center justify-center rounded-md bg-lime-50 py-2 px-6 text-center text-sm font-medium text-black hover:bg-opacity-90 lg:px-6 xl:px-8 outline outline-2 outline-black"
+      >
+        <i className="fa-solid fa-arrow-left mr-2"></i> Back
+      </Link>
 
-                      <div className="mb-3">
-                        <label htmlFor="title" className="form-label fw-bold">
-                          Title post
-                        </label>
-                        <input
-                          type="title"
-                          className="form-control"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                          placeholder="Enter Title Post.."
-                        />
-                      </div>
-                      {errors.title && (
-                        <div className="alert alert-danger">
-                          {errors.title[0]}
-                        </div>
-                      )}
-
-                      <div className="mb-3">
-                        <label
-                          htmlFor="category"
-                          className="form-label fw-bold"
-                        >
-                          Category
-                        </label>
-                        <select
-                          className="form-select"
-                          value={categoryID}
-                          onChange={(e) => setCategoryID(e.target.value)}
-                        >
-                          <option value="">-- Select Category --</option>
-                          {categories.map((category) => (
-                            <option value={category.id} key={category.id}>
-                              {category.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      {errors.category_id && (
-                        <div className="alert alert-danger">
-                          {errors.category_id[0]}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="row">
-                      <div className="mb-3">
-                        <label htmlFor="content" className="form-label fw-bold">
-                          Content
-                        </label>
-                        <ReactQuill
-                          theme="snow"
-                          rows="5"
-                          value={content}
-                          onChange={(content) => setContent(content)}
-                          placeholder="Enter Content.."
-                        />
-                      </div>
-                      {errors.content && (
-                        <div className="alert alert-danger">
-                          {errors.content[0]}
-                        </div>
-                      )}
-                    </div>
-
-                    <div>
-                      <button
-                        type="submit"
-                        className="btn btn-md btn-primary me-2"
-                      >
-                        <i className="fa fa-save"></i> Save
-                      </button>
-                      <button type="reset" className="btn btn-md btn-warning">
-                        <i className="fa fa-redo"></i> Reset
-                      </button>
-                    </div>
-                  </form>
+      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+          <h3 className="font-medium text-black dark:text-white">
+            Add Category
+          </h3>
+        </div>
+        <div className="flex flex-col gap-5.5 p-6.5">
+          <form onSubmit={storePosts}>
+            <div className="my-2">
+              <label className="mb-3 block text-black dark:text-white">
+                Title
+              </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter role name.."
+                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+              {errors.title && (
+                <div className="w-full">
+                  <p className="mb-3 text-sm font-semibold text-[#bd2929]">
+                    {errors.title[0]}
+                  </p>
                 </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 my-4">
+              <div className="basis-128">
+                <label
+                  htmlFor="category"
+                  className="text-black dark:text-white block"
+                >
+                  Category
+                </label>
+                <SelectGroupTwo
+                  id="category"
+                  value={categoryID} // Ensure this is a string or number, defaulting to an empty string
+                  onChange={(e) => setCategoryID(e)} // Pass the value directly here
+                  options={categories.map((category) => ({
+                    value: category.id,
+                    label: category.name,
+                  }))}
+                  placeholder="-- Select Category --"
+                />
+                {errors.category_id && (
+                  <div className="mt-2 text-sm text-[#bd2929]">
+                    {errors.category_id[0]}
+                  </div>
+                )}
+              </div>
+
+              <div className="basis-128">
+                <label className="block text-black dark:text-white">
+                  Image file
+                </label>
+                <input
+                  type="file"
+                  id="file"
+                  accept="images/*"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-black dark:focus:border-primary"
+                />
+                {errors.image && (
+                  <div className="w-full">
+                    <p className="mb-3 text-sm font-semibold text-[#bd2929]">
+                      {errors.image[0]}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
+
+            <div className="row">
+              <div className="mb-5">
+                <label htmlFor="content" className="form-label font-bold">
+                  Content
+                </label>
+                <ReactQuill
+                  ref={quillRef}
+                  theme="snow"
+                  value={content}
+                  onChange={setContent}
+                  placeholder="Enter Content..."
+                  style={{ width: "100%", height: 350 }}
+                />
+              </div>
+              {errors.content && (
+                <div className="w-full">
+                  <p className="mb-3 text-sm font-semibold text-[#bd2929]">
+                    {errors.content[0]}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div className="flex my-4">
+              <button
+                type="submit"
+                className="mx-2 inline-flex items-center justify-center rounded-md bg-blue-600 py-2 px-6 text-center text-sm font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-8"
+              >
+                <i className="fa-solid fa-plus mr-2"></i> Add
+              </button>
+              <button
+                type="reset"
+                onClick={handleReset}
+                className="mx-2 inline-flex items-center justify-center rounded-md bg-slate-600 py-2 px-6 text-center text-sm font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-8"
+              >
+                <i className="fa-solid fa-eraser mr-2"></i> Reset
+              </button>
+            </div>
+          </form>
         </div>
-      </main>
+      </div>
     </LayoutAdmin>
   );
 }
