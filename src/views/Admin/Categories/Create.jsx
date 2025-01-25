@@ -86,7 +86,7 @@ export default function CategoriesCreate() {
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
           <h3 className="font-medium text-black dark:text-white">
-            Input Fields
+            Add Category
           </h3>
         </div>
         <div className="flex flex-col gap-5.5 p-6.5">
@@ -134,7 +134,7 @@ export default function CategoriesCreate() {
             <div className="flex my-4">
               <button
                 type="submit"
-                className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-3 py-2 px-6 text-center text-sm font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-8"
+                className="mx-2 inline-flex items-center justify-center rounded-md bg-blue-600 py-2 px-6 text-center text-sm font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-8"
               >
                 <i className="fa-solid fa-plus mr-2"></i> Add
               </button>

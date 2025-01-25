@@ -95,7 +95,7 @@ export default function CategoriesIndex() {
             {hasAnyPermissions(["categories.create"]) && (
               <Link
                 to="/admin/categories/create"
-                className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-2.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
+                className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-3.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
                 type="button"
               >
                 <i className="fa fa-plus-circle mr-2"></i> Add New
@@ -126,22 +126,20 @@ export default function CategoriesIndex() {
         <div className="flex flex-col">
           <div className="grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
             <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                No.
-              </h5>
+              <h5 className="text-sm font-bold uppercase xsm:text-base">No.</h5>
             </div>
             <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
+              <h5 className="text-sm font-bold uppercase xsm:text-base">
                 Categories Name
               </h5>
             </div>
             <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
+              <h5 className="text-sm font-bold uppercase xsm:text-base">
                 Icon
               </h5>
             </div>
             <div className="p-2.5 text-center col-span-2 xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
+              <h5 className="text-sm font-bold uppercase xsm:text-base">
                 Actions
               </h5>
             </div>
@@ -173,7 +171,7 @@ export default function CategoriesIndex() {
                   {/* Edit Button */}
                   <Link
                     to={`/admin/categories/edit/${category.id}`}
-                    className="inline-flex items-center justify-center rounded-md bg-green-500 py-2 px-4 text-sm font-medium text-white hover:bg-green-600"
+                    className="inline-flex items-center justify-center rounded-md bg-success py-2 px-4 text-sm font-medium text-white hover:bg-green-600"
                   >
                     <i className="fa fa-edit mr-2"></i> Edit
                   </Link>
@@ -182,7 +180,7 @@ export default function CategoriesIndex() {
                   {hasAnyPermissions(["categories.delete"]) && (
                     <button
                       onClick={() => deleteCategory(category.id)}
-                      className="inline-flex items-center justify-center rounded-md bg-red-500 py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
+                      className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
                     >
                       <i className="fa fa-trash mr-2"></i> Delete
                     </button>
@@ -191,10 +189,13 @@ export default function CategoriesIndex() {
               </div>
             ))
           ) : (
-            <div>No data found!</div>
+            <div className="w-full">
+              <h5 className="flex justify-center my-3 text-lg font-semibold text-[#9D5425]">
+                No Data Found!
+              </h5>
+            </div>
           )}
         </div>
-
         {/* Pagination Component */}
         <Pagination
           className="flex justify-end my-4"
