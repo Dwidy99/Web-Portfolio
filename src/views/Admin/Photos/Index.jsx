@@ -52,7 +52,6 @@ export default function PhotosIndex() {
     }).then((response) => {
       //set data response to state "setPosts"
       setPhotos(response.data.data.data);
-      console.log(response.data.data.data);
 
       //set data response to state "pagination"
       setPagination(() => ({

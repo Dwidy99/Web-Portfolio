@@ -205,7 +205,10 @@ export default function PostsIndex() {
                     className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
                   />
                 </div>
-                <div className="flex justify-center col-span-2 p-2.5 xl:p-5 gap-2">
+                <div className="p-2.5 xl:p-5">
+                  <span className="font-medium">{post.user.name}</span>
+                </div>
+                <div className="flex justify-center p-2.5 xl:p-5 gap-2">
                   {/* Edit Button */}
                   <Link
                     to={`/admin/posts/edit/${post.id}`}
