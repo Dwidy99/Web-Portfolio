@@ -152,7 +152,7 @@ export default function ProductsCreate() {
                 placeholder="Enter Phone Number.."
                 className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500"
               />
-              {errors.owner && (
+              {errors.phone && (
                 <p className="text-red-500 text-xs mt-1">{errors.phone[0]}</p>
               )}
             </div>

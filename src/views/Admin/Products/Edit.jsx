@@ -182,10 +182,7 @@ export default function ProductsEdit() {
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Post Image */}
-          <div className="grid grid-cols-6 gap-2 my-4 mb-6">
             <div className="basis-128 col-span-3">
               <label className="block text-sm font-medium text-gray-700">
                 Product Image
@@ -198,6 +195,25 @@ export default function ProductsEdit() {
               />
               {errors.image && (
                 <p className="text-red-500 text-xs mt-1">{errors.image[0]}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Post Image */}
+          <div className="grid grid-cols-6 gap-2 my-4 mb-6">
+            <div className="basis-128 col-span-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Phone
+              </label>
+              <input
+                type="number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter Post Owner.."
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500"
+              />
+              {errors.phone && (
+                <p className="text-red-500 text-xs mt-1">{errors.phone[0]}</p>
               )}
             </div>
 
