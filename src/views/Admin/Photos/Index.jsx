@@ -112,123 +112,99 @@ export default function PhotosIndex() {
     });
   };
 
+  // Pagination Handler
+  const handlePageChange = (pageNumber) => {
+    fetchData(pageNumber, keywords);
+  };
+
   return (
     <LayoutAdmin>
-      <main>
-        <div className="container-fluid mb-5 mt-5">
-          <div className="row">
-            <div className="col-md-12">
-              {hasAnyPermissions(["photos.create"]) && (
-                <PhotosCreate fetchData={fetchData} />
-              )}
+      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div>
+          {hasAnyPermissions(["photos.create"]) && (
+            <PhotosCreate fetchData={fetchData} />
+          )}
+        </div>
+
+        <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+          Post Lists
+        </h4>
+
+        <div className="flex flex-col">
+          <div className="grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
+            <div className="p-2.5 xl:p-5">
+              <h5 className="text-sm font-bold uppercase xsm:text-base">No.</h5>
+            </div>
+            <div className="p-2.5 xl:p-5">
+              <h5 className="text-sm font-bold uppercase xsm:text-base">
+                Image
+              </h5>
+            </div>
+            <div className="p-2.5 xl:p-5">
+              <h5 className="text-sm font-bold uppercase xsm:text-base">
+                Caption
+              </h5>
+            </div>
+            <div className="p-2.5 text-center xl:p-5">
+              <h5 className="text-sm font-bold uppercase xsm:text-base">
+                Actions
+              </h5>
             </div>
           </div>
 
-          <div className="row mt-4">
-            <div className="col-md-9 col-12 mb-2">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(e) => searchData(e)}
-                  placeholder="search here.."
-                />
-                <span className="input-group-text border-0 shadow-sm">
-                  <i className="fa fa-search"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="row mt-1">
-            <div className="col-md-12">
-              <div className="card border-0 rounded shadow-sm border-sm border-top-success">
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <table className="table table-bordered table-centered table-nowrap mb-0 rounded">
-                      <thead className="thead-dark">
-                        <tr className="border-0">
-                          <th className="border-0" style={{ width: "5%" }}>
-                            No.
-                          </th>
-                          <th className="border-0">Image</th>
-                          <th className="border-0">Caption</th>
-                          <th className="border-0" style={{ width: "15%" }}>
-                            Actions
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {
-                          //cek apakah data ada?
-                          photos.length > 0 ? (
-                            //looping data "photos" dengan "map"
-                            photos.map((photo, index) => (
-                              <tr key={index}>
-                                <td className="fw-bold text-center">
-                                  {++index +
-                                    (pagination.currentPage - 1) *
-                                      pagination.perPage}
-                                </td>
-                                <td className="text-center">
-                                  <img
-                                    src={photo.image}
-                                    width={"100px"}
-                                    className="rounded"
-                                  />
-                                </td>
-                                <td>{photo.caption}</td>
-                                <td className="text-center">
-                                  {hasAnyPermissions(["photos.edit"]) && (
-                                    <Link
-                                      to={`/admin/photos/edit/${photo.id}`}
-                                      className="btn btn-primary btn-sm me-2"
-                                    >
-                                      <i className="fa fa-pencil-alt"></i>
-                                    </Link>
-                                  )}
-
-                                  {hasAnyPermissions(["photos.delete"]) && (
-                                    <button
-                                      className="btn btn-danger btn-sm"
-                                      onClick={() => deletePhoto(photo.id)}
-                                    >
-                                      <i className="fa fa-trash"></i>
-                                    </button>
-                                  )}
-                                </td>
-                              </tr>
-                            ))
-                          ) : (
-                            //tampilan pesan data belum tersedia
-                            <tr>
-                              <td colSpan={4}>
-                                <div
-                                  className="alert alert-danger border-0 rounded shadow-sm w-100 text-center"
-                                  role="alert"
-                                >
-                                  Data Not Available..
-                                </div>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <Pagination
-                    currentPage={pagination.currentPage}
-                    perPage={pagination.perPage}
-                    total={pagination.total}
-                    onChange={(pageNumber) => fetchData(pageNumber, keywords)}
-                    position="end"
+          {photos.length > 0 ? (
+            photos.map((photo, index) => (
+              <div
+                className={`grid grid-cols-4 sm:grid-cols-5 ${
+                  index === photos.length - 1
+                    ? ""
+                    : "border-b border-stroke dark:border-strokedark"
+                }`}
+                key={photo.id}
+              >
+                <div className="p-2.5 xl:p-5">{index + 1}</div>
+                <div className="p-2.5 xl:p-5">
+                  {/* Adjusted image styling */}
+                  <img
+                    src={photo.image}
+                    alt={photo.caption}
+                    className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
                   />
                 </div>
+                <div className="p-2.5 xl:p-5">
+                  <span className="font-medium">{photo.caption}</span>
+                </div>
+                <div className="flex justify-center p-2.5 xl:p-5 gap-2">
+                  {/* Delete Button */}
+                  {hasAnyPermissions(["photos.delete"]) && (
+                    <button
+                      onClick={() => deletePhoto(photo.id)}
+                      className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
+                    >
+                      <i className="fa fa-trash mr-2"></i> Delete
+                    </button>
+                  )}
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="w-full">
+              <h5 className="flex justify-center my-3 text-lg font-semibold text-[#9D5425]">
+                No Data Found!
+              </h5>
             </div>
-          </div>
+          )}
         </div>
-      </main>
+
+        {/* Pagination Component */}
+        <Pagination
+          className="flex justify-end my-4"
+          currentPage={pagination.currentPage}
+          totalCount={pagination.total}
+          pageSize={pagination.perPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </LayoutAdmin>
   );
 }
