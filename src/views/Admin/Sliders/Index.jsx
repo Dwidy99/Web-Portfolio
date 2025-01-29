@@ -38,26 +38,33 @@ export default function SlidersIndex() {
 
   //function fetchData
   const fetchData = async (pageNumber = 1) => {
-    //define variabel "page"
-    const page = pageNumber ? pageNumber : pagination.currentPage;
+    const page = pageNumber || pagination.currentPage;
+    try {
+      const response = await Api.get(`/api/admin/sliders?page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    await Api.get(`/api/admin/sliders?page=${page}`, {
-      //header
-      headers: {
-        //header + token
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) => {
-      //set data response to state "setSliders"
+      // Set sliders data and pagination
       setSliders(response.data.data.data);
-
-      //set data response to state "pagination"
-      setPagination(() => ({
+      setPagination({
         currentPage: response.data.data.current_page,
         perPage: response.data.data.per_page,
         total: response.data.data.total,
-      }));
-    });
+      });
+
+      console.log("response:", response.data.data.data);
+    } catch (error) {
+      console.error(
+        "Error fetching sliders:",
+        error.response?.data || error.message
+      );
+      toast.error("Error fetching sliders. Please try again later.", {
+        position: "top-center",
+        duration: 5000,
+      });
+    }
   };
 
   //useEffect
@@ -101,106 +108,91 @@ export default function SlidersIndex() {
     });
   };
 
+  // Pagination Handler
+  const handlePageChange = (pageNumber) => {
+    fetchData(pageNumber);
+  };
+
   return (
     <LayoutAdmin>
-      <main>
-        <div className="container-fluid mb-5 mt-5">
-          <div className="row">
-            <div className="col-md-12">
-              {hasAnyPermissions(["sliders.create"]) && (
-                <SlidersCreate fetchData={fetchData} />
-              )}
+      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div>
+          {hasAnyPermissions(["photos.create"]) && (
+            <SlidersCreate fetchData={fetchData} />
+          )}
+        </div>
+
+        <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+          Slider Lists
+        </h4>
+
+        <div className="flex flex-col">
+          <div className="grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
+            <div className="p-2.5 xl:p-5">
+              <h5 className="text-sm font-bold uppercase xsm:text-base">No.</h5>
+            </div>
+            <div className="p-2.5 xl:p-5">
+              <h5 className="text-sm font-bold uppercase text-center xsm:text-base">
+                Image
+              </h5>
+            </div>
+            <div className="p-2.5 text-center xl:p-5">
+              <h5 className="text-sm font-bold uppercase text-center xsm:text-base">
+                Actions
+              </h5>
             </div>
           </div>
 
-          <div className="row mt-4">
-            <div className="col-md-12">
-              <div className="card border-0 rounded shadow-sm border-sm border-top-success">
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <table className="table table-bordered table-centered table-nowrap mb-0 rounded">
-                      <thead className="thead-dark">
-                        <tr className="border-0">
-                          <th className="border-0" style={{ width: "5%" }}>
-                            No.
-                          </th>
-                          <th className="border-0">Image</th>
-                          <th className="border-0" style={{ width: "15%" }}>
-                            Actions
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {
-                          //cek apakah data ada?
-                          sliders.length > 0 ? (
-                            //looping data "sliders" dengan "map"
-                            sliders.map((slider, index) => (
-                              <tr key={index}>
-                                <td className="fw-bold text-center">
-                                  {++index +
-                                    (pagination.currentPage - 1) *
-                                      pagination.perPage}
-                                </td>
-                                <td className="text-center">
-                                  <img
-                                    src={slider.image}
-                                    width={"100px"}
-                                    className="rounded"
-                                  />
-                                </td>
-                                <td className="text-center">
-                                  {hasAnyPermissions(["sliders.edit"]) && (
-                                    <Link
-                                      to={`/admin/sliders/edit/${slider.id}`}
-                                      className="btn btn-primary btn-sm me-2"
-                                    >
-                                      <i className="fa fa-pencil-alt"></i>
-                                    </Link>
-                                  )}
-
-                                  {hasAnyPermissions(["sliders.delete"]) && (
-                                    <button
-                                      className="btn btn-danger btn-sm"
-                                      onClick={() => deleteSliders(slider.id)}
-                                    >
-                                      <i className="fa fa-trash"></i>
-                                    </button>
-                                  )}
-                                </td>
-                              </tr>
-                            ))
-                          ) : (
-                            //tampilan pesan data belum tersedia
-                            <tr>
-                              <td colSpan={4}>
-                                <div
-                                  className="alert alert-danger border-0 rounded shadow-sm w-100 text-center"
-                                  role="alert"
-                                >
-                                  Data Not Available..
-                                </div>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <Pagination
-                    currentPage={pagination.currentPage}
-                    perPage={pagination.perPage}
-                    total={pagination.total}
-                    onChange={(pageNumber) => fetchData(pageNumber, keywords)}
-                    position="end"
+          {sliders.length > 0 ? (
+            sliders.map((photo, index) => (
+              <div
+                className={`grid grid-cols-4 sm:grid-cols-5 ${
+                  index === sliders.length - 1
+                    ? ""
+                    : "border-b border-stroke dark:border-strokedark"
+                }`}
+                key={photo.id}
+              >
+                <div className="p-2.5 xl:p-5">{index + 1}</div>
+                <div className="p-2.5 xl:p-5">
+                  {/* Adjusted image styling */}
+                  <img
+                    src={photo.image}
+                    alt="image slider"
+                    className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
                   />
                 </div>
+                <div className="flex justify-center p-2.5 xl:p-5 gap-2">
+                  {/* Delete Button */}
+                  {hasAnyPermissions(["sliders.delete"]) && (
+                    <button
+                      onClick={() => deleteSliders(photo.id)}
+                      className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
+                    >
+                      <i className="fa fa-trash mr-2"></i> Delete
+                    </button>
+                  )}
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="w-full">
+              <h5 className="flex justify-center my-3 text-lg font-semibold text-[#9D5425]">
+                No Data Found!
+              </h5>
             </div>
-          </div>
+          )}
         </div>
-      </main>
+
+        {/* Pagination Component */}
+        <Pagination
+          className="flex justify-end my-4"
+          currentPage={pagination.currentPage}
+          totalCount={pagination.total}
+          pageSize={pagination.perPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </LayoutAdmin>
   );
 }
