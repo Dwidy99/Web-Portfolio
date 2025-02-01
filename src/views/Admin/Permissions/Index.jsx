@@ -68,89 +68,93 @@ export default function Index() {
     fetchData(1, e.target.value);
   };
 
+  // Pagination Handler
+  const handlePageChange = (pageNumber) => {
+    fetchData(pageNumber, keywords);
+  };
+
   return (
     <LayoutAdmin>
-      <main>
-        <div className="container-fluid px-4 mt-5">
-          <div className="row">
-            <div className="col-md-8">
-              <div className="row">
-                <div className="col-md-9 col-12 mb-12">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="form-control border-0 shadow-sm"
-                      onChange={(e) => searchData(e)}
-                      placeholder="search here.."
-                    />
-                    <span className="input-group-text border-0 shadow-sm">
-                      <i className="fa fa-search"></i>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row mt-1">
-            <div className="col-md-12">
-              <div className="card border-0 rounded shadow-sm border-sm border-top-success">
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <table className="table table-bordered table-centered table-nowrap mb-0 rounded">
-                      <thead className="thead-dark">
-                        <tr className="border-0">
-                          <th className="border-0" style={{ width: "5%" }}>
-                            No.
-                          </th>
-                          <th className="border-0">Permission Name</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {
-                          //cek apakah data ada?
-                          permissions.length > 0 ? (
-                            //looping data "permissions" dengan "map"
-                            permissions.map((permissions, index) => (
-                              <tr key={index}>
-                                <td className="fw-bold text-center">
-                                  {++index +
-                                    (pagination.currentPage - 1) *
-                                      pagination.perPage}
-                                </td>
-                                <td>{permissions.name}</td>
-                              </tr>
-                            ))
-                          ) : (
-                            //tampilan pesan data belum tersedia
-                            <tr>
-                              <td colSpan={2}>
-                                <div
-                                  className="alert alert-danger border-0 rounded shadow-sm w-100 text-center"
-                                  role="alert"
-                                >
-                                  Data Not Availabel..
-                                </div>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      </tbody>
-                    </table>
-                  </div>
+      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+          Permission Lists
+        </h4>
 
-                  <Pagination
-                    currentPage={pagination.currentPage}
-                    perPage={pagination.perPage}
-                    total={pagination.total}
-                    onChange={(pageNumber) => fetchData(pageNumber, keywords)}
-                    position="end"
-                  />
-                </div>
+        <div className="flex flex-row mb-4">
+          <div className="w-full basis-2/2">
+            <form action="#" method="POST">
+              <div className="relative">
+                <input
+                  type="text"
+                  onChange={(e) => searchData(e)}
+                  placeholder="Search here..."
+                  className="w-full bg-transparent pl-10 pr-4 py-2 text-black dark:text-white border border-stroke rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+                <button
+                  type="submit"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 p-2"
+                >
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
-      </main>
+
+        <table className="w-full table-auto border border-stroke border-collapse overflow-x-auto rounded-sm bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <thead>
+            <tr className="bg-gray-200 text-left dark:bg-meta-4">
+              <th
+                scope="col"
+                className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark w-[5%]"
+              >
+                No.
+              </th>
+              <th
+                scope="col"
+                className="py-4 px-4 text-center font-medium text-black dark:text-white border border-stroke dark:border-strokedark sm:table-cell w-[40%]"
+              >
+                Permissions Name
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {permissions.length > 0 ? (
+              permissions.map((permission, index) => (
+                <tr
+                  key={permission.id}
+                  className="border border-stroke dark:border-strokedark"
+                >
+                  <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
+                    {index + 1}
+                  </td>
+                  <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
+                    {permission.name}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="7"
+                  className="py-5 px-4 text-center text-sm text-[#9D5425] border border-stroke dark:border-strokedark"
+                >
+                  No Data Found!
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+        {/* Pagination Component */}
+        <Pagination
+          className="flex justify-end my-4"
+          currentPage={pagination.currentPage}
+          totalCount={pagination.total}
+          pageSize={pagination.perPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </LayoutAdmin>
   );
 }
