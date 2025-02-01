@@ -1,193 +1,169 @@
-//import useState
 import { useEffect, useState } from "react";
-//import useNavigate
 import { Link, useNavigate } from "react-router-dom";
-
-//import Api
 import Api from "../../../services/Api";
-//import LayoutAdmin
 import LayoutAdmin from "../../../layouts/Admin";
-
-//import Cookies js
 import Cookies from "js-cookie";
-//import toast js
 import toast from "react-hot-toast";
 
 export default function RolesCreate() {
-  //title page
-  document.title = "Create - Desa Digital";
+  // Title page
+  document.title = "Create Role - Desa Digital";
 
-  //navigate
+  // Navigate
   const navigate = useNavigate();
 
-  //define state "permissions"
+  // Define state for form
   const [name, setName] = useState("");
-  const [permissionsData, setPermissionsData] = useState([]);
+  const [permissionsData, setPermissionsData] = useState([]); // stores selected permissions
   const [errors, setErrors] = useState([]);
 
-  //define state "permissions"
+  // Define state for permissions
   const [permissions, setPermissions] = useState([]);
 
-  //token
+  // Token from cookies
   const token = Cookies.get("token");
 
-  //function "fetchDataPermissions"
+  // Fetch permissions data
   const fetchDataPermissions = async () => {
     await Api.get("/api/admin/permissions/all", {
-      //header
       headers: {
-        //header Bearer + Token
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      //set response data to state "permissions"
       setPermissions(response.data.data);
     });
   };
 
   useEffect(() => {
-    //call function "fetchDataPermissions"
     fetchDataPermissions();
   }, []);
 
-  //function "handleCheckboxChange"
+  // Handle checkbox change
   const handleCheckboxChange = (e) => {
-    //define data
-    let data = permissionsData;
-
-    //push data on state
-    data.push(e.target.value);
-
-    //set data to state
-    setPermissionsData(data);
+    const { value, checked } = e.target;
+    setPermissionsData((prevData) =>
+      checked ? [...prevData, value] : prevData.filter((item) => item !== value)
+    );
   };
 
-  //function "storeRoles"
+  // Handle form submission
   const storeRole = async (e) => {
     e.preventDefault();
-
     await Api.post(
       "/api/admin/roles",
       {
-        //data
         name: name,
         permissions: permissionsData,
       },
       {
-        //header
         headers: {
-          //header Bearer + Token
           Authorization: `Bearer ${token}`,
         },
       }
     )
       .then((response) => {
-        //show toast
         toast.success(response.data.message, {
-          position: "top-center",
+          position: "top-right",
           duration: 4000,
         });
-
-        //duration
         navigate("/admin/roles");
       })
-      .catch((err) => {
-        //set error message to state "errors"
-        setErrors(err.response.data);
+      .catch((error) => {
+        setErrors(error.response.data);
       });
+  };
+
+  // Reset form
+  const handleReset = () => {
+    setName(""); // Reset role name
+    setPermissionsData([]); // Reset permissions (checkboxes)
+    setErrors([]); // Reset errors
   };
 
   return (
     <LayoutAdmin>
-      <main>
-        <div className="container-fluid mb-5 mt-5">
-          <div className="row">
-            <div className="col-md-12">
-              <Link
-                to="/admin/roles"
-                className="btn btn-primary border-0 shadow-sm mb-3"
-                type="button"
-              >
-                <i className="fa fa-long-arrow-alt-left me-2"></i> Back
-              </Link>
+      <Link
+        to="/admin/roles/"
+        className="inline-flex items-center justify-center rounded-md bg-meta-4 text-white py-2 px-6 text-sm font-medium hover:bg-lime-400 focus:outline-none"
+      >
+        <i className="fa-solid fa-arrow-left mr-2"></i> Back
+      </Link>
 
-              <div className="card border-0 rounded shadow-sm border-top-success">
-                <div className="card-body">
-                  <h6>
-                    <div className="fa fa-shield-alt"></div> Create Role
-                  </h6>
-                  <hr />
-                  <form onSubmit={storeRole}>
-                    <div className="mb-3">
-                      <label htmlFor="name" className="form-label fw-bold">
-                        Role name
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Enter role name.."
-                      />
-                    </div>
-                    {errors.name && (
-                      <div className="alert alert-danger">{errors.name[0]}</div>
-                    )}
-                    <hr />
-
-                    <div className="mb-3">
-                      <label htmlFor="name" className="fw-bold">
-                        Permissions
-                      </label>
-                      <br />
-                      {permissions.map((permission) => (
-                        <div
-                          className="form-check form-check-inline"
-                          key={Math.random()}
-                        >
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            value={permission.name}
-                            onChange={handleCheckboxChange}
-                            id={`check-${permission.id}`}
-                            placeholder="Enter role name.."
-                          />
-                          <label
-                            className="form-check-label fw-normal"
-                            htmlFor={`check-${permission.id}`}
-                          >
-                            {permission.name}
-                          </label>
-                        </div>
-                      ))}
-
-                      {errors.name && (
-                        <div className="alert alert-danger">
-                          {errors.permissions[0]}
-                        </div>
-                      )}
-                      <hr />
-                    </div>
-
-                    <div>
-                      <button
-                        type="submit"
-                        className="btn btn-md btn-primary me-2"
-                      >
-                        <i className="fa fa-save"></i> Save
-                      </button>
-                      <button type="reset" className="btn btn-md btn-warning">
-                        <i className="fa fa-redo"></i> Reset
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+      <div className="rounded-lg border bg-white shadow-md mt-8 p-6">
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+          Create Role
+        </h3>
+        <form onSubmit={storeRole}>
+          {/* Role Name */}
+          <div className="mb-3">
+            <label className="block text-sm font-medium text-gray-700">
+              Role Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter role name.."
+              className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name[0]}</p>
+            )}
           </div>
-        </div>
-      </main>
+
+          {/* Permissions */}
+          <div className="mb-3">
+            <label className="font-bold text-sm text-gray-700">
+              Permissions
+            </label>
+            <div className="flex flex-wrap space-x-3 mt-1">
+              {permissions.map((permission) => (
+                <div
+                  className="flex items-center space-x-2 space-y-2"
+                  key={Math.random()}
+                >
+                  <input
+                    type="checkbox"
+                    value={permission.name}
+                    checked={permissionsData.includes(permission.name)}
+                    onChange={handleCheckboxChange}
+                    id={`check-${permission.id}`}
+                    className="h-5 w-5 border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <label
+                    htmlFor={`check-${permission.id}`}
+                    className="text-sm text-gray-800"
+                  >
+                    {permission.name}
+                  </label>
+                </div>
+              ))}
+            </div>
+            {errors.permissions && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.permissions[0]}
+              </p>
+            )}
+          </div>
+
+          {/* Buttons */}
+          <div className="flex mt-5.5 items-center space-x-4">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-500 focus:outline-none"
+            >
+              <i className="fa-solid fa-save mr-2"></i> Save
+            </button>
+            <button
+              type="button"
+              onClick={handleReset} // Call handleReset function
+              className="bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-400 focus:outline-none"
+            >
+              <i className="fa-solid fa-redo mr-2"></i> Reset
+            </button>
+          </div>
+        </form>
+      </div>
     </LayoutAdmin>
   );
 }

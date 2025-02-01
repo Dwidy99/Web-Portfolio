@@ -122,100 +122,101 @@ export default function RolesEdit() {
       });
   };
 
+  // Reset form
+  const handleReset = () => {
+    setName(""); // Reset role name
+    setPermissionsData([]); // Reset permissions (checkboxes)
+    setErrors([]); // Reset errors
+  };
+
   return (
     <LayoutAdmin>
-      <main>
-        <div className="container-fluid mb-5 mt-5">
-          <div className="row">
-            <div className="col-md-12">
-              <Link
-                to="/admin/roles"
-                className="btn btn-primary border-0 shadow-sm mb-3"
-                type="button"
-              >
-                <i className="fa fa-long-arrow-alt-left me-2"></i> Back
-              </Link>
+      <Link
+        to="/admin/roles/"
+        className="inline-flex items-center justify-center rounded-md bg-meta-4 text-white py-2 px-6 text-sm font-medium hover:bg-gray-700 focus:outline-none"
+      >
+        <i className="fa-solid fa-arrow-left mr-2"></i> Back
+      </Link>
 
-              <div className="card border-0 rounded shadow-sm border-top-success">
-                <div className="card-body">
-                  <h6>
-                    <div className="fa fa-shield-alt"></div> Edit Role
-                  </h6>
-                  <hr />
-                  <form onSubmit={updateRole}>
-                    <div className="mb-3">
-                      <label htmlFor="name" className="form-label fw-bold">
-                        Role name
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Enter role name.."
-                      />
-                    </div>
-                    {errors.name && (
-                      <div className="alert alert-danger">{errors.name[0]}</div>
-                    )}
-                    <hr />
-
-                    <div className="mb-3">
-                      <label htmlFor="name" className="fw-bold">
-                        Permissions
-                      </label>
-                      <br />
-                      {permissions.map((permission) => (
-                        <div
-                          className="form-check form-check-inline"
-                          key={Math.random()}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value={permission.name}
-                            defaultChecked={permissionsData.some(
-                              (name) => name === permission.name ?? true
-                            )}
-                            onChange={handleCheckboxChange}
-                            id={`check-${permission.id}`}
-                            placeholder="Enter role name.."
-                          />
-                          <label
-                            className="form-check-label fw-normal"
-                            htmlFor={`check-${permission.id}`}
-                          >
-                            {permission.name}
-                          </label>
-                        </div>
-                      ))}
-
-                      {errors.name && (
-                        <div className="alert alert-danger">
-                          {errors.permissions[0]}
-                        </div>
-                      )}
-                      <hr />
-                    </div>
-
-                    <div>
-                      <button
-                        type="submit"
-                        className="btn btn-md btn-primary me-2"
-                      >
-                        <i className="fa fa-save"></i> Save
-                      </button>
-                      <button type="reset" className="btn btn-md btn-warning">
-                        <i className="fa fa-redo"></i> Reset
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+      <div className="rounded-lg border bg-white shadow-md mt-8 p-6">
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+          Create Role
+        </h3>
+        <form onSubmit={updateRole}>
+          {/* Role Name */}
+          <div className="mb-3">
+            <label className="block text-sm font-medium text-gray-700">
+              Role Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter role name.."
+              className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name[0]}</p>
+            )}
           </div>
-        </div>
-      </main>
+
+          {/* Permissions */}
+          <div className="mb-3">
+            <label htmlFor="name" className="font-bold text-sm text-gray-700">
+              Permissions
+            </label>
+            <div className="flex flex-wrap space-x-3 mt-1">
+              {permissions.map((permission) => (
+                <div
+                  className="flex items-center space-x-2 space-y-2"
+                  key={Math.random()}
+                >
+                  <input
+                    className="h-5 w-5 border-gray-300 text-blue-600 focus:ring-blue-500"
+                    type="checkbox"
+                    value={permission.name}
+                    defaultChecked={permissionsData.some(
+                      (name) => name === permission.name ?? true
+                    )}
+                    onChange={handleCheckboxChange}
+                    id={`check-${permission.id}`}
+                    aria-describedby="comments-description"
+                    placeholder="Enter role name.."
+                  />
+                  <label
+                    className="text-sm text-gray-800"
+                    htmlFor={`check-${permission.id}`}
+                  >
+                    {permission.name}
+                  </label>
+                </div>
+              ))}
+            </div>
+
+            {errors.name && (
+              <div className="alert alert-danger">{errors.permissions[0]}</div>
+            )}
+            <hr />
+          </div>
+
+          {/* Buttons */}
+          <div className="flex mt-5.5 items-center space-x-4">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-500 focus:outline-none"
+            >
+              <i className="fa-solid fa-save mr-2"></i> Save
+            </button>
+            <button
+              type="button"
+              onClick={handleReset} // Call handleReset function
+              className="bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-400 focus:outline-none"
+            >
+              <i className="fa-solid fa-redo mr-2"></i> Reset
+            </button>
+          </div>
+        </form>
+      </div>
     </LayoutAdmin>
   );
 }

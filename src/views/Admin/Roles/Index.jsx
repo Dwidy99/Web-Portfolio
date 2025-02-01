@@ -111,136 +111,143 @@ export default function RolesIndex() {
     });
   };
 
+  // Pagination Handler
+  const handlePageChange = (pageNumber) => {
+    fetchData(pageNumber, keywords);
+  };
+
   return (
     <LayoutsAdmin>
-      <main>
-        <div className="container-fluid mb-5 mt-5">
-          <div className="row">
-            <div className="col-md-8">
-              <div className="row">
-                {hasAnyPermissions(["roles.create"]) && (
-                  <div className="col-md-3 col-12 mb-12">
-                    <Link
-                      to="/admin/roles/create"
-                      className="btn btn-md btn-primary border-primary border-0 shadow w-100"
-                      type="button"
-                    >
-                      <i className="fa fa-plus-circle"></i> Add new
-                    </Link>
-                  </div>
-                )}
+      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+          Role Lists
+        </h4>
 
-                <div className="col-md-9 col-12 mb-2">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => searchData(e)}
-                      placeholder="search here.."
-                    />
-                    <span className="input-group-text border-0 shadow-sm">
-                      <i className="fa fa-search"></i>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="flex flex-row mb-4">
+          <div className="w-full basis-1/4 sm:w-auto">
+            {hasAnyPermissions(["roles.create"]) && (
+              <Link
+                to="/admin/roles/create"
+                className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-3.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
+                type="button"
+              >
+                <i className="fa fa-plus-circle mr-2"></i> Add New
+              </Link>
+            )}
           </div>
-          <div className="row mt-1">
-            <div className="col-md-12">
-              <div className="card border-0 rounded shadow-sm border-sm border-top-success">
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <table className="table table-bordered table-centered table-nowrap mb-0 rounded">
-                      <thead className="thead-dark">
-                        <tr className="border-0">
-                          <th className="border-0" style={{ width: "5%" }}>
-                            No.
-                          </th>
-                          <th className="border-0">Role Name</th>
-                          <th className="border-0" style={{ width: "60%" }}>
-                            Permissions
-                          </th>
-                          <th className="border-0" style={{ width: "15%" }}>
-                            Actions
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {
-                          //cek apakah data ada?
-                          roles.length > 0 ? (
-                            //looping data "roles" dengan "map"
-                            roles.map((role, index) => (
-                              <tr key={index}>
-                                <td className="fw-bold text-center">
-                                  {++index +
-                                    (pagination.currentPage - 1) *
-                                      pagination.perPage}
-                                </td>
-                                <td>{role.name}</td>
-                                <td>
-                                  {role.permissions.map((permission, index) => (
-                                    <span
-                                      className="btn btn-warning btn-sm shadow-sm border-0 ms-2 mb-2 fw-normal"
-                                      key={index}
-                                    >
-                                      {permission.name}
-                                    </span>
-                                  ))}
-                                </td>
-                                <td className="text-center">
-                                  {hasAnyPermissions(["roles.edit"]) && (
-                                    <Link
-                                      to={`/admin/roles/edit/${role.id}`}
-                                      className="btn btn-primary btn-sm me-2"
-                                    >
-                                      <i className="fa fa-pencil-alt"></i>
-                                    </Link>
-                                  )}
 
-                                  {hasAnyPermissions(["roles.delete"]) && (
-                                    <button
-                                      className="btn btn-danger btn-sm"
-                                      onClick={() => deleteRole(role.id)}
-                                    >
-                                      <i className="fa fa-trash"></i>
-                                    </button>
-                                  )}
-                                </td>
-                              </tr>
-                            ))
-                          ) : (
-                            //tampilan pesan data belum tersedia
-                            <tr>
-                              <td colSpan={4}>
-                                <div
-                                  className="alert alert-danger border-0 rounded shadow-sm w-100 text-center"
-                                  role="alert"
-                                >
-                                  Data Not Available..
-                                </div>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <Pagination
-                    currentPage={pagination.currentPage}
-                    perPage={pagination.perPage}
-                    total={pagination.total}
-                    onChange={(pageNumber) => fetchData(pageNumber, keywords)}
-                    position="end"
-                  />
-                </div>
+          <div className="w-full basis-2/2">
+            <form action="#" method="POST">
+              <div className="relative">
+                <input
+                  type="text"
+                  onChange={(e) => searchData(e)}
+                  placeholder="Search here..."
+                  className="w-full bg-transparent pl-10 pr-4 py-2 text-black dark:text-white border border-stroke rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+                <button
+                  type="submit"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 p-2"
+                >
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
-      </main>
+
+        <table className="w-full table-auto border border-stroke border-collapse overflow-x-auto rounded-sm bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <thead>
+            <tr className="bg-gray-200 text-left dark:bg-meta-4">
+              <th
+                scope="col"
+                className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark w-[5%]"
+              >
+                No.
+              </th>
+              <th
+                scope="col"
+                className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark w-[10%]"
+              >
+                Role
+              </th>
+              <th
+                scope="col"
+                className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark sm:table-cell w-[40%]"
+              >
+                Permissions
+              </th>
+              <th
+                scope="col"
+                className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark w-[10%]"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {roles.length > 0 ? (
+              roles.map((role, index) => (
+                <tr
+                  key={role.id}
+                  className="border border-stroke dark:border-strokedark"
+                >
+                  <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
+                    {index + 1}
+                  </td>
+                  <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
+                    {role.name}
+                  </td>
+                  <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark sm:table-cell">
+                    {role.permissions.map((permission, index) => (
+                      <span
+                        className="inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium bg-primary text-primary  m-0.5"
+                        key={index}
+                      >
+                        {permission.name}
+                      </span>
+                    ))}
+                  </td>
+                  <td className="py-5 px-2 text-center text-lg font-medium text-black dark:text-white border border-stroke dark:border-strokedark lg:table-cell">
+                    <Link
+                      to={`/admin/roles/edit/${role.id}`}
+                      className="inline-flex mx-1.5 items-center justify-center font-medium text-black"
+                    >
+                      <i className="fa fa-edit"></i>
+                    </Link>
+                    {hasAnyPermissions(["roles.delete"]) && (
+                      <button
+                        onClick={() => deleteRole(role.id)}
+                        className="inline-flex mx-1.5 items-center justify-center font-medium text-black"
+                      >
+                        <i className="fa fa-trash"></i>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="7"
+                  className="py-5 px-4 text-center text-sm text-[#9D5425] border border-stroke dark:border-strokedark"
+                >
+                  No Data Found!
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+        {/* Pagination Component */}
+        <Pagination
+          className="flex justify-end my-4"
+          currentPage={pagination.currentPage}
+          totalCount={pagination.total}
+          pageSize={pagination.perPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </LayoutsAdmin>
   );
 }
