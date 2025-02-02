@@ -158,7 +158,7 @@ export default function RolesIndex() {
 
         <table className="w-full table-auto border border-stroke border-collapse overflow-x-auto rounded-sm bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <thead>
-            <tr className="bg-gray-200 text-left dark:bg-meta-4">
+            <tr className="bg-gray-200 text-center dark:bg-meta-4">
               <th
                 scope="col"
                 className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark w-[5%]"
