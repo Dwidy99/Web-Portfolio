@@ -325,36 +325,6 @@ export default function RoutesIndex() {
         }
       />
 
-      {/* route "/admin/aparaturs" */}
-      {/* <Route
-        path="/admin/aparaturs"
-        element={
-          <PrivateRoutes>
-            <AparatursIndex />
-          </PrivateRoutes>
-        }
-      /> */}
-
-      {/* route "/admin/aparturs/edit/:id" */}
-      {/* <Route
-        path="/admin/aparaturs/edit/:id"
-        element={
-          <PrivateRoutes>
-            <AparatursEdit />
-          </PrivateRoutes>
-        }
-      /> */}
-
-      {/* route "/admin/aparaturs" */}
-      {/* <Route
-        path="/admin/aparaturs/create"
-        element={
-          <PrivateRoutes>
-            <AparatursCreate />
-          </PrivateRoutes>
-        }
-      /> */}
-
       {/* PUBLIC Route */}
 
       {/* route "/" */}
