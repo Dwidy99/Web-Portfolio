@@ -16,7 +16,11 @@ import {
   MdOutlineSecurity,
   MdPostAdd,
 } from "react-icons/md";
-import { FaUsersGear } from "react-icons/fa6";
+import {
+  FaCircleArrowDown,
+  FaCircleChevronDown,
+  FaUsersGear,
+} from "react-icons/fa6";
 import { CiUnlock } from "react-icons/ci";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { SiOpenmediavault } from "react-icons/si";
@@ -87,7 +91,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+        `group relative flex items-center rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
           isActive || activeCondition ? "!text-white " : ""
         }`
       }
@@ -123,15 +127,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           aria-expanded={sidebarOpen}
           className="block lg:hidden"
         >
-          <svg
-            className="fill-current"
-            width="20"
-            height="18"
-            viewBox="0 0 20 18"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M19 8.175H2.98748L9.36248 1.6875C9.69998 1.35 9.69998 0.825 9.36248 0.4875C9.02498 0.15 8.49998 0.15 8.16248 0.4875L0.399976 8.3625C0.0624756 8.7 0.0624756 9.225 0.399976 9.5625L8.16248 17.4375C8.31248 17.5875 8.53748 17.7 8.76248 17.7C8.98748 17.7 9.17498 17.625 9.36248 17.475C9.69998 17.1375 9.69998 16.6125 9.36248 16.275L3.02498 9.8625H19C19.45 9.8625 19.825 9.4875 19.825 9.0375C19.825 8.55 19.45 8.175 19 8.175Z" />
-          </svg>
+          <i className="fa-solid fa-arrow-left text-white"></i>
         </button>
       </div>
 
@@ -143,7 +139,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             hasAnyPermission(["sliders.index"])) && (
             <>
               <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2 flex items-center">
-                <FaMagic className="mr-2" /> CONTENT MANAGEMENT
+                <i className="fa-solid fa-wand-magic-sparkles mr-2"></i> CONTENT
+                MANAGEMENT
               </h3>
               <ul className="mb-6 flex flex-col gap-1.5">
                 {/* Contents Link */}
@@ -164,9 +161,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             : setSidebarExpanded(true);
                         }}
                       >
-                        <GiPencilBrush />
+                        <i className="fa-solid fa-wand-sparkles"></i>
                         Contents
-                        <IoIosArrowDropdownCircle
+                        <FaCircleChevronDown
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && "rotate-180"
                           }`}
@@ -180,8 +177,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-9">
                           {hasAnyPermission(["categories.index"]) && (
                             <li>
-                              <div className="flex item-center">
-                                <TbCategoryPlus className="text-white" />
+                              <div className="flex items-center">
+                                <i className="fa-solid fa-layer-group text-white"></i>
                                 {renderNavLink(
                                   "/admin/categories",
                                   "Categories"
@@ -191,8 +188,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           )}
                           {hasAnyPermission(["posts.index"]) && (
                             <li>
-                              <div className="flex item-center">
-                                <MdPostAdd className="text-white" />
+                              <div className="flex items-center">
+                                <i className="fa-solid fa-file-circle-plus text-white"></i>
                                 {renderNavLink("/admin/posts", "Posts")}
                               </div>
                             </li>
@@ -202,8 +199,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           )}
                           {hasAnyPermission(["products.index"]) && (
                             <li>
-                              <div className="flex item-center">
-                                <MdOutlineProductionQuantityLimits className="text-white" />
+                              <div className="flex items-center">
+                                <i className="fa-solid fa-bars text-white"></i>
                                 {renderNavLink("/admin/products", "Products")}
                               </div>
                             </li>
@@ -221,7 +218,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           {hasAnyPermission(["sliders.index"]) && (
             <>
               <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2 flex items-center">
-                <MdManageHistory className="mr-2" /> MEDIA MANAGEMENT
+                <i className="fa-solid fa-bars-progress mr-2"></i> MEDIA
+                MANAGEMENT
               </h3>
               <ul className="mb-6 flex flex-col gap-1.5">
                 {/* Media Link */}
@@ -244,7 +242,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       >
                         <SiOpenmediavault />
                         Media
-                        <IoIosArrowDropdownCircle
+                        <FaCircleChevronDown
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && "rotate-180"
                           }`}
@@ -257,14 +255,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-9">
                           <li>
-                            <div className="flex item-center gap-2">
-                              <MdOutlinePermMedia className="text-white" />
+                            <div className="flex items-center">
+                              <i className="fa-solid fa-images text-white"></i>
                               {renderNavLink("/admin/photos", "Photos")}
                             </div>
                           </li>
                           <li>
-                            <div className="flex item-center gap-2">
-                              <TiMediaFastForward className="text-white" />
+                            <div className="flex items-center">
+                              <i className="fa-solid fa-photo-film text-white"></i>
                               {renderNavLink("/admin/sliders", "Sliders")}
                             </div>
                           </li>
@@ -301,9 +299,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           : setSidebarExpanded(true);
                       }}
                     >
-                      <FaUsersCog />
+                      <i className="fa-solid fa-users-gear"></i>
                       Users
-                      <IoIosArrowDropdownCircle
+                      <FaCircleChevronDown
                         className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                           open && "rotate-180"
                         }`}
@@ -317,16 +315,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-9">
                         {hasAnyPermission(["roles.index"]) && (
                           <li>
-                            <div className="flex items-center gap-2">
-                              <MdOutlineSecurity className="text-white" />
+                            <div className="flex items-center">
+                              <i className="fa-solid fa-user-shield text-white"></i>
                               {renderNavLink("/admin/roles", "Roles")}
                             </div>
                           </li>
                         )}
                         {hasAnyPermission(["permissions.index"]) && (
                           <li>
-                            <div className="flex items-center gap-2">
-                              <CiUnlock className="text-white" />
+                            <div className="flex items-center">
+                              <i className="fa-solid fa-building-lock text-white"></i>
                               {renderNavLink(
                                 "/admin/permissions",
                                 "Permissions"
@@ -336,8 +334,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         )}
                         {hasAnyPermission(["users.index"]) && (
                           <li>
-                            <div className="flex items-center gap-2">
-                              <FaRegUser className="text-white" />
+                            <div className="flex items-center">
+                              <i className="fa-solid fa-users text-white"></i>
                               {renderNavLink("/admin/users", "Users")}
                             </div>
                           </li>
