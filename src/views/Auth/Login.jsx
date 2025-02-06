@@ -1,147 +1,163 @@
-//import service
+// Import service
 import Api from "../../services/Api";
 
-//import navigate
-import { Navigate, useNavigate } from "react-router-dom";
+// Import navigate
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 
-//import layoutAuth
+// Import layoutAuth
 import LayoutAuth from "../../layouts/Auth";
 
-//import useState
+// Import useState
 import { useState } from "react";
 
-//import Cookies
+// Import Cookies
 import Cookies from "js-cookie";
 
-//import toast
+// Import toast
 import toast from "react-hot-toast";
+import { FaUser } from "react-icons/fa6";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 export default function Login() {
-  //title page
+  // Title page
   document.title = "Login - Admin Desa";
 
-  //navigate
+  // Navigate
   const navigate = useNavigate();
 
-  //define state
+  // Define state
   const [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
 
-  //define state errors
+  // Define state errors
   const [errors, setErrors] = useState([]);
 
-  //method login
+  // Method login
   const login = async (e) => {
     e.preventDefault();
 
     await Api.post("/api/login", {
-      //data
+      // Data
       email: email,
       password: password,
     })
       .then((response) => {
-        //set token to cookie
+        // Set token to cookie
         Cookies.set("token", response.data.token);
 
-        //set user to cookies
+        // Set user to cookies
         Cookies.set("user", JSON.stringify(response.data.user));
 
-        //set permision to cookies
+        // Set permissions to cookies
         Cookies.set("permissions", JSON.stringify(response.data.permissions));
 
-        //show toast
+        // Show toast
         toast.success("Login Successfully!", {
           position: "top-right",
           duration: 4000,
         });
 
-        //redirect dashboard page
+        // Redirect to dashboard page
         navigate("/admin/dashboard");
       })
       .catch((error) => {
-        //set response error to state
+        // Set response error to state
         setErrors(error.response.data);
-        //set password empty
+        // Set password empty
         setPassword("");
       });
   };
 
-  //check if cookie already exista
+  // Check if cookie already exists
   if (Cookies.get("token")) {
-    //redirect dashboard page
+    // Redirect to dashboard page
     return <Navigate to="/admin/dashboard" replace />;
   }
 
   return (
     <LayoutAuth>
-      <div
-        className="row d-flex align-items-center justify-content-center"
-        style={{ marginTop: "50px" }}
-      >
-        <div className="col-md-7">
-          <div className="text-center mb-5">
-            <img src={"/images/logo-jbg.png"} width={"100"} alt="Images" />
-            <h4>
-              <strong className="text-white mt-3">DESA SANTRI, JOMBANG</strong>
+      <div className="flex items-center justify-center mt-12">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-6">
+            <h4 className="text-white font-semibold text-xl">
+              Admin Page, by Dwi
             </h4>
           </div>
-          <div className="card rounded-4 shadow-sm border-top-success">
-            <div className="card-body">
-              <div className="form-left h-100 py-3 px-3">
-                {errors.message && (
-                  <div className="alert alert-danger">{errors.message}</div>
-                )}
-                <form onSubmit={login} className="row g-4">
-                  <div className="col-12">
-                    <label htmlFor="email">Email Address</label>
-                    <div className="input-group">
-                      <div className="input-group-text">
-                        <i className="fa fa-envelope"></i>
-                      </div>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter Email Address"
-                      />
+          <div className="bg-white rounded-xl shadow-md border-t-4 border-green-500 p-6">
+            <div className="h-full">
+              {errors.message && (
+                <div className="bg-red-500 text-white p-3 rounded-md mb-4">
+                  {errors.message}
+                </div>
+              )}
+              <form onSubmit={login} className="space-y-6">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 dark:text-white"
+                  >
+                    Email
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
+                      <FaUser className="text-gray-500" />
                     </div>
-                    {errors.email && (
-                      <div className="alert alert-danger mt-2">
-                        {errors.email[0]}
-                      </div>
-                    )}
+                    <input
+                      type="text"
+                      id="email"
+                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter Email Address"
+                    />
                   </div>
-
-                  <div className="col-12">
-                    <label htmlFor="password">Password</label>
-                    <div className="input-group">
-                      <div className="input-group-text">
-                        <i className="fa fa-lock"></i>
-                      </div>
-                      <input
-                        type="password"
-                        className="form-control"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter Password"
-                      />
+                  {errors.email && (
+                    <div className="text-red-500 text-sm mt-2">
+                      {errors.email[0]}
                     </div>
-                    {errors.password && (
-                      <div className="alert alert-danger mt-2">
-                        {errors.password[0]}
-                      </div>
-                    )}
-                  </div>
+                  )}
+                </div>
 
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700 dark:text-white"
+                  >
+                    Password
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
+                      <RiLockPasswordLine className="text-gray-500" />
+                    </div>
+                    <input
+                      type="password"
+                      id="password"
+                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter Password"
+                    />
+                  </div>
+                  {errors.password && (
+                    <div className="text-red-500 text-sm mt-2">
+                      {errors.password[0]}
+                    </div>
+                  )}
+                </div>
+
+                <div>
                   <button
-                    className="btn btn-primary px-4 float-end rounded-4"
+                    className="w-full min-h-[55px] py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
                     type="submit"
                   >
                     Login
                   </button>
-                </form>
-              </div>
+                </div>
+              </form>
+
+              <NavLink to="/">
+                <h4 className="mt-3 text-blue-600">back to home page</h4>
+              </NavLink>
             </div>
           </div>
         </div>

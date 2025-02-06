@@ -10,7 +10,6 @@ import hasAnyPermission from "../../../utils/Permissions";
 import {
   FaBarsProgress,
   FaCircleChevronDown,
-  FaFileCirclePlus,
   FaGaugeHigh,
   FaImages,
   FaLayerGroup,
@@ -21,10 +20,7 @@ import {
 } from "react-icons/fa6";
 import PropTypes from "prop-types";
 import { GoFileDiff } from "react-icons/go";
-import {
-  MdContactPage,
-  MdOutlineProductionQuantityLimits,
-} from "react-icons/md";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaPhotoVideo, FaUserEdit, FaUsersCog } from "react-icons/fa";
 import { GrDashboard, GrInsecure, GrSecure } from "react-icons/gr";
 
