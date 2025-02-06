@@ -328,8 +328,7 @@ export default function RoutesIndex() {
       {/* PUBLIC Route */}
 
       {/* route "/" */}
-      <Route path="/" element={<Home />} />
-      <Route path="/home" element={<HomePorto />} />
+      <Route path="/" element={<HomePorto />} />
 
       {/* route "/aparaturs" */}
       {/* <Route path="/aparaturs" element={<Aparaturs />} /> */}

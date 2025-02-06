@@ -58,12 +58,12 @@ export default function Home() {
 
   // Daftar warna untuk tombol
   const colors = [
-    "bg-red-500",
-    "bg-blue-500",
-    "bg-green-500",
-    "bg-yellow-500",
-    "bg-indigo-500",
-    "bg-purple-500",
+    "bg-meta-1",
+    "bg-meta-3",
+    "bg-meta-4",
+    "bg-meta-5",
+    "bg-meta-6",
+    "bg-meta-7",
   ];
 
   return (

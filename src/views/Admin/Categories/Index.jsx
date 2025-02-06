@@ -85,7 +85,7 @@ export default function CategoriesIndex() {
 
   return (
     <LayoutAdmin>
-      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default lg:dark:bg-meta-4 sm:px-7.5 xl:pb-1">
         <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
           Categories List
         </h4>
@@ -123,79 +123,87 @@ export default function CategoriesIndex() {
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <div className="grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">No.</h5>
-            </div>
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                Categories Name
-              </h5>
-            </div>
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                Icon
-              </h5>
-            </div>
-            <div className="p-2.5 text-center col-span-2 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                Actions
-              </h5>
-            </div>
-          </div>
-
-          {categories.length > 0 ? (
-            categories.map((category, index) => (
-              <div
-                className={`grid grid-cols-4 sm:grid-cols-5 ${
-                  index === categories.length - 1
-                    ? ""
-                    : "border-b border-stroke dark:border-strokedark"
-                }`}
-                key={category.id}
-              >
-                <div className="p-2.5 xl:p-5">{index + 1}</div>
-                <div className="p-2.5 xl:p-5">
-                  <span className="font-medium">{category.name}</span>
-                </div>
-                <div className="p-2.5 xl:p-5">
-                  {/* Adjusted image styling */}
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
-                  />
-                </div>
-                <div className="flex justify-center col-span-2 p-2.5 xl:p-5 gap-2">
-                  {/* Edit Button */}
-                  <Link
-                    to={`/admin/categories/edit/${category.id}`}
-                    className="inline-flex items-center justify-center rounded-md bg-success py-2 px-4 text-sm font-medium text-white hover:bg-green-600"
-                  >
-                    <i className="fa fa-edit mr-2"></i> Edit
-                  </Link>
-
-                  {/* Delete Button */}
-                  {hasAnyPermissions(["categories.delete"]) && (
-                    <button
-                      onClick={() => deleteCategory(category.id)}
-                      className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
+        <div className="rounded-lg border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <div className="max-w-full overflow-x-auto">
+            <table className="w-full table-auto border-collapse border border-stroke dark:border-strokedark">
+              <thead>
+                <tr className="bg-bodydark2 text-left dark:bg-meta-4">
+                  <th className="min-w-[115px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11 border border-stroke dark:border-strokedark">
+                    No.
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11 border border-stroke dark:border-strokedark">
+                    Categories Name
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11 border border-stroke dark:border-strokedark">
+                    Icon
+                  </th>
+                  <th className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {categories.length > 0 ? (
+                  categories.map((category, index) => (
+                    <tr
+                      className={`${index === categories.length - 1 ? "" : "border-b border-stroke dark:border-strokedark"}`}
+                      key={category.id}
                     >
-                      <i className="fa fa-trash mr-2"></i> Delete
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="w-full">
-              <h5 className="flex justify-center my-3 text-lg font-semibold text-[#9D5425]">
-                No Data Found!
-              </h5>
-            </div>
-          )}
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <h5 className="font-medium text-black dark:text-white">
+                          {index + 1}
+                        </h5>
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <h5 className="font-medium text-black dark:text-white">
+                          {category.name}
+                        </h5>
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <h5 className="font-medium text-black dark:text-white">
+                          <img
+                            src={category.image}
+                            alt={category.name}
+                            className="w-12 h-12 object-cover rounded-full mx-auto"
+                          />
+                        </h5>
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <h5 className="font-medium text-black dark:text-white">
+                          <Link
+                            to={`/admin/categories/edit/${category.id}`}
+                            className="inline-flex items-center justify-center rounded-md bg-success py-2 px-4 text-sm font-medium text-white hover:bg-green-600"
+                          >
+                            <i className="fa fa-edit mr-2"></i> Edit
+                          </Link>
+
+                          {hasAnyPermissions(["categories.delete"]) && (
+                            <button
+                              onClick={() => deleteCategory(category.id)}
+                              className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
+                            >
+                              <i className="fa fa-trash mr-2"></i> Delete
+                            </button>
+                          )}
+                        </h5>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="4"
+                      className="py-5 text-center text-lg font-semibold text-red-500 dark:text-white border border-stroke dark:border-strokedark"
+                    >
+                      No Data Found!
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
+
         {/* Pagination Component */}
         <Pagination
           className="flex justify-end my-4"

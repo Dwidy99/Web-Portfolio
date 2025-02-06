@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types"; // Import PropTypes
 import ClickOutside from "../ClickOutside";
 import UserOne from "../../../assets/admin/images/user/user-01.png";
 
@@ -17,7 +18,7 @@ const DropdownUser = ({ logout, user }) => {
           <span className="block text-sm font-medium text-black dark:text-white">
             {user ? user.name : "Guest"}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{user ? user.email : "@guest"}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -101,6 +102,15 @@ const DropdownUser = ({ logout, user }) => {
       {/* <!-- Dropdown End --> */}
     </ClickOutside>
   );
+};
+
+DropdownUser.propTypes = {
+  logout: PropTypes.func.isRequired, // logout should be a function
+  user: PropTypes.shape({
+    // user is an object with a name string
+    name: PropTypes.string,
+    email: PropTypes.string,
+  }).isRequired,
 };
 
 export default DropdownUser;

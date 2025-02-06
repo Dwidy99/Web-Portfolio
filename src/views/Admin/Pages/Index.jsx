@@ -112,8 +112,130 @@ export default function PagesIndex() {
     });
   };
 
+  // Pagination Handler
+  const handlePageChange = (pageNumber) => {
+    fetchData(pageNumber, keywords);
+  };
+
   return (
     <LayoutAdmin>
+      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default lg:dark:bg-meta-4 sm:px-7.5 xl:pb-1">
+        <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+          Categories List
+        </h4>
+
+        <div className="flex flex-row mb-4">
+          <div className="w-full basis-1/4 sm:w-auto">
+            {hasAnyPermissions(["pages.create"]) && (
+              <Link
+                to="/admin/pages/create"
+                className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-3.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
+                type="button"
+              >
+                <i className="fa fa-plus-circle mr-2"></i> Add New
+              </Link>
+            )}
+          </div>
+
+          <div className="w-full basis-2/2">
+            <form action="#" method="POST">
+              <div className="relative">
+                <input
+                  type="text"
+                  onChange={(e) => searchData(e)}
+                  placeholder="Search here..."
+                  className="w-full bg-transparent pl-10 pr-4 py-2 text-black dark:text-white border border-stroke rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+                <button
+                  type="submit"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 p-2"
+                >
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <div className="max-w-full overflow-x-auto">
+            <table className="w-full table-auto border-collapse border border-stroke dark:border-strokedark">
+              <thead>
+                <tr className="bg-bodydark2 text-left dark:bg-meta-4">
+                  <th className="min-w-[80px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11 border border-stroke dark:border-strokedark">
+                    No.
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11 border border-stroke dark:border-strokedark">
+                    Title Page
+                  </th>
+                  <th className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {pages.length > 0 ? (
+                  pages.map((page, index) => (
+                    <tr
+                      className={`${index === pages.length - 1 ? "" : "border-b border-stroke dark:border-strokedark"}`}
+                      key={page.id}
+                    >
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <h5 className="font-medium text-black dark:text-white">
+                          {index + 1}
+                        </h5>
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <h5 className="font-medium text-black dark:text-white">
+                          {page.title}
+                        </h5>
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <h5 className="font-medium text-black dark:text-white">
+                          <Link
+                            to={`/admin/pages/edit/${page.id}`}
+                            className="inline-flex items-center justify-center rounded-md bg-success py-2 px-4 text-sm font-medium text-white hover:bg-green-600"
+                          >
+                            <i className="fa fa-edit mr-2"></i> Edit
+                          </Link>
+
+                          {hasAnyPermissions(["pages.delete"]) && (
+                            <button
+                              onClick={() => deletePage(page.id)}
+                              className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
+                            >
+                              <i className="fa fa-trash mr-2"></i> Delete
+                            </button>
+                          )}
+                        </h5>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="4"
+                      className="py-5 text-center text-lg font-semibold text-red-500 dark:text-white border border-stroke dark:border-strokedark"
+                    >
+                      No Data Found!
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Pagination Component */}
+        <Pagination
+          className="flex justify-end my-4"
+          currentPage={pagination.currentPage}
+          totalCount={pagination.total}
+          pageSize={pagination.perPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
+
       <main>
         <div className="container-fluid px-4 mt-5">
           <div className="row">
