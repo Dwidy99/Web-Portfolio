@@ -134,7 +134,7 @@ const Header = ({ sidebarOpen, setSidebarOpen }) => {
           <ul className="flex items-center gap-2 2xsm:gap-4"></ul>
 
           {/* <!-- User Area --> */}
-          <DropdownUser user={user} />
+          <DropdownUser logout={logout} user={user} />
           {/* <!-- User Area --> */}
         </div>
       </div>
