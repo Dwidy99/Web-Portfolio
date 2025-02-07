@@ -8,6 +8,7 @@ import Api from "../../../services/Api";
 import Cookies from "js-cookie";
 //import Layout
 import Pagination from "../../../components/general/Pagination";
+import { MdPersonSearch } from "react-icons/md";
 
 export default function Index() {
   //title page
@@ -94,7 +95,7 @@ export default function Index() {
                   type="submit"
                   className="absolute left-0 top-1/2 -translate-y-1/2 p-2"
                 >
-                  <i className="fa-solid fa-magnifying-glass"></i>
+                  <MdPersonSearch />
                 </button>
               </div>
             </form>

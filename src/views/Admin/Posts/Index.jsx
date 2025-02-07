@@ -17,7 +17,8 @@ import Cookies from "js-cookie";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
 import { FaUserEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
+import { MdDeleteForever, MdPersonSearch } from "react-icons/md";
+import { FaCirclePlus } from "react-icons/fa6";
 
 export default function PostsIndex() {
   //Page title
@@ -120,7 +121,7 @@ export default function PostsIndex() {
 
   return (
     <LayoutAdmin>
-      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <div className=" border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
           Post Lists
         </h4>
@@ -133,7 +134,7 @@ export default function PostsIndex() {
                 className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-3.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
                 type="button"
               >
-                <i className="fa fa-plus-circle mr-2"></i> Add New
+                <FaCirclePlus className="text-white mr-2" /> Add New
               </Link>
             )}
           </div>
@@ -151,95 +152,97 @@ export default function PostsIndex() {
                   type="submit"
                   className="absolute left-0 top-1/2 -translate-y-1/2 p-2"
                 >
-                  <i className="fa-solid fa-magnifying-glass"></i>
+                  <MdPersonSearch />
                 </button>
               </div>
             </form>
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <div className="grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">No.</h5>
-            </div>
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                Title
-              </h5>
-            </div>
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                Category
-              </h5>
-            </div>
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                User
-              </h5>
-            </div>
-            <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                Actions
-              </h5>
-            </div>
-          </div>
-
-          {posts.length > 0 ? (
-            posts.map((post, index) => (
-              <div
-                className={`grid grid-cols-4 sm:grid-cols-5 ${
-                  index === posts.length - 1
-                    ? ""
-                    : "border-b border-stroke dark:border-strokedark"
-                }`}
-                key={post.id}
-              >
-                <div className="p-2.5 xl:p-5">{index + 1}</div>
-                <div className="p-2.5 xl:p-5">
-                  <span className="font-medium">{post.title}</span>
-                </div>
-                <div className="p-2.5 xl:p-5">
-                  {/* Adjusted image styling */}
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
-                  />
-                </div>
-                <div className="p-2.5 xl:p-5">
-                  <span className="font-medium">{post.user.name}</span>
-                </div>
-                <div className="flex justify-center p-2.5 xl:p-5 gap-2">
-                  {/* Edit Button */}
-                  <Link
-                    to={`/admin/posts/edit/${post.id}`}
-                    className="inline-flex items-center justify-center rounded-md bg-success py-2 px-4 text-sm font-medium text-white hover:bg-green-600"
-                  >
-                    <FaUserEdit className="mr-2 text-xl text-primary dark:text-white" />{" "}
-                    Edit
-                  </Link>
-
-                  {/* Delete Button */}
-                  {hasAnyPermissions(["posts.delete"]) && (
-                    <button
-                      onClick={() => deletePost(post.id)}
-                      className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
+        <div className="rounded-lg border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <div className="max-w-full overflow-x-auto">
+            <table className="w-full text-center items-center table-auto border-collapse border border-stroke dark:border-strokedark">
+              <thead>
+                <tr className="bg-gray-200 dark:bg-meta-4">
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                    <h5 className="uppercase">No.</h5>
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                    <h5 className="uppercase">Title</h5>
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                    <h5 className="uppercase">Category</h5>
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                    <h5 className="uppercase">User</h5>
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                    <h5 className="uppercase">Actions</h5>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {posts.length > 0 ? (
+                  posts.map((post, index) => (
+                    <tr
+                      className={`${
+                        index === posts.length - 1
+                          ? ""
+                          : "border-b border-stroke dark:border-strokedark"
+                      }`}
+                      key={post.id}
                     >
-                      <MdDeleteForever className="mr-2 text-xl text-danger dark:text-white" />{" "}
-                      Delete
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="w-full">
-              <h5 className="flex justify-center my-3 text-lg font-semibold text-[#9D5425]">
-                No Data Found!
-              </h5>
-            </div>
-          )}
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        {index + 1}
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <span className="font-medium">{post.title}</span>
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        {/* Adjusted image styling */}
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
+                        />
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <span className="font-medium">{post.user.name}</span>
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        {/* Edit Button */}
+                        <Link
+                          to={`/admin/posts/edit/${post.id}`}
+                          className="inline-flex items-center justify-center rounded-md py-2 px-4  font-medium text-white"
+                        >
+                          <FaUserEdit className="mr-2 text-xl text-primary dark:text-white" />
+                        </Link>
+
+                        {/* Delete Button */}
+                        {hasAnyPermissions(["posts.delete"]) && (
+                          <button
+                            onClick={() => deletePost(post.id)}
+                            className="inline-flex rounded-md py-2 px-4  font-medium text-white"
+                          >
+                            <MdDeleteForever className="mr-2 text-xl text-danger dark:text-white" />
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="5"
+                      className="py-5 text-center text-lg font-semibold text-red-500 dark:text-white border border-stroke dark:border-strokedark"
+                    >
+                      No Data Found!
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Pagination Component */}

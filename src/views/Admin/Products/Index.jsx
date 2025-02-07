@@ -18,7 +18,8 @@ import Cookies from "js-cookie";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
 import { FaUserEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
+import { MdDeleteForever, MdPersonSearch } from "react-icons/md";
+import { FaCirclePlus } from "react-icons/fa6";
 
 export default function ProductsIndex() {
   //Page Title
@@ -133,7 +134,7 @@ export default function ProductsIndex() {
                 className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-3.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
                 type="button"
               >
-                <i className="fa fa-plus-circle mr-2"></i> Add New
+                <FaCirclePlus className="text-white mr-2" /> Add New
               </Link>
             )}
           </div>
@@ -151,7 +152,7 @@ export default function ProductsIndex() {
                   type="submit"
                   className="absolute left-0 top-1/2 -translate-y-1/2 p-2"
                 >
-                  <i className="fa-solid fa-magnifying-glass"></i>
+                  <MdPersonSearch />
                 </button>
               </div>
             </form>

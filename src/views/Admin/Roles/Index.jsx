@@ -17,6 +17,8 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 //import toast js
 import toast from "react-hot-toast";
+import { MdPersonSearch } from "react-icons/md";
+import { FaCirclePlus } from "react-icons/fa6";
 
 export default function RolesIndex() {
   //title page
@@ -131,7 +133,7 @@ export default function RolesIndex() {
                 className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-3.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
                 type="button"
               >
-                <i className="fa fa-plus-circle mr-2"></i> Add New
+                <FaCirclePlus className="text-white mr-2" /> Add New
               </Link>
             )}
           </div>
@@ -149,37 +151,37 @@ export default function RolesIndex() {
                   type="submit"
                   className="absolute left-0 top-1/2 -translate-y-1/2 p-2"
                 >
-                  <i className="fa-solid fa-magnifying-glass"></i>
+                  <MdPersonSearch />
                 </button>
               </div>
             </form>
           </div>
         </div>
 
-        <table className="w-full table-auto border border-stroke border-collapse overflow-x-auto rounded-sm bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <table className="w-full text-center items-center table-auto border border-stroke border-collapse overflow-x-auto rounded-sm bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <thead>
-            <tr className="bg-gray-200 text-center dark:bg-meta-4">
+            <tr className="bg-gray-200 dark:bg-meta-4">
               <th
                 scope="col"
-                className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark w-[5%]"
+                className="py-4 px-4 dark:text-white dark:border-strokedark w-[5%]"
               >
                 No.
               </th>
               <th
                 scope="col"
-                className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark w-[10%]"
+                className="py-4 px-4 dark:text-white dark:border-strokedark w-[10%]"
               >
                 Role
               </th>
               <th
                 scope="col"
-                className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark sm:table-cell w-[40%]"
+                className="py-4 px-4 dark:text-white dark:border-strokedark sm:table-cell w-[40%]"
               >
                 Permissions
               </th>
               <th
                 scope="col"
-                className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark w-[10%]"
+                className="py-4 px-4 dark:text-white dark:border-strokedark w-[10%]"
               >
                 Actions
               </th>
@@ -192,13 +194,13 @@ export default function RolesIndex() {
                   key={role.id}
                   className="border border-stroke dark:border-strokedark"
                 >
-                  <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
+                  <td className="py-5 px-2 border border-stroke dark:text-white dark:border-strokedark">
                     {index + 1}
                   </td>
-                  <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
+                  <td className="py-5 px-2 border border-stroke dark:text-white dark:border-strokedark">
                     {role.name}
                   </td>
-                  <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark sm:table-cell">
+                  <td className="py-5 px-2 border border-stroke dark:text-white dark:border-strokedark sm:table-cell">
                     {role.permissions.map((permission, index) => (
                       <span
                         className="inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium bg-primary text-primary  m-0.5"
@@ -208,17 +210,17 @@ export default function RolesIndex() {
                       </span>
                     ))}
                   </td>
-                  <td className="py-5 px-2 text-center text-lg font-medium text-black dark:text-white border border-stroke dark:border-strokedark lg:table-cell">
+                  <td className="py-5 px-2 border border-stroke dark:text-white dark:border-strokedark lg:table-cell">
                     <Link
                       to={`/admin/roles/edit/${role.id}`}
-                      className="inline-flex mx-1.5 items-center justify-center font-medium text-black"
+                      className="inline-flex mx-1.5"
                     >
                       <i className="fa fa-edit"></i>
                     </Link>
                     {hasAnyPermissions(["roles.delete"]) && (
                       <button
                         onClick={() => deleteRole(role.id)}
-                        className="inline-flex mx-1.5 items-center justify-center font-medium text-black"
+                        className="inline-flex mx-1.5"
                       >
                         <i className="fa fa-trash"></i>
                       </button>
@@ -230,7 +232,7 @@ export default function RolesIndex() {
               <tr>
                 <td
                   colSpan="7"
-                  className="py-5 px-4 text-center text-sm text-[#9D5425] border border-stroke dark:border-strokedark"
+                  className="py-5 px-4 text-[#9D5425] border border-stroke dark:border-strokedark"
                 >
                   No Data Found!
                 </td>

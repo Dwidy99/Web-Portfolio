@@ -19,6 +19,7 @@ import hasAnyPermissions from "../../../utils/Permissions";
 import PhotosCreate from "./Create";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
+import { MdDeleteForever } from "react-icons/md";
 
 export default function PhotosIndex() {
   //page title
@@ -126,74 +127,80 @@ export default function PhotosIndex() {
           )}
         </div>
 
-        <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+        <h4 className="mt-6 mb-1 text-xl font-semibold text-black dark:text-white">
           Post Lists
         </h4>
 
-        <div className="flex flex-col">
-          <div className="grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">No.</h5>
-            </div>
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                Image
-              </h5>
-            </div>
-            <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                Caption
-              </h5>
-            </div>
-            <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-bold uppercase xsm:text-base">
-                Actions
-              </h5>
-            </div>
-          </div>
-
-          {photos.length > 0 ? (
-            photos.map((photo, index) => (
-              <div
-                className={`grid grid-cols-4 sm:grid-cols-5 ${
-                  index === photos.length - 1
-                    ? ""
-                    : "border-b border-stroke dark:border-strokedark"
-                }`}
-                key={photo.id}
-              >
-                <div className="p-2.5 xl:p-5">{index + 1}</div>
-                <div className="p-2.5 xl:p-5">
-                  {/* Adjusted image styling */}
-                  <img
-                    src={photo.image}
-                    alt={photo.caption}
-                    className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
-                  />
-                </div>
-                <div className="p-2.5 xl:p-5">
-                  <span className="font-medium">{photo.caption}</span>
-                </div>
-                <div className="flex justify-center p-2.5 xl:p-5 gap-2">
-                  {/* Delete Button */}
-                  {hasAnyPermissions(["photos.delete"]) && (
-                    <button
-                      onClick={() => deletePhoto(photo.id)}
-                      className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
+        <div className="rounded-lg border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <div className="max-w-full overflow-x-auto">
+            <table className="w-full text-center items-center table-auto border-collapse border border-stroke dark:border-strokedark">
+              <thead>
+                <tr className="bg-gray-200 dark:bg-meta-4">
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                    <h5 className="uppercase">No.</h5>
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                    <h5 className="uppercase">Image</h5>
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                    <h5 className="uppercase">Caption</h5>
+                  </th>
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                    <h5 className="uppercase">Actions</h5>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {photos.length > 0 ? (
+                  photos.map((photo, index) => (
+                    <tr
+                      className={`${
+                        index === photos.length - 1
+                          ? ""
+                          : "border-b border-stroke dark:border-strokedark"
+                      }`}
+                      key={photo.id}
                     >
-                      <i className="fa fa-trash mr-2"></i> Delete
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="w-full">
-              <h5 className="flex justify-center my-3 text-lg font-semibold text-[#9D5425]">
-                No Data Found!
-              </h5>
-            </div>
-          )}
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        {index + 1}
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        {/* Adjusted image styling */}
+                        <img
+                          src={photo.image}
+                          alt={photo.caption}
+                          className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
+                        />
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <span className="font-medium">{photo.caption}</span>
+                      </td>
+                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        {/* Delete Button */}
+                        {hasAnyPermissions(["photos.delete"]) && (
+                          <button
+                            onClick={() => deletePhoto(photo.id)}
+                            className="inline-flex rounded-md py-2 px-4  font-medium text-white"
+                          >
+                            <MdDeleteForever className="mr-2 text-xl text-danger dark:text-white" />
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="3"
+                      className="py-5 text-lg font-semibold text-red-500 dark:text-white border border-stroke dark:border-strokedark"
+                    >
+                      No Data Found!
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Pagination Component */}

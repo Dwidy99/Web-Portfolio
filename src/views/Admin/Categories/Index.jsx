@@ -7,6 +7,9 @@ import Api from "../../../services/Api";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
 import Pagination from "../../../components/general/Pagination";
+import { FaUserEdit } from "react-icons/fa";
+import { MdDeleteForever, MdPersonSearch } from "react-icons/md";
+import { FaCirclePlus } from "react-icons/fa6";
 
 export default function CategoriesIndex() {
   document.title = "Categories - Desa Digital";
@@ -95,10 +98,10 @@ export default function CategoriesIndex() {
             {hasAnyPermissions(["categories.create"]) && (
               <Link
                 to="/admin/categories/create"
-                className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-3.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
+                className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-3.5 px-2 text-center font-medium text-white hover:bg-opacity-90 sm:text-xs"
                 type="button"
               >
-                <i className="fa fa-plus-circle mr-2"></i> Add New
+                <FaCirclePlus className="text-white mr-2" /> Add New
               </Link>
             )}
           </div>
@@ -116,7 +119,7 @@ export default function CategoriesIndex() {
                   type="submit"
                   className="absolute left-0 top-1/2 -translate-y-1/2 p-2"
                 >
-                  <i className="fa-solid fa-magnifying-glass"></i>
+                  <MdPersonSearch />
                 </button>
               </div>
             </form>
@@ -125,19 +128,19 @@ export default function CategoriesIndex() {
 
         <div className="rounded-lg border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
-            <table className="w-full table-auto border-collapse border border-stroke dark:border-strokedark">
+            <table className="w-full text-center items-center table-auto border-collapse border border-stroke dark:border-strokedark">
               <thead>
-                <tr className="bg-bodydark2 text-left dark:bg-meta-4">
-                  <th className="min-w-[115px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11 border border-stroke dark:border-strokedark">
+                <tr className="bg-gray-200 dark:bg-meta-4">
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
                     No.
                   </th>
-                  <th className="min-w-[115px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11 border border-stroke dark:border-strokedark">
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
                     Categories Name
                   </th>
-                  <th className="min-w-[115px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11 border border-stroke dark:border-strokedark">
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
                     Icon
                   </th>
-                  <th className="py-4 px-4 font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
+                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
                     Actions
                   </th>
                 </tr>
@@ -150,17 +153,13 @@ export default function CategoriesIndex() {
                       key={category.id}
                     >
                       <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          {index + 1}
-                        </h5>
+                        <h5 className="dark:text-white">{index + 1}</h5>
                       </td>
                       <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          {category.name}
-                        </h5>
+                        <h5 className="dark:text-white">{category.name}</h5>
                       </td>
                       <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
+                        <h5 className="dark:text-white">
                           <img
                             src={category.image}
                             alt={category.name}
@@ -168,24 +167,22 @@ export default function CategoriesIndex() {
                           />
                         </h5>
                       </td>
-                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          <Link
-                            to={`/admin/categories/edit/${category.id}`}
-                            className="inline-flex items-center justify-center rounded-md bg-success py-2 px-4 text-sm font-medium text-white hover:bg-green-600"
-                          >
-                            <i className="fa fa-edit mr-2"></i> Edit
-                          </Link>
+                      <td className="flex justify-center p-2.5 xl:p-5 gap-2">
+                        <Link
+                          to={`/admin/categories/edit/${category.id}`}
+                          className="inline-flex rounded-md py-2 px-4 text-white"
+                        >
+                          <FaUserEdit className="mr-2 text-xl text-primary dark:text-white" />
+                        </Link>
 
-                          {hasAnyPermissions(["categories.delete"]) && (
-                            <button
-                              onClick={() => deleteCategory(category.id)}
-                              className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
-                            >
-                              <i className="fa fa-trash mr-2"></i> Delete
-                            </button>
-                          )}
-                        </h5>
+                        {hasAnyPermissions(["categories.delete"]) && (
+                          <button
+                            onClick={() => deleteCategory(category.id)}
+                            className="inline-flex rounded-md py-2 px-4 text-white"
+                          >
+                            <MdDeleteForever className="mr-2 text-xl text-danger dark:text-white" />
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))

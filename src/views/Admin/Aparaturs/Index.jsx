@@ -17,6 +17,7 @@ import Pagination from "../../../components/general/Pagination";
 import Cookies from "js-cookie";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
+import { FaCirclePlus } from "react-icons/fa6";
 
 export default function AparatursIndex() {
   //Page Title
@@ -125,7 +126,7 @@ export default function AparatursIndex() {
                       className="btn btn-md btn-primary border-primary border-0 shadow w-100"
                       type="button"
                     >
-                      <i className="fa fa-plus-circle"></i> Add new
+                      <FaCirclePlus className="text-white mr-2" /> Add new
                     </Link>
                   </div>
                 )}
