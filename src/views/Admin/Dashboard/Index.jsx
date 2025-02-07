@@ -1,128 +1,111 @@
-//import Layout
-import LayoutAdmin from "../../../layouts/Admin";
-//import useState
+// Import Dependencies
 import { useEffect, useState } from "react";
-//import Api
+import LayoutAdmin from "../../../layouts/Admin";
 import Api from "../../../services/Api";
-//import Cookies
 import Cookies from "js-cookie";
-//import Link
-import { Link } from "react-router-dom";
+import CardDataStats from "../../../components/admin/CardDataStats";
+import { TbCategory2 } from "react-icons/tb";
+import { LuSignpostBig } from "react-icons/lu";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+import { SlPicture } from "react-icons/sl";
 
 export default function Dashboard() {
-  //title page
+  // Set title page
   document.title = "Dashboard - Desa Digital";
 
-  //init state
-  const [countCategories, setCountCategories] = useState(0);
-  const [countPosts, setCountPosts] = useState(0);
-  const [countProducts, setCountProducts] = useState(0);
-  const [countAparaturs, setCountAparaturs] = useState(0);
+  // State untuk data dashboard
+  const [dashboardData, setDashboardData] = useState({
+    categories: 0,
+    posts: 0,
+    products: 0,
+    aparaturs: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  //token from cookies
+  // Token dari cookies
   const token = Cookies.get("token");
 
-  //hook useEffect
+  // Fetch API saat pertama kali halaman dimuat
   useEffect(() => {
-    //fetch Api
-    Api.get("/api/admin/dashboard", {
-      //header
-      headers: {
-        //header Bearer + Token
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) => {
-      //set data
-      setCountCategories(response.data.data.categories);
-      setCountPosts(response.data.data.posts);
-      setCountProducts(response.data.data.products);
-      setCountAparaturs(response.data.data.aparaturs);
-    });
+    const fetchDashboardData = async () => {
+      try {
+        const response = await Api.get("/api/admin/dashboard", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setDashboardData(response.data.data);
+      } catch (err) {
+        setError("Failed to load data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
   }, []);
+
+  // Data statistik untuk CardDataStats
+  const statsData = [
+    {
+      title: "Total Categories",
+      total: dashboardData.categories,
+      rate: "0.43%",
+      levelUp: true,
+      icon: <TbCategory2 className="text-xl text-primary dark:text-white" />,
+    },
+    {
+      title: "Total Posts",
+      total: dashboardData.posts,
+      rate: "2.15%",
+      levelUp: true,
+      icon: <LuSignpostBig className="text-xl text-primary dark:text-white" />,
+    },
+    {
+      title: "Total Products",
+      total: dashboardData.products,
+      rate: "2.59%",
+      levelUp: true,
+      icon: (
+        <MdOutlineProductionQuantityLimits className="text-xl text-primary dark:text-white" />
+      ),
+    },
+    {
+      title: "Total Photos",
+      total: dashboardData.photos,
+      rate: "0.95%",
+      levelDown: true,
+      icon: <SlPicture className="text-xl text-primary dark:text-white" />,
+    },
+  ];
 
   return (
     <LayoutAdmin>
-      <main>
-        <div className="container-fluid px-4 mt-5">
-          <div className="row">
-            <div className="col-xl-3 col-md-6">
-              <div className="card bg-primary text-white mb-4 border-0 shadow-sm">
-                <div className="card-body">
-                  <strong>{countCategories}</strong> CATEGORIES
-                </div>
-                <div className="card-footer d-flex align-item-center justify-content-between">
-                  <Link
-                    className="small text-white stretched-link"
-                    to="/admin/categories"
-                  >
-                    View Details
-                  </Link>
-                  <div className="small text-white">
-                    <i className="fas fa-angel-right"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-xl-3 col-md-6">
-              <div className="card bg-warning text-white mb-4 border-0 shadow-sm">
-                <div className="card-body">
-                  <strong>{countPosts}</strong> POSTS
-                </div>
-                <div className="card-footer d-flex align-item-center justify-content-between">
-                  <Link
-                    className="small text-white stretched-link"
-                    to="/admin/posts"
-                  >
-                    View Details
-                  </Link>
-                  <div className="small text-white">
-                    <i className="fas fa-angel-right"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-xl-3 col-md-6">
-              <div className="card bg-success text-white mb-4 border-0 shadow-sm">
-                <div className="card-body">
-                  <strong>{countProducts}</strong> PRODUCTS
-                </div>
-                <div className="card-footer d-flex align-item-center justify-content-between">
-                  <Link
-                    className="small text-white stretched-link"
-                    to="/admin/products"
-                  >
-                    View Details
-                  </Link>
-                  <div className="small text-white">
-                    <i className="fas fa-angel-right"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-xl-3 col-md-6">
-              <div className="card bg-danger text-white mb-4 border-0 shadow-sm">
-                <div className="card-body">
-                  <strong>{countAparaturs}</strong> APARATURS
-                </div>
-                <div className="card-footer d-flex align-item-center justify-content-between">
-                  <Link
-                    className="small text-white stretched-link"
-                    to="/admin/aparaturs"
-                  >
-                    View Details
-                  </Link>
-                  <div className="small text-white">
-                    <i className="fas fa-angel-right"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+        {/* Loading State */}
+        {loading ? (
+          <div className="col-span-4 text-center text-lg font-semibold text-gray-500 dark:text-gray-300">
+            Loading...
           </div>
-        </div>
-      </main>
+        ) : error ? (
+          <div className="col-span-4 text-center text-red-500 font-medium">
+            {error}
+          </div>
+        ) : (
+          // Render CardDataStats secara dinamis
+          statsData.map((stat, index) => (
+            <CardDataStats
+              key={index}
+              title={stat.title}
+              total={stat.total}
+              rate={stat.rate}
+              levelUp={stat.levelUp}
+              levelDown={stat.levelDown}
+            >
+              {stat.icon}
+            </CardDataStats>
+          ))
+        )}
+      </div>
     </LayoutAdmin>
   );
 }

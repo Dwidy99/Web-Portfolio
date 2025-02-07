@@ -17,6 +17,8 @@ import Pagination from "../../../components/general/Pagination";
 import Cookies from "js-cookie";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
+import { FaUserEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 export default function ProductsIndex() {
   //Page Title
@@ -233,14 +235,14 @@ export default function ProductsIndex() {
                       to={`/admin/products/edit/${product.id}`}
                       className="inline-flex mx-1.5 items-center justify-center font-medium text-black"
                     >
-                      <i className="fa fa-edit"></i>
+                      <FaUserEdit className="text-xl text-primary dark:text-white mr-2" />
                     </Link>
                     {hasAnyPermissions(["products.delete"]) && (
                       <button
                         onClick={() => deleteProduct(product.id)}
                         className="inline-flex mx-1.5 items-center justify-center font-medium text-black"
                       >
-                        <i className="fa fa-trash"></i>
+                        <MdDeleteForever className="text-xl text-danger dark:text-white mr-2" />
                       </button>
                     )}
                   </td>

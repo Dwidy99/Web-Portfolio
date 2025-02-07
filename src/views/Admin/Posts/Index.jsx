@@ -16,6 +16,8 @@ import hasAnyPermissions from "../../../utils/Permissions";
 import Cookies from "js-cookie";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
+import { FaUserEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 export default function PostsIndex() {
   //Page title
@@ -214,7 +216,8 @@ export default function PostsIndex() {
                     to={`/admin/posts/edit/${post.id}`}
                     className="inline-flex items-center justify-center rounded-md bg-success py-2 px-4 text-sm font-medium text-white hover:bg-green-600"
                   >
-                    <i className="fa fa-edit mr-2"></i> Edit
+                    <FaUserEdit className="mr-2 text-xl text-primary dark:text-white" />{" "}
+                    Edit
                   </Link>
 
                   {/* Delete Button */}
@@ -223,7 +226,8 @@ export default function PostsIndex() {
                       onClick={() => deletePost(post.id)}
                       className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-4 text-sm font-medium text-white hover:bg-red-600"
                     >
-                      <i className="fa fa-trash mr-2"></i> Delete
+                      <MdDeleteForever className="mr-2 text-xl text-danger dark:text-white" />{" "}
+                      Delete
                     </button>
                   )}
                 </div>
