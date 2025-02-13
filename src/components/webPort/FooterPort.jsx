@@ -50,7 +50,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="w-full px-4 mb-12 md:w-1/3">
+          <div className="w-full px-4 mb-12 ">
             <h3 className="font-semibold text-xl text-white mb-5">Tautan</h3>
             <ul className="text-slate-300">
               <li>

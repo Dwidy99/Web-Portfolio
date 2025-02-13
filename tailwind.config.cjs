@@ -6,6 +6,10 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
+    container: {
+      center: true,
+      padding: "16px",
+    },
     fontFamily: {
       satoshi: ["Satoshi", "sans-serif"],
     },
@@ -24,6 +28,7 @@ module.exports = {
       colors: {
         current: "currentColor",
         transparent: "transparent",
+        dark: "#0f172a",
         white: "#FFFFFF",
         black: {
           ...colors.black,

@@ -68,9 +68,9 @@ export default function Home() {
 
   return (
     <LayoutWeb>
-      <div className="container my-5 mb-5 lg:px-16 lg:mx-16">
+      <div className="container my-5 mb-5">
         <div className="grid grid-cols-1">
-          <div className="my-5 lg:px-6 lg:mx-6">
+          <div className="my-5 px-6 mx-6">
             <div className="text-lg font-bold">
               <h4 className="flex items-center">
                 <strong className="text-slate-700 ml-2 text-5xl">
@@ -82,7 +82,7 @@ export default function Home() {
           {loadingProfiles ? (
             <LoadingTailwind />
           ) : (
-            <div className="flex flex-wrap lg:px-3 lg:mx-3">
+            <div className="flex flex-wrap px-3 mx-3">
               {profiles.length > 0 ? (
                 profiles.map((profile) => (
                   <div
@@ -93,10 +93,10 @@ export default function Home() {
                       <img
                         src={profile?.image}
                         alt={profile.title}
-                        className="w-[700px] h-[450px] object-cover rounded-lg"
+                        className=""
                       />
                     </div>
-                    <div className="w-2/3 lg:mx-28 lg:w-3/4">
+                    <div className="mx-28 w-3/4">
                       <h3 className="text-lg font-semibold mb-2">
                         {profile.title}
                       </h3>
@@ -116,7 +116,7 @@ export default function Home() {
         {loadingCategories ? (
           <LoadingTailwind />
         ) : (
-          <div className="my-5 lg:px-6 lg:mx-6">
+          <div className="my-5 lg:px-6 mx-6">
             <div className="text-lg font-bold">
               <h4 className="flex items-center">
                 <strong className="text-slate-900 text-4xl">Popular Tag</strong>
@@ -126,7 +126,7 @@ export default function Home() {
               </h4>
               <hr />
             </div>
-            <div className="flex flex-row flex-nowrap space-x-4 py-3">
+            <div className="flex flex-row flex-wrap py-3">
               {categories.length > 0 ? (
                 categories.map((category, index) => (
                   <CardCategory

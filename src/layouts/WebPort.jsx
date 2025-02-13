@@ -1,6 +1,6 @@
 //import css
 import "../assets/webPorto/css/index.css";
-import "../assets/webPorto/css/tailwind.css";
+// import "../assets/webPorto/css/tailwind.css";
 
 //import js
 import "../assets/webPorto/js/script.js";
