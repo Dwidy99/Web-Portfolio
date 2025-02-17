@@ -1,4 +1,7 @@
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useState, useEffect, useRef } from "react";
+import { BsMoonStarsFill } from "react-icons/bs";
+import { IoSunnySharp } from "react-icons/io5";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,15 +68,22 @@ export default function Navbar() {
         }`}
       >
         <div className="container">
-          <div className="flex items-center justify-between relative">
-            <div className="px-4">
+          <div className="flex items-center justify-between mx-25.5 relative font-bold">
+            <div className="">
               <a
                 href="#home"
-                className="font-bold text-lg text-primary block py-6"
+                className="text-lg text-meta-12 flex items-center"
               >
-                dwiyulianto
+                <DotLottieReact
+                  src="https://lottie.host/2e6f2bd3-568d-48c9-ac85-2f837e3a35c5/DRkd0qtHGo.lottie"
+                  loop
+                  autoplay
+                  style={{ width: "20%", height: "20%", lineHeight: "0" }}
+                />
+                dwiYulianto
               </a>
             </div>
+
             <div className="flex items-center px-4">
               {/* Hamburger Button for Mobile */}
               <button
@@ -93,7 +103,7 @@ export default function Navbar() {
                 ref={menuRef}
                 className={`absolute rounded-lg py-4 dark:bg-dark dark:shadow-slate-500 lg:static lg:block lg:max-w-full lg:rounded-none lg:bg-transparent lg:shadow-none lg:dark:bg-transparent ${
                   isOpen
-                    ? "block right-4 top-full w-full max-w-[250px]"
+                    ? "block bg-white drop-shadow-xl border-spacing-1 right-4 top-full w-full max-w-[250px]"
                     : "hidden "
                 }`}
               >
@@ -124,33 +134,17 @@ export default function Navbar() {
                   </li>
                   <li className="group">
                     <a
-                      href="#clients"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-white"
-                    >
-                      Clients
-                    </a>
-                  </li>
-                  <li className="group">
-                    <a
                       href="#blog"
                       className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-white"
                     >
                       Blog
                     </a>
                   </li>
-                  <li className="group">
-                    <a
-                      href="#contact"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-white"
-                    >
-                      Contact
-                    </a>
-                  </li>
                   {/* Dark Mode Toggle */}
-                  <li className="mt-3 items-center pl-8 lg:mt-0">
+                  <li className="mt-1 items-center pl-8 lg:mt-0">
                     <div className="flex">
                       <span className="mr-2 text-sm text-slate-500 dark:text-slate-200">
-                        light
+                        <IoSunnySharp />
                       </span>
                       <input
                         type="checkbox"
@@ -164,7 +158,7 @@ export default function Navbar() {
                         </div>
                       </label>
                       <span className="ml-2 text-sm text-slate-500 dark:text-slate-200">
-                        dark
+                        <BsMoonStarsFill />
                       </span>
                     </div>
                   </li>

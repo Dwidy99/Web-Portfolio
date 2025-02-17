@@ -58,65 +58,61 @@ export default function Home() {
 
   // Daftar warna untuk tombol
   const colors = [
-    "bg-meta-1",
-    "bg-meta-3",
-    "bg-meta-4",
-    "bg-meta-5",
-    "bg-meta-6",
+    "bg-meta-11",
+    "bg-meta-13",
+    "bg-meta-14",
+    "bg-meta-15",
     "bg-meta-7",
+    "bg-meta-1",
   ];
 
   return (
     <LayoutWeb>
-      <div className="container my-5 mb-5">
-        <div className="grid grid-cols-1">
-          <div className="my-5 px-6 mx-6">
-            <div className="text-lg font-bold">
-              <h4 className="flex items-center">
-                <strong className="text-slate-700 ml-2 text-5xl">
-                  Hello, folks! Discover my stories and creative ideas.
-                </strong>
-              </h4>
-            </div>
-          </div>
-          {loadingProfiles ? (
-            <LoadingTailwind />
-          ) : (
-            <div className="flex flex-wrap px-3 mx-3">
-              {profiles.length > 0 ? (
-                profiles.map((profile) => (
-                  <div
-                    key={profile.id}
-                    className="w-full px-4 flex items-center mb-6"
-                  >
-                    <div className="">
-                      <img
-                        src={profile?.image}
-                        alt={profile.title}
-                        className=""
-                      />
-                    </div>
-                    <div className="mx-28 w-3/4">
-                      <h3 className="text-lg font-semibold mb-2">
-                        {profile.title}
-                      </h3>
-                      <p className="text-sm text-gray-600">{profile.content}</p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-center text-gray-500">
-                  No profiles available.
+      <div className="container">
+        <h4 className="flex items-center my-30 mx-25.5 font-bold">
+          <strong className="text-slate-600 xsm:text-5xl lg:text-7xl">
+            Hello, folks! Discover my stories and creative ideas.
+          </strong>
+        </h4>
+      </div>
+      {loadingProfiles ? (
+        <LoadingTailwind />
+      ) : (
+        <div className="container">
+          {profiles.length > 0 ? (
+            profiles.map((profile) => (
+              <div
+                key={profile.id}
+                className="grid grid-cols-2 gap-2 justify-items-center mx-22.5 xsm:grid-cols-1 items-center mb-6 lg:grid-cols-2"
+              >
+                <div className="max-w-96 xsm:order-2 lg:order-1">
+                  <img
+                    src={profile?.image}
+                    alt={profile.title}
+                    className="w-full rounded-3xl"
+                  />
                 </div>
-              )}
+                <div className="w-full xsm:order-1 xsm:p-5 lg:order-2">
+                  <h3 className="text-2xl font-semibold mb-2">
+                    {profile.title}
+                  </h3>
+                  <p className="text-md text-gray-600">{profile.content}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center text-gray-500">
+              No profiles available.
             </div>
           )}
         </div>
+      )}
 
-        {loadingCategories ? (
-          <LoadingTailwind />
-        ) : (
-          <div className="my-5 lg:px-6 mx-6">
+      {loadingCategories ? (
+        <LoadingTailwind />
+      ) : (
+        <div className="container">
+          <div className="mx-22.5">
             <div className="text-lg font-bold">
               <h4 className="flex items-center">
                 <strong className="text-slate-900 text-4xl">Popular Tag</strong>
@@ -126,12 +122,13 @@ export default function Home() {
               </h4>
               <hr />
             </div>
-            <div className="flex flex-row flex-wrap py-3">
+            <div className="flex flex-wrap justify-between py-3">
               {categories.length > 0 ? (
                 categories.map((category, index) => (
                   <CardCategory
                     key={category.id}
                     name={category.name} // Kirimkan title sebagai prop
+                    image={category.image}
                     colorClass={colors[index % colors.length]} // Memberikan warna berdasarkan urutan
                   />
                 ))
@@ -142,8 +139,8 @@ export default function Home() {
               )}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </LayoutWeb>
   );
 }

@@ -1,15 +1,20 @@
-export default function CardCategory({ name, colorClass }) {
+export default function CardCategory({ name, image, colorClass }) {
   return (
-    <div className="p-2 lg:w-1/6 md:w-1/3 w-full">
-      <div className="flex space-x-4">
-        <button
-          className={`${colorClass} drop-shadow-xl text-white rounded px-4 py-2 hover:${
-            colorClass.split("-")[0]
-          }-600`}
-        >
-          {name}
-        </button>
-      </div>
+    <div className="flex justify-evenly items-center my-2">
+      {/* Button */}
+      <a
+        className={`${colorClass} drop-shadow-xl text-white rounded px-3 py-2 hover:${
+          colorClass.split("-")[0]
+        }-600`}
+      >
+        <img
+          src={image}
+          alt={name}
+          className="inline object-cover rounded-md shadow-md mx-1"
+          style={{ width: "25px" }}
+        />
+        {name}
+      </a>
     </div>
   );
 }
