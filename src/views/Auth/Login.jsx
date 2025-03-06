@@ -76,7 +76,7 @@ export default function Login() {
 
   return (
     <LayoutAuth>
-      <div className="flex items-center justify-center mt-12">
+      <div className="flex items-center justify-center">
         <div className="w-full max-w-md">
           <div className="text-center mb-6">
             <h4 className="text-white font-semibold text-xl">
@@ -105,7 +105,7 @@ export default function Login() {
                     <input
                       type="text"
                       id="email"
-                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-7 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter Email Address"
@@ -132,7 +132,7 @@ export default function Login() {
                     <input
                       type="password"
                       id="password"
-                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-7 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter Password"
@@ -145,19 +145,18 @@ export default function Login() {
                   )}
                 </div>
 
-                <div>
+                <div className="flex">
+                  <NavLink className="w-1/2" to="/">
+                    <h4 className="mt-3 text-blue-600">Back to home page</h4>
+                  </NavLink>
                   <button
-                    className="w-full min-h-[55px] py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+                    className="w-1/2 min-h-[40px] bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
                     type="submit"
                   >
                     Login
                   </button>
                 </div>
               </form>
-
-              <NavLink to="/">
-                <h4 className="mt-3 text-blue-600">back to home page</h4>
-              </NavLink>
             </div>
           </div>
         </div>
