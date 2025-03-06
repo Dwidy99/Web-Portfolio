@@ -2,6 +2,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useState, useEffect, useRef } from "react";
 import { BsMoonStarsFill } from "react-icons/bs";
 import { IoSunnySharp } from "react-icons/io5";
+import useColorMode from "../../hook/useColorMode";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +10,7 @@ export default function Navbar() {
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const toTopRef = useRef(null); // Reference for the to-top button
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [colorMode, setColorMode] = useColorMode(); // Menggunakan hook useColorMode
 
   // Function to toggle the mobile menu
   const toggleMenu = () => {
@@ -59,28 +60,6 @@ export default function Navbar() {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
-  // Handle the dark mode toggle
-  useEffect(() => {
-    // Check if dark mode preference is saved in localStorage or if it should follow the system preference
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === "dark");
-    } else {
-      setIsDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Update localStorage and apply the dark mode class to the <html> element
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDarkMode]);
 
   return (
     <>
@@ -174,8 +153,10 @@ export default function Navbar() {
                         className="hidden"
                         aria-label="dark-mode"
                         id="dark-toggle"
-                        checked={isDarkMode}
-                        onChange={() => setIsDarkMode(!isDarkMode)}
+                        checked={colorMode === "dark"}
+                        onChange={() =>
+                          setColorMode(colorMode === "dark" ? "light" : "dark")
+                        } // Menangani perubahan mode
                       />
                       <label htmlFor="dark-toggle">
                         <div className="flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-500 p-1">
