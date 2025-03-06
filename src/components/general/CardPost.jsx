@@ -1,42 +1,34 @@
-//import DateID
-import DateID from "../../utils/DateID";
-//import Link
 import { Link } from "react-router-dom";
+import DateID from "../../utils/DateID";
+import { GoArrowRight } from "react-icons/go";
 
 export default function CardPost(props) {
   return (
-    <div className="col-md-4 mb-3" key={props.id}>
-      <Link to={`/posts/${props.slug}`} className="text-decoration-none">
-        <div className="card mb-3 w-100 rounded-3 border-0 shadow-sm">
-          <img src={props.image} className="card-img-top" alt="..." />
-          <div className="card-body">
-            <h5 className="card-title">
-              {props.title.length > 50
-                ? `${props.title.substring(0, 50)}...`
-                : props.title}
-            </h5>
-            <p className="card-text mt-3">
-              {props.content.length > 40 ? (
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: props.content.substring(0, 40) + "...",
-                  }}
-                ></span>
-              ) : (
-                <span
-                  dangerouslySetInnerHTML={{ __html: props.content }}
-                ></span>
-              )}
-            </p>
-          </div>
-          <div className="card-footer">
-            <small className="text-body-secondary">
-              <i className="fa fa-calendar"></i>
-              {DateID(new Date(props.date))}
-            </small>
-          </div>
-        </div>
-      </Link>
-    </div>
+    <li
+      key={props.index}
+      className="lg:grid grid-cols-2 gap-x-6 gap-y-6 py-5 sm:flex sm:flex-wrap"
+    >
+      <div className="flex gap-x-4 mb-6 min-w-0 flex-auto">
+        <p className="text-lg font-extrabold text-gray-500">
+          {DateID(new Date(props.date))}
+        </p>
+      </div>
+      <div className="flex flex-col justify-start shrink-0 sm:flex sm:flex-col sm:items-start">
+        <h2 className="font-bold text-lg text-gray-900 text-left">
+          {props.title || "Lorem ipsum dolor sit."}
+        </h2>
+        <span
+          className="text-sm text-gray-800 text-left"
+          dangerouslySetInnerHTML={{
+            __html: props.content.substring(0, 250) + "...",
+          }}
+        ></span>
+        <p className="mt-1 font-bold text-gray-700 text-left">
+          <Link to={`/posts/${props.slug}`}>
+            Read more <GoArrowRight className="inline" />
+          </Link>
+        </p>
+      </div>
+    </li>
   );
 }
