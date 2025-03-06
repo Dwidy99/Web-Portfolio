@@ -120,9 +120,11 @@ export default function Home() {
         <div className="mx-22.5">
           <div className="text-lg font-bold">
             <h4 className="flex items-center">
-              <strong className="text-slate-900 text-4xl">Popular Tag</strong>
+              <strong className="text-slate-900 text-4xl dark:text-gray-500">
+                Popular Tag
+              </strong>
             </h4>
-            <h4 className="mb-4">
+            <h4 className="mb-4 dark:text-slate-300">
               Popular tags feature the most widely favored topics.
             </h4>
             <hr />

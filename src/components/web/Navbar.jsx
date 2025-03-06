@@ -9,6 +9,7 @@ export default function Navbar() {
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const toTopRef = useRef(null); // Reference for the to-top button
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Function to toggle the mobile menu
   const toggleMenu = () => {
@@ -59,11 +60,33 @@ export default function Navbar() {
     };
   }, []);
 
+  // Handle the dark mode toggle
+  useEffect(() => {
+    // Check if dark mode preference is saved in localStorage or if it should follow the system preference
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === "dark");
+    } else {
+      setIsDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update localStorage and apply the dark mode class to the <html> element
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDarkMode]);
+
   return (
     <>
       {/* Navbar */}
       <header
-        className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 shadow-lg ${
+        className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 shadow-lg dark:bg-slate-700 ${
           isFixed ? "bg-transparent navbar-fixed" : ""
         }`}
       >
@@ -72,7 +95,7 @@ export default function Navbar() {
             <div className="my-6">
               <a
                 href="#home"
-                className="text-lg text-meta-12 flex items-center"
+                className="text-lg text-meta-12 flex items-center dark:text-slate-300"
               >
                 <DotLottieReact
                   src="https://lottie.host/2e6f2bd3-568d-48c9-ac85-2f837e3a35c5/DRkd0qtHGo.lottie"
@@ -101,7 +124,7 @@ export default function Navbar() {
               {/* Navigation Menu */}
               <nav
                 ref={menuRef}
-                className={`absolute rounded-lg py-4 dark:bg-dark dark:shadow-slate-500 lg:static lg:block lg:max-w-full lg:rounded-none lg:bg-transparent lg:shadow-none lg:dark:bg-transparent ${
+                className={`absolute rounded-lg py-4 dark:bg-dark dark:text-slate-800 lg:static lg:block lg:max-w-full lg:rounded-none lg:bg-transparent lg:shadow-none lg:dark:bg-transparent ${
                   isOpen
                     ? "block bg-white drop-shadow-xl border-spacing-1 right-4 top-full w-full max-w-[250px]"
                     : "hidden "
@@ -111,7 +134,7 @@ export default function Navbar() {
                   <li className="group">
                     <a
                       href="#home"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-white"
+                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                     >
                       Beranda
                     </a>
@@ -119,7 +142,7 @@ export default function Navbar() {
                   <li className="group">
                     <a
                       href="#about"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-white"
+                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                     >
                       About
                     </a>
@@ -127,7 +150,7 @@ export default function Navbar() {
                   <li className="group">
                     <a
                       href="#portfolio"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-white"
+                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                     >
                       Portfolio
                     </a>
@@ -135,7 +158,7 @@ export default function Navbar() {
                   <li className="group">
                     <a
                       href="#blog"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-white"
+                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                     >
                       Blog
                     </a>
@@ -151,6 +174,8 @@ export default function Navbar() {
                         className="hidden"
                         aria-label="dark-mode"
                         id="dark-toggle"
+                        checked={isDarkMode}
+                        onChange={() => setIsDarkMode(!isDarkMode)}
                       />
                       <label htmlFor="dark-toggle">
                         <div className="flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-500 p-1">

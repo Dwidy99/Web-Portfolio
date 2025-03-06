@@ -16,7 +16,10 @@ export default function BuildWith() {
           <RiTailwindCssFill style={{ color: "#2587be" }} />
         </Link>
         <Link href="https://www.typescriptlang.org">
-          <AiOutlineJavaScript style={{ color: "#1b1b1a" }} />
+          <AiOutlineJavaScript
+            style={{ color: "#1b1b1a" }}
+            className="dark:bg-slate-500"
+          />
         </Link>
       </div>
     </div>
