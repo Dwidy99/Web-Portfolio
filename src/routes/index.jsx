@@ -54,9 +54,9 @@ import SlidersIndex from "../views/Admin/Sliders/Index";
 // PUBLIC
 // import Home
 
-import HomePorto from "../views/WebPorto/Home/Index";
 import { useEffect, useState } from "react";
 import Loader from "../components/general/Loader";
+import Home from "../views/Web/Home/Index";
 
 export default function RoutesIndex() {
   const [loading, setLoading] = useState(true);
@@ -315,7 +315,7 @@ export default function RoutesIndex() {
       {/* PUBLIC Route */}
 
       {/* route "/" */}
-      <Route path="/" element={<HomePorto />} />
+      <Route path="/" element={<Home />} />
     </Routes>
   );
 }

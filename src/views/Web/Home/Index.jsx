@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import LayoutWeb from "../../../layouts/WebPort";
+import LayoutWeb from "../../../layouts/Web";
 import LoadingTailwind from "../../../components/general/LoadingTailwind";
 import Api from "../../../services/Api";
 import CardCategory from "../../../components/general/CardCategory";
