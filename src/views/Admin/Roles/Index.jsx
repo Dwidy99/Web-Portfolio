@@ -203,7 +203,7 @@ export default function RolesIndex() {
                   <td className="py-5 px-2 border border-stroke dark:text-white dark:border-strokedark sm:table-cell">
                     {role.permissions.map((permission, index) => (
                       <span
-                        className="inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium bg-primary text-primary  m-0.5"
+                        className="inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium bg-primary m-0.5"
                         key={index}
                       >
                         {permission.name}
