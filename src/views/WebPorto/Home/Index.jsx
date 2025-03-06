@@ -3,19 +3,37 @@ import LayoutWeb from "../../../layouts/WebPort";
 import LoadingTailwind from "../../../components/general/LoadingTailwind";
 import Api from "../../../services/Api";
 import CardCategory from "../../../components/general/CardCategory";
+import RandomColors from "../../../utils/RandomColors"; // Import RandomColors
+import CardPost from "../../../components/general/CardPost";
 
 export default function Home() {
-  const [profiles, setProfiles] = useState([]); // State to hold an array of profiles
-  const [categories, setCategories] = useState([]); // State to hold an array of categories
-  const [loadingProfiles, setLoadingProfiles] = useState(true); // Loading state for profiles
-  const [loadingCategories, setLoadingCategories] = useState(true); // Loading state for categories
+  const [profiles, setProfiles] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [loadingProfiles, setLoadingProfiles] = useState(true);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingPosts, setLoadingPosts] = useState(true);
+
+  const fetchDataPosts = async () => {
+    setLoadingPosts(true);
+
+    try {
+      const response = await Api.get(`/api/public/posts_home`);
+
+      setPosts(response.data.data.map((post) => ({ ...post })));
+    } catch (error) {
+      console.error("Error fetching posts data:", error);
+    } finally {
+      setLoadingPosts(false);
+    }
+  };
 
   const fetchDataProfiles = async () => {
     setLoadingProfiles(true);
 
     try {
       const response = await Api.get(`/api/public/profiles`);
-      setProfiles(response.data.data.map((profile) => ({ ...profile }))); // Map over data and create new objects
+      setProfiles(response.data.data.map((profile) => ({ ...profile })));
     } catch (error) {
       console.error("Error fetching profile data:", error);
     } finally {
@@ -28,9 +46,7 @@ export default function Home() {
 
     try {
       const response = await Api.get(`/api/public/categories`);
-      console.log("Response Categories:", response); // Log response for debugging
 
-      // Memeriksa apakah response.data.data adalah array
       if (Array.isArray(response.data.data)) {
         setCategories(
           response.data.data.map((category, index) => ({
@@ -54,27 +70,19 @@ export default function Home() {
   useEffect(() => {
     fetchDataProfiles();
     fetchDataCategories();
+    fetchDataPosts();
   }, []);
-
-  // Daftar warna untuk tombol
-  const colors = [
-    "bg-meta-11",
-    "bg-meta-13",
-    "bg-meta-14",
-    "bg-meta-15",
-    "bg-meta-7",
-    "bg-meta-1",
-  ];
 
   return (
     <LayoutWeb>
       <div className="container">
-        <h4 className="flex items-center my-30 mx-25.5 font-bold">
+        <h4 className="flex items-center text-center font-bold lg:my-22.5 xsm:mt-22.5 lg:mx-25.5 xsm:mx-7.5">
           <strong className="text-slate-600 xsm:text-5xl lg:text-7xl">
             Hello, folks! Discover my stories and creative ideas.
           </strong>
         </h4>
       </div>
+
       {loadingProfiles ? (
         <LoadingTailwind />
       ) : (
@@ -108,28 +116,28 @@ export default function Home() {
         </div>
       )}
 
-      {loadingCategories ? (
-        <LoadingTailwind />
-      ) : (
-        <div className="container">
-          <div className="mx-22.5">
-            <div className="text-lg font-bold">
-              <h4 className="flex items-center">
-                <strong className="text-slate-900 text-4xl">Popular Tag</strong>
-              </h4>
-              <h4 className="mb-4">
-                Popular tags feature the most widely favored topics.
-              </h4>
-              <hr />
-            </div>
+      <div className="container">
+        <div className="mx-22.5">
+          <div className="text-lg font-bold">
+            <h4 className="flex items-center">
+              <strong className="text-slate-900 text-4xl">Popular Tag</strong>
+            </h4>
+            <h4 className="mb-4">
+              Popular tags feature the most widely favored topics.
+            </h4>
+            <hr />
+          </div>
+          {loadingCategories ? (
+            <LoadingTailwind />
+          ) : (
             <div className="flex flex-wrap justify-between py-3">
               {categories.length > 0 ? (
                 categories.map((category, index) => (
                   <CardCategory
                     key={category.id}
-                    name={category.name} // Kirimkan title sebagai prop
+                    name={category.name}
                     image={category.image}
-                    colorClass={colors[index % colors.length]} // Memberikan warna berdasarkan urutan
+                    colorClass={RandomColors()} // Random color for each category
                   />
                 ))
               ) : (
@@ -138,9 +146,36 @@ export default function Home() {
                 </div>
               )}
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
+
+      <div className="container">
+        <div className="mx-22.5">
+          {loadingPosts ? (
+            <LoadingTailwind />
+          ) : (
+            <ul role="list" className="divide-y divide-gray-100">
+              {posts.length > 0 ? (
+                posts.map((post, index) => (
+                  <CardPost
+                    key={post.id}
+                    image={post.image}
+                    slug={post.slug}
+                    title={post.title}
+                    content={post.content}
+                    date={post.created_at}
+                  />
+                ))
+              ) : (
+                <div className="text-center text-gray-500">
+                  No posts available.
+                </div>
+              )}
+            </ul>
+          )}
+        </div>
+      </div>
     </LayoutWeb>
   );
 }
