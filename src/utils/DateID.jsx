@@ -2,18 +2,18 @@ export default function DateID(date) {
   let e = date.getDate();
   return `${e} ${
     [
-      "Januari",
-      "Februari",
-      "Maret",
+      "January",
+      "February",
+      "March",
       "April",
-      "Mei",
-      "Juni",
-      "Juli",
-      "Agustus",
+      "May",
+      "June",
+      "July",
+      "August",
       "September",
-      "Oktober",
+      "October",
       "November",
-      "Desember",
+      "December",
     ][date.getMonth()]
   } ${date.getFullYear()}`;
 }
