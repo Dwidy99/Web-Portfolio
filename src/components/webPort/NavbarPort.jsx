@@ -68,8 +68,8 @@ export default function Navbar() {
         }`}
       >
         <div className="container">
-          <div className="flex items-center justify-between mx-25.5 relative font-bold">
-            <div className="">
+          <div className="flex items-center justify-between relative font-bold lg:mx-25.5">
+            <div className="my-6">
               <a
                 href="#home"
                 className="text-lg text-meta-12 flex items-center"
