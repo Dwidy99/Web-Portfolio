@@ -3,13 +3,13 @@ import { useState, useEffect, useRef } from "react";
 import { BsMoonStarsFill } from "react-icons/bs";
 import { IoSunnySharp } from "react-icons/io5";
 import useColorMode from "../../hook/useColorMode";
+import ClickOutside from "../general/ClickOutside";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
-  const menuRef = useRef(null);
-  const buttonRef = useRef(null);
   const toTopRef = useRef(null); // Reference for the to-top button
+  const buttonRef = useRef(null); // Reference for hamburger button
   const [colorMode, setColorMode] = useColorMode(); // Menggunakan hook useColorMode
 
   // Function to toggle the mobile menu
@@ -42,31 +42,12 @@ export default function Navbar() {
     };
   }, []);
 
-  // Close the mobile menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (
-        menuRef.current &&
-        buttonRef.current &&
-        !menuRef.current.contains(e.target) &&
-        !buttonRef.current.contains(e.target)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    window.addEventListener("click", handleClickOutside);
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
   return (
     <>
       {/* Navbar */}
       <header
-        className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 shadow-lg dark:bg-slate-700 ${
-          isFixed ? "bg-transparent navbar-fixed" : ""
+        className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 shadow-lg dark:bg-slate-800 ${
+          isFixed ? "bg-transparent navbar-fixed dark:bg-transparent" : ""
         }`}
       >
         <div className="container">
@@ -74,7 +55,7 @@ export default function Navbar() {
             <div className="my-6">
               <a
                 href="#home"
-                className="text-lg text-meta-12 flex items-center dark:text-slate-300"
+                className="text-lg text-meta-12 flex items-center hover:text-primary dark:text-slate-300"
               >
                 <DotLottieReact
                   src="https://lottie.host/2e6f2bd3-568d-48c9-ac85-2f837e3a35c5/DRkd0qtHGo.lottie"
@@ -101,75 +82,81 @@ export default function Navbar() {
               </button>
 
               {/* Navigation Menu */}
-              <nav
-                ref={menuRef}
-                className={`absolute rounded-lg py-4 dark:bg-dark dark:text-slate-800 lg:static lg:block lg:max-w-full lg:rounded-none lg:bg-transparent lg:shadow-none lg:dark:bg-transparent ${
-                  isOpen
-                    ? "block bg-white drop-shadow-xl border-spacing-1 right-4 top-full w-full max-w-[250px]"
-                    : "hidden "
-                }`}
+              <ClickOutside
+                onClickOutside={() => setIsOpen(false)}
+                excludeRef={buttonRef}
               >
-                <ul className="block lg:flex">
-                  <li className="group">
-                    <a
-                      href="#home"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
-                    >
-                      Beranda
-                    </a>
-                  </li>
-                  <li className="group">
-                    <a
-                      href="#about"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
-                    >
-                      About
-                    </a>
-                  </li>
-                  <li className="group">
-                    <a
-                      href="#portfolio"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
-                    >
-                      Portfolio
-                    </a>
-                  </li>
-                  <li className="group">
-                    <a
-                      href="#blog"
-                      className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
-                    >
-                      Blog
-                    </a>
-                  </li>
-                  {/* Dark Mode Toggle */}
-                  <li className="mt-1 items-center pl-8 lg:mt-0">
-                    <div className="flex">
-                      <span className="mr-2 text-sm text-slate-500 dark:text-slate-200">
-                        <IoSunnySharp />
-                      </span>
-                      <input
-                        type="checkbox"
-                        className="hidden"
-                        aria-label="dark-mode"
-                        id="dark-toggle"
-                        checked={colorMode === "dark"}
-                        onChange={() =>
-                          setColorMode(colorMode === "dark" ? "light" : "dark")
-                        } // Menangani perubahan mode
-                      />
-                      <label htmlFor="dark-toggle">
-                        <div className="flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-500 p-1">
-                          <div className="toggle-circle h-4 w-4 rounded-full bg-white transition duration-300 ease-in-out"></div>
-                        </div>
-                      </label>
-                      <span className="ml-2 text-sm text-slate-500 dark:text-slate-200">
-                        <BsMoonStarsFill />
-                      </span>
-                    </div>
-                  </li>
-                </ul>
-              </nav>
+                <nav
+                  className={`absolute rounded-lg py-4 dark:bg-dark dark:text-slate-800 lg:static lg:block lg:max-w-full lg:rounded-none lg:bg-transparent lg:shadow-none lg:dark:bg-transparent ${
+                    isOpen
+                      ? "block bg-white drop-shadow-xl border-spacing-1 right-4 top-full w-full max-w-[250px]"
+                      : "hidden"
+                  }`}
+                >
+                  <ul className="block lg:flex">
+                    <li className="group">
+                      <a
+                        href="#home"
+                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
+                      >
+                        Beranda
+                      </a>
+                    </li>
+                    <li className="group">
+                      <a
+                        href="#about"
+                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
+                      >
+                        About
+                      </a>
+                    </li>
+                    <li className="group">
+                      <a
+                        href="#portfolio"
+                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
+                      >
+                        Portfolio
+                      </a>
+                    </li>
+                    <li className="group">
+                      <a
+                        href="#blog"
+                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
+                      >
+                        Blog
+                      </a>
+                    </li>
+                    {/* Dark Mode Toggle */}
+                    <li className="mt-1 items-center pl-8 lg:mt-0">
+                      <div className="flex">
+                        <span className="mr-2 text-sm text-slate-500 dark:text-slate-200">
+                          <IoSunnySharp />
+                        </span>
+                        <input
+                          type="checkbox"
+                          className="hidden"
+                          aria-label="dark-mode"
+                          id="dark-toggle"
+                          checked={colorMode === "dark"}
+                          onChange={() =>
+                            setColorMode(
+                              colorMode === "dark" ? "light" : "dark"
+                            )
+                          } // Menangani perubahan mode
+                        />
+                        <label htmlFor="dark-toggle">
+                          <div className="flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-500 p-1">
+                            <div className="toggle-circle h-4 w-4 rounded-full bg-white transition duration-300 ease-in-out"></div>
+                          </div>
+                        </label>
+                        <span className="ml-2 text-sm text-slate-500 dark:text-slate-200">
+                          <BsMoonStarsFill />
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                </nav>
+              </ClickOutside>
             </div>
           </div>
         </div>
