@@ -47,25 +47,12 @@ import PhotosIndex from "../views/Admin/Photos/Index";
 import PhotosCreate from "../views/Admin/Photos/Create";
 // import Sliders
 import SlidersIndex from "../views/Admin/Sliders/Index";
-// import Aparaturs
-// import AparatursIndex from "../views/Admin/Aparaturs/Index";
-// import AparatursEdit from "../views/Admin/Aparaturs/Edit";
-// import AparatursCreate from "../views/Admin/Aparaturs/Create";
 
 //======================================================
 // view public
 //======================================================
 // PUBLIC
 // import Home
-import Home from "../views/Web/Home/Index";
-// import Aparaturs from "../components/web/Aparaturs";
-import WebPagesIndex from "../views/Web/Pages/Index";
-import WebPagesShow from "../views/Web/Pages/Show";
-import WebPhotosIndex from "../views/Web/Photos/Index";
-import WebPostsIndex from "../views/Web/Posts/Index";
-import WebPostsShow from "../views/Web/Posts/Show";
-import WebProductsIndex from "../views/Web/Products/Index";
-import WebProductsShow from "../views/Web/Products/Show";
 
 import HomePorto from "../views/WebPorto/Home/Index";
 import { useEffect, useState } from "react";
@@ -329,25 +316,6 @@ export default function RoutesIndex() {
 
       {/* route "/" */}
       <Route path="/" element={<HomePorto />} />
-
-      {/* route "/aparaturs" */}
-      {/* <Route path="/aparaturs" element={<Aparaturs />} /> */}
-
-      {/* route "/pages" */}
-      <Route path="/pages" element={<WebPagesIndex />} />
-      {/* route "/pages/detail/:id" */}
-      <Route path="/pages/:slug" element={<WebPagesShow />} />
-
-      {/* route "/photos" */}
-      <Route path="/photos" element={<WebPhotosIndex />} />
-
-      {/* route "/posts" */}
-      <Route path="/posts" element={<WebPostsIndex />} />
-      <Route path="/posts/:slug" element={<WebPostsShow />} />
-
-      {/* route "/products" */}
-      <Route path="/products" element={<WebProductsIndex />} />
-      <Route path="/products/:slug" element={<WebProductsShow />} />
     </Routes>
   );
 }
