@@ -1,9 +1,11 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { BsMoonStarsFill } from "react-icons/bs";
 import { IoSunnySharp } from "react-icons/io5";
 import useColorMode from "../../hook/useColorMode";
 import ClickOutside from "../general/ClickOutside";
+import TopToButton from "../general/TopToButton";
+import HandleScroll from "../general/HandleScroll";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,31 +18,6 @@ export default function Navbar() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
-  // Handle scroll to fix the navbar and toggle "to-top" button visibility
-  useEffect(() => {
-    const handleScroll = () => {
-      const header = document.querySelector("header");
-      const fixedNav = header.offsetTop;
-      const scrollTop = window.scrollY;
-
-      if (scrollTop > fixedNav) {
-        setIsFixed(true);
-        toTopRef.current.classList.remove("hidden");
-        toTopRef.current.classList.add("flex");
-      } else {
-        setIsFixed(false);
-        toTopRef.current.classList.add("hidden");
-        toTopRef.current.classList.remove("flex");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <>
@@ -161,16 +138,10 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-
       {/* To-Top Button */}
-      <button
-        ref={toTopRef}
-        id="to-top"
-        className="hidden fixed bottom-6 right-6 p-3 bg-primary text-white rounded-full shadow-lg transition-all duration-300 ease-in-out"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      >
-        ↑
-      </button>
+      <TopToButton /> {/* Add the new ToTopButton component */}
+      {/* Handle scroll visibility and navbar fixes */}
+      <HandleScroll setIsFixed={setIsFixed} toTopRef={toTopRef} />
     </>
   );
 }
