@@ -9,13 +9,13 @@ export default function BuildWith() {
       <span className="mr-1 text-gray-500 dark:text-gray-400">Build with</span>
 
       <div className="flex space-x-1.5">
-        <Link href="https://nextjs.org">
+        <Link to="https://react.dev/">
           <FaReact style={{ color: "#2596be" }} />
         </Link>
-        <Link href="https://tailwindcss.com">
+        <Link to="https://tailwindcss.com/">
           <RiTailwindCssFill style={{ color: "#2587be" }} />
         </Link>
-        <Link href="https://www.typescriptlang.org">
+        <Link to="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
           <AiOutlineJavaScript
             style={{ color: "#1b1b1a" }}
             className="dark:bg-slate-500"
