@@ -1,26 +1,30 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { BsMoonStarsFill } from "react-icons/bs";
 import { IoSunnySharp } from "react-icons/io5";
 import useColorMode from "../../hook/useColorMode";
 import ClickOutside from "../general/ClickOutside";
 import TopToButton from "../general/TopToButton";
 import HandleScroll from "../general/HandleScroll";
+import SnowEffect from "../general/SnowEffect";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
-  const toTopRef = useRef(null); // Reference for the to-top button
-  const buttonRef = useRef(null); // Reference for hamburger button
-  const [colorMode, setColorMode] = useColorMode(); // Menggunakan hook useColorMode
+  const toTopRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [colorMode, setColorMode] = useColorMode();
 
-  // Function to toggle the mobile menu
+  // Fungsi untuk toggle menu
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <>
+      {/* Gunakan komponen SnowEffect di sini */}
+      <SnowEffect />
+
       {/* Navbar */}
       <header
         className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 shadow-lg dark:bg-slate-800 ${
@@ -45,7 +49,7 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center px-4">
-              {/* Hamburger Button for Mobile */}
+              {/* Hamburger Button */}
               <button
                 ref={buttonRef}
                 type="button"
@@ -119,7 +123,7 @@ export default function Navbar() {
                             setColorMode(
                               colorMode === "dark" ? "light" : "dark"
                             )
-                          } // Menangani perubahan mode
+                          }
                         />
                         <label htmlFor="dark-toggle">
                           <div className="flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-500 p-1">
@@ -138,9 +142,11 @@ export default function Navbar() {
           </div>
         </div>
       </header>
+
       {/* To-Top Button */}
-      <TopToButton /> {/* Add the new ToTopButton component */}
-      {/* Handle scroll visibility and navbar fixes */}
+      <TopToButton />
+
+      {/* Handle Scroll */}
       <HandleScroll setIsFixed={setIsFixed} toTopRef={toTopRef} />
     </>
   );
