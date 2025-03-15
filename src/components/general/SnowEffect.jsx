@@ -13,7 +13,7 @@ const SnowEffect = () => {
         opacity: Math.random(), // Transparansi
         speedX: Math.random() * 2 - 4, // Diperlambat 10x
         speedY: Math.random() * 1 + 0.5, // Diperlambat 10x
-        radius: Math.random() * 2 + 2, // Ukuran partikel
+        radius: Math.random() * 2 + 1, // Ukuran partikel
       });
     }
     return snowflakes;
@@ -93,6 +93,7 @@ const SnowEffect = () => {
     <canvas
       ref={canvasRef}
       className="absolute top-0 left-0 w-full h-full z-0"
+      style={{ pointerEvents: "none" }} // Agar canvas tidak mengganggu interaksi
     ></canvas>
   );
 };
