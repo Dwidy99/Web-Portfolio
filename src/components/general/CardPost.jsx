@@ -24,7 +24,7 @@ export default function CardPost(props) {
           }}
         ></span>
         <p className="mt-1 font-bold text-gray-500 text-left">
-          <Link to={`/posts/${props.slug}`}>
+          <Link to={`/blog/${props.slug}`} className="hover:underline">
             Read more <GoArrowRight className="inline" />
           </Link>
         </p>
