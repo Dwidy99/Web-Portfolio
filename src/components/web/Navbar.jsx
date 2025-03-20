@@ -1,12 +1,12 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { BsMoonStarsFill } from "react-icons/bs";
 import { IoSunnySharp } from "react-icons/io5";
 import useColorMode from "../../hook/useColorMode";
 import ClickOutside from "../general/ClickOutside";
 import TopToButton from "../general/TopToButton";
 import HandleScroll from "../general/HandleScroll";
-import SnowEffect from "../general/SnowEffect";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,20 +22,17 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Gunakan komponen SnowEffect di sini */}
-      <SnowEffect />
-
       {/* Navbar */}
       <header
-        className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 shadow-lg dark:bg-slate-800 ${
+        className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 shadow-lg dark:bg-meta-14 ${
           isFixed ? "bg-transparent navbar-fixed dark:bg-transparent" : ""
         }`}
       >
         <div className="container">
           <div className="flex items-center justify-between relative font-bold lg:mx-25.5">
             <div className="my-6">
-              <a
-                href="#home"
+              <Link
+                to="/"
                 className="text-lg text-meta-12 flex items-center hover:text-primary dark:text-slate-300"
               >
                 <DotLottieReact
@@ -43,9 +40,10 @@ export default function Navbar() {
                   loop
                   autoplay
                   style={{ width: "20%", height: "20%", lineHeight: "0" }}
+                  className=""
                 />
-                dwiYulianto
-              </a>
+                DwiYulianto
+              </Link>
             </div>
 
             <div className="flex items-center px-4">
@@ -77,11 +75,19 @@ export default function Navbar() {
                   <ul className="block lg:flex">
                     <li className="group">
                       <a
-                        href="#home"
+                        href="#projects"
                         className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                       >
-                        Beranda
+                        Projects
                       </a>
+                    </li>
+                    <li className="group">
+                      <Link
+                        to="/blog"
+                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
+                      >
+                        Blog
+                      </Link>
                     </li>
                     <li className="group">
                       <a
@@ -89,22 +95,6 @@ export default function Navbar() {
                         className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                       >
                         About
-                      </a>
-                    </li>
-                    <li className="group">
-                      <a
-                        href="#portfolio"
-                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
-                      >
-                        Portfolio
-                      </a>
-                    </li>
-                    <li className="group">
-                      <a
-                        href="#blog"
-                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
-                      >
-                        Blog
                       </a>
                     </li>
                     {/* Dark Mode Toggle */}

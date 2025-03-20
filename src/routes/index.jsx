@@ -57,6 +57,8 @@ import SlidersIndex from "../views/Admin/Sliders/Index";
 import { useEffect, useState } from "react";
 import Loader from "../components/general/Loader";
 import Home from "../views/Web/Home/Index";
+import BlogsIndex from "../views/Web/Blog/Index";
+import BlogsShow from "../views/Web/Blog/Show";
 
 export default function RoutesIndex() {
   const [loading, setLoading] = useState(true);
@@ -316,6 +318,21 @@ export default function RoutesIndex() {
 
       {/* route "/" */}
       <Route path="/" element={<Home />} />
+
+      {/* route "/admin/categories/edit/:id" */}
+      <Route
+        path="/admin/categories/edit/:id"
+        element={
+          <PrivateRoutes>
+            <CategoriesEdit />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/public/blog" */}
+      <Route path="/blog" element={<BlogsIndex />} />
+      {/* route "/public/blog/:slug" */}
+      <Route path="/blog/:slug" element={<BlogsShow />} />
     </Routes>
   );
 }
