@@ -74,7 +74,7 @@ module.exports = {
           11: "#9E2A2F", // warna lebih gelap
           12: "#303D44", // lebih gelap
           13: "#1A5A5C",
-          14: "#232A2E",
+          14: "#134E4A",
           15: "#0C6B7D",
         },
         success: "#219653",
