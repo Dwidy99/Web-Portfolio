@@ -60,6 +60,8 @@ export default function CategoriesCreate() {
         navigate("/admin/categories");
       })
       .catch((err) => {
+        console.log(err);
+        
         setErrors(err.response.data);
       });
   };
