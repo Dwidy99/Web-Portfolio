@@ -183,7 +183,7 @@ export default function ProductsEdit() {
               )}
             </div>
 
-            <div className="basis-128 col-span-3">
+            <div className="basis-128 col-span-3 mt-5">
               <label className="block text-sm font-medium text-gray-700">
                 Product Image
               </label>
@@ -266,7 +266,6 @@ export default function ProductsEdit() {
               value={content}
               onChange={setContent}
               placeholder="Enter Post Content..."
-              className="w-full h-100 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500"
             />
             {errors.content && (
               <p className="text-red-500 text-xs mt-1">{errors.content[0]}</p>

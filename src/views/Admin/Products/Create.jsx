@@ -221,7 +221,6 @@ export default function ProductsCreate() {
               value={content}
               onChange={setContent}
               placeholder="Enter Post Content..."
-              className="w-full h-100 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500"
             />
             {errors.content && (
               <p className="text-red-500 text-xs mt-1">{errors.content[0]}</p>
