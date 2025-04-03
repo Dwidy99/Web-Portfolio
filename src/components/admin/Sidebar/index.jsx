@@ -23,6 +23,7 @@ import { GoFileDiff } from "react-icons/go";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaPhotoVideo, FaUserEdit, FaUsersCog } from "react-icons/fa";
 import { GrDashboard, GrInsecure, GrSecure } from "react-icons/gr";
+import { ImProfile } from "react-icons/im";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
@@ -185,6 +186,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col text-bodydark2 gap-2.5 pl-9">
+                          {hasAnyPermission(["profiles.index"]) && (
+                            <li>
+                              <div className="flex items-center">
+                                <ImProfile />
+                                {renderNavLink(
+                                  "/admin/profiles",
+                                  "Profile"
+                                )}
+                              </div>
+                            </li>
+                          )}
                           {hasAnyPermission(["categories.index"]) && (
                             <li>
                               <div className="flex items-center">
