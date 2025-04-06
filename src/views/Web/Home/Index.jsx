@@ -136,7 +136,7 @@ export default function Home() {
               {categories.length > 0 ? (
                 categories.map((category, index) => (
                   <CardCategory
-                    key={category.id}
+                    key={index}
                     name={category.name}
                     image={category.image}
                     colorClass={RandomColors()} // Random color for each category
@@ -161,7 +161,8 @@ export default function Home() {
               {posts.length > 0 ? (
                 posts.map((post, index) => (
                   <CardPost
-                    key={post.id}
+                    key={index}
+                    index={index}
                     image={post.image}
                     slug={post.slug}
                     title={post.title}

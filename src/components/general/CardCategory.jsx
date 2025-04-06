@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function CardCategory({ name, image, colorClass }) {
   return (
     <div className="flex justify-evenly items-center my-2">
@@ -18,3 +20,9 @@ export default function CardCategory({ name, image, colorClass }) {
     </div>
   );
 }
+
+CardCategory.propTypes = {
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  colorClass: PropTypes.string.isRequired,
+};
