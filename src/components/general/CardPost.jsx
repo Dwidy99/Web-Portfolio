@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import DateID from "../../utils/DateID";
 import { GoArrowRight } from "react-icons/go";
@@ -6,7 +7,7 @@ export default function CardPost(props) {
   return (
     <li
       key={props.index}
-      className="lg:grid grid-cols-2 gap-x-6 gap-y-6 py-5 sm:flex sm:flex-wrap "
+      className="lg:grid grid-cols-2 gap-x-6 gap-y-6 py-5 sm:flex sm:flex-wrap"
     >
       <div className="flex gap-x-4 mb-6 min-w-0 flex-auto">
         <p className="text-lg font-extrabold text-gray-500">
@@ -24,7 +25,7 @@ export default function CardPost(props) {
           }}
         ></span>
         <p className="mt-1 font-bold text-gray-500 text-left">
-          <Link to={`/blog/${props.slug}`} className="hover:underline">
+          <Link to={`/posts/${props.slug}`} className="hover:underline">
             Read more <GoArrowRight className="inline" />
           </Link>
         </p>
@@ -32,3 +33,12 @@ export default function CardPost(props) {
     </li>
   );
 }
+
+CardPost.propTypes = {
+  index: PropTypes.number,
+  date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
+    .isRequired,
+  title: PropTypes.string,
+  content: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+};
