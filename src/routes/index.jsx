@@ -59,8 +59,8 @@ import SlidersIndex from "../views/Admin/Sliders/Index";
 import { useEffect, useState } from "react";
 import Loader from "../components/general/Loader";
 import Home from "../views/Web/Home/Index";
-import BlogsIndex from "../views/Web/Blog/Index";
-import BlogsShow from "../views/Web/Blog/Show";
+import BlogsIndex from "../views/Web/Post/Index";
+import BlogsShow from "../views/Web/Post/Show";
 
 export default function RoutesIndex() {
   const [loading, setLoading] = useState(true);
@@ -165,7 +165,7 @@ export default function RoutesIndex() {
           </PrivateRoutes>
         }
       />
-      
+
       {/* route "/admin/profiles" */}
       <Route
         path="/admin/profiles/"
