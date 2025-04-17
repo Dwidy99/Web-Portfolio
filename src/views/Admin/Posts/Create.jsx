@@ -19,7 +19,9 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [categoryID, setCategoryID] = useState("");
   const [content, setContent] = useState("");
+
   const [errors, setErrors] = useState({});
+
   const [categories, setCategories] = useState([]);
 
   // Token
@@ -30,7 +32,7 @@ export default function Create() {
 
   // Set Page Title
   useEffect(() => {
-    document.title = "Create Posts - Desa Digital";
+    document.title = "Create Posts - My Portfolio";
   }, []);
 
   // Fetch categories
@@ -71,16 +73,18 @@ export default function Create() {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
-      }).then((response) => {
-        toast.success(response.data.message, {
-          position: "top-center",
-          duration: 6000,
+      })
+        .then((response) => {
+          toast.success(response.data.message, {
+            position: "top-center",
+            duration: 6000,
+          });
+
+          navigate("/admin/posts");
+        })
+        .catch((err) => {
+          setErrors(err.response.data);
         });
-        
-        navigate("/admin/posts");
-      }).catch((err) => {
-        setErrors(err.response.data);
-      });
     } catch (err) {
       setErrors(err.response?.data || {});
     }
