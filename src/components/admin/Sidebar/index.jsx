@@ -10,6 +10,7 @@ import hasAnyPermission from "../../../utils/Permissions";
 import {
   FaBarsProgress,
   FaCircleChevronDown,
+  FaClipboardList,
   FaGaugeHigh,
   FaImages,
   FaLayerGroup,
@@ -29,10 +30,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
   const { pathname } = location;
 
-  // Split pathname to get active route
   const activeRoute = pathname.split("/");
-
-  // Get user data from cookies
   const user = JSON.parse(Cookies.get("user"));
 
   const trigger = useRef(null);
@@ -42,8 +40,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
-
-  const [openDropdown, setOpenDropdown] = useState(null); // To track which dropdown is open
 
   // Close sidebar on click outside
   useEffect(() => {
@@ -71,19 +67,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     return () => document.removeEventListener("keydown", keyHandler);
   }, [sidebarOpen]);
 
+  // Manage sidebar expanded state
   useEffect(() => {
     localStorage.setItem("sidebar-expanded", sidebarExpanded.toString());
-    if (sidebarExpanded) {
-      document.querySelector("body")?.classList.add("sidebar-expanded");
-    } else {
-      document.querySelector("body")?.classList.remove("sidebar-expanded");
-    }
+    document
+      .querySelector("body")
+      ?.classList.toggle("sidebar-expanded", sidebarExpanded);
   }, [sidebarExpanded]);
 
-  const toggleDropdown = (index) => {
-    setOpenDropdown(openDropdown === index ? null : index); // Toggle dropdown
-  };
-
+  // NavLink rendering helper
   const renderNavLink = (to, label, activeCondition) => (
     <NavLink
       to={to}
@@ -190,9 +182,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             <li>
                               <div className="flex items-center">
                                 <ImProfile />
+                                {renderNavLink("/admin/profiles", "Profile")}
+                              </div>
+                            </li>
+                          )}
+                          {hasAnyPermission(["experiences.index"]) && (
+                            <li>
+                              <div className="flex items-center">
+                                <FaClipboardList />
                                 {renderNavLink(
-                                  "/admin/profiles",
-                                  "Profile"
+                                  "/admin/experiences",
+                                  "Experience"
                                 )}
                               </div>
                             </li>
