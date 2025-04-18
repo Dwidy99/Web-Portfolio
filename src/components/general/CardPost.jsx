@@ -12,7 +12,7 @@ export default function CardPost(props) {
       className="lg:grid grid grid-cols-3 gap-4 sm:flex sm:flex-wrap"
     >
       <div className="flex mb-6 min-w-0 flex-auto">
-        <p className="text-lg font-semibold text-gray-500">{englishDate}</p>
+        <p className="text-md font-semibold text-gray-500">{englishDate}</p>
       </div>
       <div className="col-span-2 flex flex-col justify-start shrink-0 sm:flex sm:flex-col sm:items-start">
         <h2 className="font-bold text-lg text-gray-500 text-left">
@@ -24,7 +24,7 @@ export default function CardPost(props) {
             __html: props.content.substring(0, 250) + "...",
           }}
         ></span>
-        <p className="mt-1 font-bold text-gray-500 text-left">
+        <p className="mt-1 text-sm font-medium text-right text-blue-600">
           <Link to={`/blog/${props.slug}`} className="hover:underline">
             Read more <GoArrowRight className="inline" />
           </Link>
