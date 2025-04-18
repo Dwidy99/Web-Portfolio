@@ -15,11 +15,13 @@ import Api from "../../../services/Api";
 import Cookies from "js-cookie";
 //import toast js
 import toast from "react-hot-toast";
+import ReactQuill from "react-quill";
 
 export default function ProfilesIndex() {
   document.title = "Edit Profile - My Portfolio";
 
   const navigate = useNavigate();
+  const quillRef = useRef(null);
   const formRef = useRef(null);
 
   // const { id } = useParams();
@@ -30,10 +32,9 @@ export default function ProfilesIndex() {
 
   const [profileImage, setProfileImage] = useState(""); // URL for the profile image
   const token = Cookies.get("token");
-  
-  const user = JSON.parse(Cookies.get("user"));  
+
+  const user = JSON.parse(Cookies.get("user"));
   console.log(user);
-  
 
   const fetchDataProfile = async () => {
     // Pastikan user dan token tersedia sebelum melakukan request
@@ -41,15 +42,15 @@ export default function ProfilesIndex() {
       toast.error("User authentication error!", { position: "top-center" });
       return;
     }
-  
+
     try {
       const response = await Api.get(`/api/admin/profiles/${user.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       // Cek jika response sukses dan memiliki data
       const data = response?.data?.data;
-  
+
       if (!data || Object.keys(data).length === 0) {
         toast.error("Profile data not found!", { position: "top-center" });
         setTitle("No profile available");
@@ -57,15 +58,14 @@ export default function ProfilesIndex() {
         setContent("No address available.");
         return;
       }
-  
+
       // Set state dengan data yang tersedia
       setTitle(data.title || "Untitled");
       setProfileImage(data.image || ""); // Bisa diisi dengan placeholder image jika kosong
       setContent(data.content || "No content available.");
-  
     } catch (error) {
       console.error("Failed to fetch profile:", error);
-  
+
       // Tangani error dengan status yang lebih spesifik
       if (error.response) {
         if (error.response.status === 404) {
@@ -76,21 +76,25 @@ export default function ProfilesIndex() {
           });
           navigate("/login"); // Redirect ke login jika token tidak valid
         } else {
-          toast.error(`Error ${error.response.status}: ${error.response.data.message || "Something went wrong!"}`, {
-            position: "top-center",
-          });
+          toast.error(
+            `Error ${error.response.status}: ${error.response.data.message || "Something went wrong!"}`,
+            {
+              position: "top-center",
+            }
+          );
         }
       } else {
-        toast.error("Failed to fetch profile data!", { position: "top-center" });
+        toast.error("Failed to fetch profile data!", {
+          position: "top-center",
+        });
       }
-  
+
       // Set state ke default agar tidak crash
       setTitle("No profile available");
       setProfileImage("");
       setContent("No address available.");
     }
   };
-  
 
   const updateProfiles = async (e) => {
     e.preventDefault();
@@ -128,6 +132,7 @@ export default function ProfilesIndex() {
 
   useEffect(() => {
     fetchDataProfile();
+    quillRef.current.getEditor();
   }, []);
 
   return (
@@ -140,7 +145,9 @@ export default function ProfilesIndex() {
       </Link>
 
       <div className="rounded-lg border bg-white shadow-md mt-8 p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Edit Profile</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+          Edit Profile
+        </h3>
         <form ref={formRef} onSubmit={updateProfiles}>
           {/* Profile Title */}
           <div className="grid grid-cols-2 gap-2 my-4 mb-6">
@@ -196,24 +203,20 @@ export default function ProfilesIndex() {
             </div>
           </div>
 
-          <div className="mb-3">
-            <label
-              htmlFor="content"
-              className="block text-sm font-bold text-gray-700"
-            >
-              Address
+          {/* Content */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700">
+              Description
             </label>
-            <textarea
-              rows={6}
+            <ReactQuill
+              ref={quillRef}
+              theme="snow"
               value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Enter Address"
-              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-            ></textarea>
+              onChange={setContent}
+              placeholder="Enter Description..."
+            />
             {errors.content && (
-              <div className="mt-1 alert alert-danger col-md-6">
-                <p className="text-red-500 text-xs">{errors.content[0]}</p>
-              </div>
+              <p className="text-red-500 text-xs mt-1">{errors.content[0]}</p>
             )}
           </div>
 
