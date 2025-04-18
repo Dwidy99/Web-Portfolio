@@ -90,12 +90,12 @@ export default function Navbar() {
                       </Link>
                     </li>
                     <li className="group">
-                      <a
-                        href="#about"
+                      <Link
+                        to="/about"
                         className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                       >
                         About
-                      </a>
+                      </Link>
                     </li>
                     {/* Dark Mode Toggle */}
                     <li className="mt-1 items-center pl-8 lg:mt-0">

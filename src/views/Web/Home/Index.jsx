@@ -5,6 +5,8 @@ import Api from "../../../services/Api";
 import CardCategory from "../../../components/general/CardCategory";
 import RandomColors from "../../../utils/RandomColors"; // Import RandomColors
 import CardPost from "../../../components/general/CardPost";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [profiles, setProfiles] = useState([]);
@@ -35,7 +37,7 @@ export default function Home() {
       const response = await Api.get(`/api/public/profiles`);
       setProfiles(response.data.data.map((profile) => ({ ...profile })));
     } catch (error) {
-      console.error("Error fetching profile data:", error);
+      toast.error(error.response.data.message);
     } finally {
       setLoadingProfiles(false);
     }
@@ -55,13 +57,10 @@ export default function Home() {
           }))
         );
       } else {
-        console.error(
-          "Data categories tidak berupa array:",
-          response.data.data
-        );
+        toast.error("Data categories tidak berupa array:");
       }
     } catch (error) {
-      console.error("Error fetching categories data:", error);
+      toast.error(error.response.data.message);
     } finally {
       setLoadingCategories(false);
     }
@@ -101,10 +100,53 @@ export default function Home() {
                   />
                 </div>
                 <div className="w-full xsm:order-1 xsm:p-5 lg:order-2">
-                  <h3 className="text-2xl font-semibold mb-2">
-                    {profile.title}
-                  </h3>
-                  <p className="text-md text-gray-600">{profile.content}</p>
+                  <div>
+                    <h3 className="text-2xl font-semibold mb-2">
+                      {profile.title}
+                    </h3>
+                    <p
+                      className="mt-6 text-lg dark:text-gray-500"
+                      dangerouslySetInnerHTML={{ __html: profile.content }}
+                    ></p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-6 font-semibold my-4">
+                    <div>
+                      📝
+                      <Link
+                        to="/blog"
+                        className="hover:underline text-gray-600"
+                      >
+                        My writings
+                      </Link>
+                    </div>
+                    <div>
+                      🛠️
+                      <Link
+                        to="/projects"
+                        className="hover:underline text-gray-600"
+                      >
+                        What have I build
+                      </Link>
+                    </div>
+                    <div>
+                      🧐
+                      <Link
+                        to="/about"
+                        className="hover:underline text-gray-600"
+                      >
+                        More about me and myself
+                      </Link>
+                    </div>
+                    <div>
+                      💼
+                      <Link
+                        to="/about"
+                        className="hover:underline text-gray-600"
+                      >
+                        My Career
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))
@@ -139,7 +181,8 @@ export default function Home() {
                     key={index}
                     name={category.name}
                     image={category.image}
-                    colorClass={RandomColors()} // Random color for each category
+                    colorClass={RandomColors()}
+                    slug={category.slug}
                   />
                 ))
               ) : (
