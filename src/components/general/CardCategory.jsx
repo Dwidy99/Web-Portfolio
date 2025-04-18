@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-export default function CardCategory({ name, image, colorClass }) {
+export default function CardCategory({ name, image, colorClass, slug }) {
   return (
     <div className="flex justify-evenly items-center my-2">
-      {/* Button */}
-      <a
+      {/* Link */}
+      <Link
+        to={`/blog/category/${slug}`} // Ubah tujuan link berdasarkan slug kategori
         className={`${colorClass} drop-shadow-xl text-white rounded px-3 py-2 hover:${
           colorClass.split("-")[0]
         }-600`}
@@ -16,7 +18,7 @@ export default function CardCategory({ name, image, colorClass }) {
           style={{ width: "25px" }}
         />
         {name}
-      </a>
+      </Link>
     </div>
   );
 }
@@ -25,4 +27,5 @@ CardCategory.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   colorClass: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 };
