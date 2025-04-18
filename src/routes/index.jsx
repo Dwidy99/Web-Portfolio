@@ -49,6 +49,10 @@ import PhotosIndex from "../views/Admin/Photos/Index";
 import PhotosCreate from "../views/Admin/Photos/Create";
 // import Sliders
 import SlidersIndex from "../views/Admin/Sliders/Index";
+// import Experiences
+import ExperiencesIndex from "../views/Admin/Experiences/Index";
+import ExperiencesCreate from "../views/Admin/Experiences/Create";
+import ExperiencesEdit from "../views/Admin/Experiences/Edit";
 
 //======================================================
 // view public
@@ -58,9 +62,17 @@ import SlidersIndex from "../views/Admin/Sliders/Index";
 
 import { useEffect, useState } from "react";
 import Loader from "../components/general/Loader";
+
+// import Home
 import Home from "../views/Web/Home/Index";
+
+// import Blogs
 import BlogsIndex from "../views/Web/Post/Index";
 import BlogsShow from "../views/Web/Post/Show";
+import CategoryPostsIndex from "../views/Web/Post/CategoryPostsIndex";
+
+// import About
+import AboutIndex from "../views/Web/About/Index";
 
 export default function RoutesIndex() {
   const [loading, setLoading] = useState(true);
@@ -326,6 +338,36 @@ export default function RoutesIndex() {
         }
       />
 
+      {/* route "/admin/pages/experiences" */}
+      <Route
+        path="/admin/experiences"
+        element={
+          <PrivateRoutes>
+            <ExperiencesIndex />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/experiences/create" */}
+      <Route
+        path="/admin/experiences/create"
+        element={
+          <PrivateRoutes>
+            <ExperiencesCreate />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "admin/experiences/edit" */}
+      <Route
+        path="/admin/experiences/edit/:id"
+        element={
+          <PrivateRoutes>
+            <ExperiencesEdit />
+          </PrivateRoutes>
+        }
+      />
+
       {/* PUBLIC Route */}
 
       {/* route "/" */}
@@ -345,6 +387,10 @@ export default function RoutesIndex() {
       <Route path="/blog" element={<BlogsIndex />} />
       {/* route "/public/blog/:slug" */}
       <Route path="/blog/:slug" element={<BlogsShow />} />
+      <Route path="/blog/category/:slug" element={<CategoryPostsIndex />} />
+
+      {/* route "/public/about" */}
+      <Route path="/about" element={<AboutIndex />} />
     </Routes>
   );
 }
