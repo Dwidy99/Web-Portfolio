@@ -9,19 +9,27 @@ export default function CardPost(props) {
   return (
     <li
       key={props.index}
-      className="lg:grid grid grid-cols-3 gap-4 sm:flex sm:flex-wrap"
+      className="lg:grid mb-6 grid grid-cols-3 gap-4 sm:flex sm:flex-wrap"
     >
       <div className="flex mb-6 min-w-0 flex-auto">
         <p className="text-md font-semibold text-gray-500">{englishDate}</p>
       </div>
       <div className="col-span-2 flex flex-col justify-start shrink-0 sm:flex sm:flex-col sm:items-start">
-        <h2 className="font-bold text-lg text-gray-500 text-left">
+        <span className="font-bold text-lg text-gray-500 text-left">
           {props.title || "Lorem ipsum dolor sit."}
-        </h2>
+        </span>
+        <div className="flex flex-col mb-2 min-w-0 flex-auto">
+          {/* 👇 tampilkan nama kategori */}
+          {props.category && (
+            <span className="text-xs text-blue-600 font-medium">
+              {props.category.name}
+            </span>
+          )}
+        </div>
         <span
           className="text-sm text-gray-500 text-left"
           dangerouslySetInnerHTML={{
-            __html: props.content.substring(0, 250) + "...",
+            __html: props.content.substring(0, 120) + "...",
           }}
         ></span>
         <p className="mt-1 text-sm font-medium text-right text-blue-600">
@@ -41,4 +49,5 @@ CardPost.propTypes = {
   title: PropTypes.string,
   content: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
+  category: PropTypes.object, // 👈 tambahkan prop ini
 };

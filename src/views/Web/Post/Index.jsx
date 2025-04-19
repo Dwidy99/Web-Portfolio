@@ -109,6 +109,7 @@ export default function Index() {
             <CardBlog
               key={post.id}
               title={post.title}
+              category={post.category}
               content={post.content || "No description available"}
               image={post.image}
             >

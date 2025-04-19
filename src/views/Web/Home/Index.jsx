@@ -22,7 +22,7 @@ export default function Home() {
     try {
       const response = await Api.get(`/api/public/posts_home`);
 
-      setPosts(response.data.data.map((post) => ({ ...post })));
+      setPosts(response.data.data);
     } catch (error) {
       console.error("Error fetching posts data:", error);
     } finally {
@@ -75,7 +75,7 @@ export default function Home() {
   return (
     <LayoutWeb>
       <div className="container">
-        <h4 className="flex items-center text-center font-bold lg:my-22.5 xsm:mt-22.5 lg:mx-25.5 xsm:mx-7.5">
+        <h4 className="flex items-center text-center font-bold lg:my-22.5 xsm:mt-22.5 lg:mx-25.5">
           <strong className="text-slate-600 xsm:text-5xl lg:text-7xl">
             Hello, folks! Discover my stories and creative ideas.
           </strong>
@@ -90,7 +90,7 @@ export default function Home() {
             profiles.map((profile) => (
               <div
                 key={profile.id}
-                className="grid grid-cols-2 gap-2 justify-items-center mx-22.5 xsm:grid-cols-1 items-center mb-6 lg:grid-cols-2"
+                className="grid grid-cols-2 gap-2 justify-items-center lg:mx-22.5 xsm:grid-cols-1 items-center mb-6 lg:grid-cols-2"
               >
                 <div className="max-w-96 xsm:order-2 lg:order-1">
                   <img
@@ -159,7 +159,7 @@ export default function Home() {
       )}
 
       <div className="container">
-        <div className="mx-22.5">
+        <div className="lg:mx-22.5">
           <div className="text-lg font-bold">
             <h4 className="flex items-center">
               <strong className="text-slate-900 text-4xl dark:text-gray-500">
@@ -196,7 +196,19 @@ export default function Home() {
       </div>
 
       <div className="container">
-        <div className="mx-22.5">
+        <div className="text-lg font-bold mt-8">
+          <h4 className="flex items-center">
+            <strong className="text-slate-900 text-4xl dark:text-gray-500">
+              Recent Posts
+            </strong>
+          </h4>
+          <h4 className="mb-4 dark:text-slate-300">
+            My desire to practice my skills and share my acquired knowledge
+            fuels my endeavors.
+          </h4>
+          <hr />
+        </div>
+        <div className="lg:mx-22.5">
           {loadingPosts ? (
             <LoadingTailwind />
           ) : (
@@ -209,8 +221,8 @@ export default function Home() {
                     image={post.image}
                     slug={post.slug}
                     title={post.title}
+                    category={post.category} // 👈 ini
                     content={post.content}
-                    date={post.created_at}
                   />
                 ))
               ) : (
