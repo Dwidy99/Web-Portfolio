@@ -76,7 +76,7 @@ export default function Home() {
     <LayoutWeb>
       <div className="container">
         <h4 className="flex items-center text-center font-bold lg:my-22.5 xsm:mt-22.5 lg:mx-25.5">
-          <strong className="text-slate-600 xsm:text-5xl lg:text-7xl">
+          <strong className="text-slate-600 dark:text-sky-700 xsm:text-5xl lg:text-7xl">
             Hello, folks! Discover my stories and creative ideas.
           </strong>
         </h4>
@@ -196,7 +196,7 @@ export default function Home() {
       </div>
 
       <div className="container">
-        <div className="text-lg font-bold mt-8">
+        <div className="text-lg font-bold mt-8 lg:mx-22.5">
           <h4 className="flex items-center">
             <strong className="text-slate-900 text-4xl dark:text-gray-500">
               Recent Posts
@@ -223,6 +223,7 @@ export default function Home() {
                     title={post.title}
                     category={post.category} // 👈 ini
                     content={post.content}
+                    date={post.created_at}
                   />
                 ))
               ) : (
