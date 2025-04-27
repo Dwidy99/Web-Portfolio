@@ -8,9 +8,13 @@ import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 //import Cookies js
 import Cookies from "js-cookie";
+import ReactQuillEditor from "../../../components/general/ReactQuillEditor";
+
+import PropTypes from "prop-types";
 
 export default function PhotosCreate(props) {
   const formRef = useRef(null);
+  const quillRef = useRef(null);
 
   //define state "photo"
   const [image, setImage] = useState("");
@@ -101,25 +105,20 @@ export default function PhotosCreate(props) {
             </div>
           )}
 
-          <div className="mb-3">
-            <label className="mb-2 block text-black dark:text-white">
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700">
               Caption
             </label>
-            <input
-              type="text"
-              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            <ReactQuillEditor
+              ref={quillRef}
               value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-              placeholder="Enter Caption Photo.."
+              onChange={setCaption}
+              placeholder="Enter Caption..."
             />
+            {errors.caption && (
+              <p className="text-red-500 text-xs mt-1">{errors.caption[0]}</p>
+            )}
           </div>
-          {errors.caption && (
-            <div className="w-full">
-              <p className="mb-3 text-sm font-semibold text-[#bd2929]">
-                {errors.caption[0]}
-              </p>
-            </div>
-          )}
           <div className="flex my-4">
             <button
               type="submit"
@@ -140,3 +139,7 @@ export default function PhotosCreate(props) {
     </div>
   );
 }
+
+PhotosCreate.propTypes = {
+  fetchData: PropTypes.func.isRequired, // fetchData harus function dan wajib diisi
+};

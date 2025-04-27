@@ -19,7 +19,8 @@ import hasAnyPermissions from "../../../utils/Permissions";
 import PhotosCreate from "./Create";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
-import { MdDeleteForever } from "react-icons/md";
+import { MdDeleteForever, MdPersonSearch } from "react-icons/md";
+import { FaUserEdit } from "react-icons/fa";
 
 export default function PhotosIndex() {
   //page title
@@ -131,19 +132,35 @@ export default function PhotosIndex() {
           Post Lists
         </h4>
 
+        <div className="w-full basis-1/2 my-4">
+          <form action="#" method="POST">
+            <div className="relative">
+              <input
+                type="text"
+                onChange={(e) => searchData(e)}
+                placeholder="Search here..."
+                className="w-full bg-transparent pl-10 pr-4 py-2 text-black dark:text-white border border-stroke rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button
+                type="submit"
+                className="absolute left-0 top-1/2 -translate-y-1/2 p-2"
+              >
+                <MdPersonSearch />
+              </button>
+            </div>
+          </form>
+        </div>
+
         <div className="rounded-lg border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
             <table className="w-full text-center items-center table-auto border-collapse border border-stroke dark:border-strokedark">
               <thead>
                 <tr className="bg-gray-200 dark:bg-meta-4">
-                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
+                  <th className="min-w-[5px] py-4 px-4 dark:text-white">
                     <h5 className="uppercase">No.</h5>
                   </th>
                   <th className="min-w-[115px] py-4 px-4 dark:text-white">
                     <h5 className="uppercase">Image</h5>
-                  </th>
-                  <th className="min-w-[115px] py-4 px-4 dark:text-white">
-                    <h5 className="uppercase">Caption</h5>
                   </th>
                   <th className="min-w-[115px] py-4 px-4 dark:text-white">
                     <h5 className="uppercase">Actions</h5>
@@ -168,14 +185,16 @@ export default function PhotosIndex() {
                         {/* Adjusted image styling */}
                         <img
                           src={photo.image}
-                          alt={photo.caption}
                           className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
                         />
                       </td>
                       <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
-                        <span className="font-medium">{photo.caption}</span>
-                      </td>
-                      <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
+                        <Link
+                          to={`/admin/photos/edit/${photo.id}`}
+                          className="inline-flex items-center justify-center rounded-md py-2 px-4  font-medium text-white"
+                        >
+                          <FaUserEdit className="mr-2 text-xl text-primary dark:text-white" />
+                        </Link>
                         {/* Delete Button */}
                         {hasAnyPermissions(["photos.delete"]) && (
                           <button
