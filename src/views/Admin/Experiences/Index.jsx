@@ -211,17 +211,17 @@ export default function ExperiencesIndex() {
                     {index + 1}
                   </td>
                   <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
-                    {experience.experience_name}
+                    {experience.name}
                   </td>
                   <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark">
-                    {experience.icon ? (
+                    {experience.image ? (
                       <img
-                        src={experience.icon}
+                        src={experience.image}
                         alt="Company Icon"
                         className="w-10 h-10 object-cover mx-auto rounded-full"
                       />
                     ) : (
-                      <span className="text-xs text-gray-400">No Icon</span>
+                      <span className="text-xs text-gray-400">No Image</span>
                     )}
                   </td>
                   <td className="py-5 px-2 text-center text-sm font-medium text-black dark:text-white border border-stroke dark:border-strokedark">

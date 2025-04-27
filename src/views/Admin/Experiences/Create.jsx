@@ -12,8 +12,8 @@ import LayoutAdmin from "../../../layouts/Admin";
 import toast from "react-hot-toast";
 // import Cookies js
 import Cookies from "js-cookie";
-import ReactQuill from "react-quill";
 import SelectGroupTwo from "../../../components/general/SelectGroupTwo";
+import ReactQuillEditor from "../../../components/general/ReactQuillEditor";
 
 export default function ExperiencesCreate() {
   //page title
@@ -23,12 +23,13 @@ export default function ExperiencesCreate() {
   const navigate = useNavigate();
 
   const formRef = useRef(null);
+  const quillRef = useRef(null);
 
   //define state for form
   const [profileId, setProfileId] = useState("");
-  const [experienceName, setExperienceName] = useState("");
-  const [experienceDescription, setExperienceDescription] = useState("");
-  const [icon, setIcon] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -68,9 +69,9 @@ export default function ExperiencesCreate() {
     const formData = new FormData();
 
     //this send data must "sequentially" and same with "Backend"
-    formData.append("icon", icon);
-    formData.append("experience_name", experienceName);
-    formData.append("experience_description", experienceDescription);
+    formData.append("image", image);
+    formData.append("name", name);
+    formData.append("description", description);
     formData.append("start_date", startDate);
     formData.append("end_date", endDate);
     formData.append("profile_id", profileId);
@@ -104,9 +105,9 @@ export default function ExperiencesCreate() {
 
   const handleReset = () => {
     if (formRef.current) formRef.current.reset();
-    setExperienceName("");
-    setExperienceDescription("");
-    setIcon("");
+    setName("");
+    setDescription("");
+    setImage("");
     setStartDate("");
     setEndDate("");
     setErrors([]);
@@ -132,8 +133,8 @@ export default function ExperiencesCreate() {
               <label className="form-label text-sm font-bold">Job Title</label>
               <input
                 type="text"
-                value={experienceName}
-                onChange={(e) => setExperienceName(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Enter Experience Name.."
                 className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500"
               />
@@ -175,12 +176,12 @@ export default function ExperiencesCreate() {
               </label>
               <input
                 type="file"
-                accept="icon/*"
-                onChange={(e) => setIcon(e.target.files[0])}
+                accept="image/*"
+                onChange={(e) => setImage(e.target.files[0])}
                 className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-black dark:focus:border-primary"
               />
-              {errors.icon && (
-                <p className="text-red-500 text-xs mt-1">{errors.icon[0]}</p>
+              {errors.image && (
+                <p className="text-red-500 text-xs mt-1">{errors.image[0]}</p>
               )}
             </div>
           </div>
@@ -219,17 +220,19 @@ export default function ExperiencesCreate() {
           </div>
 
           {/* // Content Editor */}
-          <div className="mb-5">
-            <label className="form-label text-sm font-bold">Description</label>
-            <ReactQuill
-              theme="snow"
-              value={experienceDescription}
-              onChange={setExperienceDescription}
-              placeholder="Enter description..."
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700">
+              Description
+            </label>
+            <ReactQuillEditor
+              ref={quillRef}
+              value={description}
+              onChange={setDescription}
+              placeholder="Enter Description..."
             />
-            {errors.experience_description && (
-              <p className="text-sm text-red-600">
-                {errors.experience_description[0]}
+            {errors.description && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.description[0]}
               </p>
             )}
           </div>
