@@ -54,6 +54,8 @@ export default function PostsIndex() {
       //set data reponse to state "setposts"
       setPosts(response.data.data.data);
 
+      console.log(response);
+
       //set data pagination to state "pagination"
       setPagination(() => ({
         currentPage: response.data.data.current_page,
