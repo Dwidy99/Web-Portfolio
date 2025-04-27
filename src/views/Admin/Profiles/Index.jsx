@@ -1,7 +1,7 @@
 //import react
 import { useEffect, useRef, useState } from "react";
 //import react-router-dom
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //quill CSS
 import "react-quill/dist/quill.snow.css";
 
@@ -25,16 +25,19 @@ export default function ProfilesIndex() {
   const formRef = useRef(null);
 
   // const { id } = useParams();
+  const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
+  const [about, setAbout] = useState("");
+  const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
+  const [tech_description, setTechDescription] = useState("");
   const [errors, setErrors] = useState([]);
 
   const [profileImage, setProfileImage] = useState(""); // URL for the profile image
   const token = Cookies.get("token");
 
   const user = JSON.parse(Cookies.get("user"));
-  console.log(user);
 
   const fetchDataProfile = async () => {
     // Pastikan user dan token tersedia sebelum melakukan request
@@ -53,19 +56,25 @@ export default function ProfilesIndex() {
 
       if (!data || Object.keys(data).length === 0) {
         toast.error("Profile data not found!", { position: "top-center" });
-        setTitle("No profile available");
+        setName("No profile name available");
+        setTitle("No profile title available");
         setProfileImage(""); // Bisa diisi dengan placeholder image jika kosong
-        setContent("No address available.");
+        setAbout("No about available.");
+        setDescription("No description available.");
+        setContent("No content available.");
+        setTechDescription("No tech available.");
         return;
       }
 
       // Set state dengan data yang tersedia
+      setName(data.name || "Unknow");
       setTitle(data.title || "Untitled");
       setProfileImage(data.image || ""); // Bisa diisi dengan placeholder image jika kosong
+      setAbout(data.about || "No about available.");
+      setDescription(data.description || "No description available.");
       setContent(data.content || "No content available.");
+      setTechDescription(data.tech_description || "No tech available.");
     } catch (error) {
-      console.error("Failed to fetch profile:", error);
-
       // Tangani error dengan status yang lebih spesifik
       if (error.response) {
         if (error.response.status === 404) {
@@ -90,18 +99,26 @@ export default function ProfilesIndex() {
       }
 
       // Set state ke default agar tidak crash
+      setName("No profile name available");
       setTitle("No profile available");
       setProfileImage("");
-      setContent("No address available.");
+      setAbout("No about available.");
+      setDescription("No description available.");
+      setContent("No content available.");
+      setTechDescription("No tech available.");
     }
   };
 
   const updateProfiles = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("name", name);
     formData.append("title", title);
     formData.append("image", image);
+    formData.append("about", about);
+    formData.append("description", description);
     formData.append("content", content);
+    formData.append("tech_description", tech_description);
     formData.append("_method", "PUT");
 
     await Api.post(`/api/admin/profiles/${user.id}`, formData, {
@@ -115,6 +132,7 @@ export default function ProfilesIndex() {
           position: "top-center",
           duration: 6000,
         });
+
         navigate("/admin/profiles");
       })
       .catch((error) => {
@@ -124,9 +142,14 @@ export default function ProfilesIndex() {
 
   const handleReset = () => {
     if (formRef.current) formRef.current.reset();
+    setName("");
     setTitle("");
     setImage("");
+    setAbout("");
+    setDescription("");
     setContent("");
+    setTechDescription("");
+
     setErrors([]);
   };
 
@@ -152,7 +175,22 @@ export default function ProfilesIndex() {
           {/* Profile Title */}
           <div className="grid grid-cols-2 gap-2 my-4 mb-6">
             <div className="basis-128">
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm font-bold text-gray-700">
+                Profile Name
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter Profile Title"
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500"
+              />
+              {errors.name && (
+                <p className="text-red-500 text-xs">{errors.name[0]}</p>
+              )}
+            </div>
+            <div className="basis-128">
+              <label className="block text-sm font-bold text-gray-700">
                 Profile Title
               </label>
               <input
@@ -188,7 +226,7 @@ export default function ProfilesIndex() {
             </div>
 
             <div className="basis-128 col-span-3">
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm font-bold text-gray-700">
                 Profile Image
               </label>
               <input
@@ -203,10 +241,43 @@ export default function ProfilesIndex() {
             </div>
           </div>
 
-          {/* Content */}
+          {/* Description */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-bold text-gray-700">
+              About
+            </label>
+            <ReactQuill
+              ref={quillRef}
+              theme="snow"
+              value={about}
+              onChange={setAbout}
+              placeholder="Enter Description..."
+            />
+            {errors.about && (
+              <p className="text-red-500 text-xs mt-1">{errors.about[0]}</p>
+            )}
+          </div>
+          {/* Description */}
+          <div className="mb-6">
+            <label className="block text-sm font-bold text-gray-700">
               Description
+            </label>
+            <ReactQuill
+              ref={quillRef}
+              theme="snow"
+              value={description}
+              onChange={setDescription}
+              placeholder="Enter Description..."
+            />
+            {errors.description && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.description[0]}
+              </p>
+            )}
+          </div>
+          <div className="mb-6">
+            <label className="block text-sm font-bold text-gray-700">
+              Content
             </label>
             <ReactQuill
               ref={quillRef}
@@ -217,6 +288,23 @@ export default function ProfilesIndex() {
             />
             {errors.content && (
               <p className="text-red-500 text-xs mt-1">{errors.content[0]}</p>
+            )}
+          </div>
+          <div className="mb-6">
+            <label className="block text-sm font-bold text-gray-700">
+              Tech Description
+            </label>
+            <ReactQuill
+              ref={quillRef}
+              theme="snow"
+              value={tech_description}
+              onChange={setTechDescription}
+              placeholder="Enter your technology stack, tools, or tech-related description..."
+            />
+            {errors.tech_description && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.tech_description[0]}
+              </p>
             )}
           </div>
 
