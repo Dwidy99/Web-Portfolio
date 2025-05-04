@@ -5,9 +5,9 @@ import LayoutAdmin from "../../../layouts/Admin";
 import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import SelectGroupTwo from "../../../components/general/SelectGroupTwo";
+import ReactQuillEditor from "../../../components/general/ReactQuillEditor";
 
 export default function Create() {
   // Refs
@@ -44,7 +44,13 @@ export default function Create() {
         });
         setCategories(data.data);
       } catch (error) {
-        console.error("Failed to fetch categories:", error);
+        toast.error(
+          `Failed to fetch categories. Please try again later. ${error}`,
+          {
+            position: "top-center",
+            duration: 5000,
+          }
+        );
       }
     };
 
@@ -180,17 +186,18 @@ export default function Create() {
             </div>
 
             {/* // Content Editor */}
-            <div className="mb-5">
-              <label className="form-label font-bold">Content</label>
-              <ReactQuill
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700">
+                Description
+              </label>
+              <ReactQuillEditor
                 ref={quillRef}
-                theme="snow"
                 value={content}
                 onChange={setContent}
-                placeholder="Enter content..."
+                placeholder="Enter Description..."
               />
               {errors.content && (
-                <p className="text-sm text-red-600">{errors.content[0]}</p>
+                <p className="text-red-500 text-xs mt-1">{errors.content[0]}</p>
               )}
             </div>
 
