@@ -24,7 +24,7 @@ import { FaUserEdit } from "react-icons/fa";
 
 export default function PhotosIndex() {
   //page title
-  document.title = "Photos - Desa Digital";
+  document.title = "Photos - My Portfolio";
 
   //define state "photos"
   const [photos, setPhotos] = useState([]);

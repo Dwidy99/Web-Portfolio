@@ -18,7 +18,7 @@ import toast from "react-hot-toast";
 import ReactQuillEditor from "../../../components/general/ReactQuillEditor";
 
 export default function PostEdit() {
-  document.title = "Edit Posts - Desa Digital";
+  document.title = "Edit Posts - My Portfolio";
 
   const navigate = useNavigate();
   const quillRef = useRef(null);
@@ -26,6 +26,7 @@ export default function PostEdit() {
 
   const { id } = useParams();
   const [image, setImage] = useState("");
+  const [link, setLink] = useState("");
   const [caption, setCaption] = useState("");
 
   const [errors, setErrors] = useState([]);
@@ -37,10 +38,9 @@ export default function PostEdit() {
     await Api.get(`/api/admin/photos/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then((response) => {
-      console.log(response);
-
       setCaption(response.data.data.caption);
       setPhotoImage(response.data.data.image);
+      setLink(response.data.data.link);
     });
   };
 
@@ -52,6 +52,7 @@ export default function PostEdit() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", image);
+    formData.append("link", link);
     formData.append("caption", caption);
     formData.append("_method", "PUT");
 
@@ -62,8 +63,6 @@ export default function PostEdit() {
       },
     })
       .then((response) => {
-        console.log(response);
-
         toast.success(response.data.message, {
           position: "top-center",
           duration: 6000,
@@ -71,7 +70,6 @@ export default function PostEdit() {
         navigate("/admin/photos");
       })
       .catch((error) => {
-        console.log(error);
         setErrors(error.response.data);
       });
   };
@@ -80,6 +78,7 @@ export default function PostEdit() {
     if (formRef.current) formRef.current.reset();
     setCaption("");
     setImage("");
+    setLink("");
     setErrors([]);
   };
 
@@ -95,28 +94,26 @@ export default function PostEdit() {
       <div className="rounded-lg border bg-white shadow-md mt-8 p-6">
         <h3 className="text-xl font-semibold text-gray-900 mb-4">Edit Post</h3>
         <form ref={formRef} onSubmit={updatePhotos}>
-          {/* Post Image */}
-          <div className="grid grid-cols-4 gap-2 my-4 mb-6">
-            <div className="basis-64">
-              {photoImage ? (
-                <div className="relative">
-                  <img
-                    src={photoImage}
-                    className="w-full h-auto rounded-lg shadow-md object-cover"
-                    style={{ maxWidth: "150px", maxHeight: "150px" }}
-                  />
-                </div>
-              ) : (
-                <div className="flex items-center justify-center h-32 bg-gray-200 rounded-lg">
-                  <p className="text-sm text-gray-600">No icon available</p>
-                </div>
-              )}
-            </div>
+          <div className="basis-64">
+            {photoImage ? (
+              <div className="relative">
+                <img
+                  src={photoImage}
+                  className="w-full h-auto rounded-lg shadow-md object-cover"
+                  style={{ maxWidth: "150px", maxHeight: "150px" }}
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-32 bg-gray-200 rounded-lg">
+                <p className="text-sm text-gray-600">No icon available</p>
+              </div>
+            )}
+          </div>
 
-            <div className="basis-128 col-span-3">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Photo
-              </label>
+          {/* Post Image */}
+          <div className="grid grid-cols-2 gap-2">
+            <div className="my-2">
+              <label className="mb-3 block text-black">Photo</label>
               <input
                 type="file"
                 accept="image/*"
@@ -125,6 +122,20 @@ export default function PostEdit() {
               />
               {errors.image && (
                 <p className="text-red-500 text-xs mt-1">{errors.image[0]}</p>
+              )}
+            </div>
+
+            <div className="my-2">
+              <label className="mb-3 block text-black">Link</label>
+              <input
+                type="text"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+                placeholder="Enter post link.."
+                className="w-full rounded-lg border border-stroke py-3 px-5 text-black outline-none transition focus:border-primary"
+              />
+              {errors.link && (
+                <p className="text-sm text-red-600">{errors.link[0]}</p>
               )}
             </div>
           </div>

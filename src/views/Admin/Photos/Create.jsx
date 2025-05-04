@@ -18,6 +18,7 @@ export default function PhotosCreate(props) {
 
   //define state "photo"
   const [image, setImage] = useState("");
+  const [link, setLink] = useState("");
   const [caption, setCaption] = useState("");
 
   //define state "errors"
@@ -34,6 +35,7 @@ export default function PhotosCreate(props) {
 
     //append data to formData
     formData.append("image", image);
+    formData.append("link", link);
     formData.append("caption", caption);
 
     await Api.post(`/api/admin/photos`, formData, {
@@ -60,6 +62,7 @@ export default function PhotosCreate(props) {
         // Reset error messages
         setErrors("");
         setImage("");
+        setLink("");
         setCaption("");
       })
       .catch((err) => {
@@ -71,8 +74,9 @@ export default function PhotosCreate(props) {
     if (formRef.current) {
       formRef.current.reset(); // Reset form fields
     }
-    setCaption(""); // Reset caption state
     setImage(""); // Reset image state
+    setLink(""); // Reset link state
+    setCaption(""); // Reset caption state
     setErrors([]); // Clear errors
   };
 
@@ -85,30 +89,41 @@ export default function PhotosCreate(props) {
       </div>
       <div className="flex flex-col gap-5.5 p-6.5">
         <form onSubmit={storePhoto}>
-          <div className="mb-3">
-            <label className="mb-2 block text-black dark:text-white">
-              Image
-            </label>
-            <input
-              type="file"
-              id="file"
-              className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-              accept="images/*"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-          </div>
-          {errors.image && (
-            <div className="w-full">
-              <p className="mb-3 text-sm font-semibold text-[#bd2929]">
-                {errors.image[0]}
-              </p>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="my-3">
+              <label className="mb-3 font-bold">Image</label>
+              <input
+                type="file"
+                id="file"
+                className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                accept="images/*"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+              {errors.image && (
+                <div className="w-full">
+                  <p className="mb-3 text-sm font-semibold text-[#bd2929]">
+                    {errors.image[0]}
+                  </p>
+                </div>
+              )}
             </div>
-          )}
+            <div className="my-3">
+              <label className="mb-3 font-bold">Link</label>
+              <input
+                type="text"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+                placeholder="Enter post link.."
+                className="w-full rounded-lg border border-stroke py-3 px-5 outline-none transition focus:border-primary"
+              />
+              {errors.link && (
+                <p className="text-sm text-red-600">{errors.link[0]}</p>
+              )}
+            </div>
+          </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700">
-              Caption
-            </label>
+            <label className="mb-3 font-bold">Caption</label>
             <ReactQuillEditor
               ref={quillRef}
               value={caption}
@@ -141,5 +156,5 @@ export default function PhotosCreate(props) {
 }
 
 PhotosCreate.propTypes = {
-  fetchData: PropTypes.func.isRequired, // fetchData harus function dan wajib diisi
+  fetchData: PropTypes.func, // fetchData harus function dan wajib diisi
 };
