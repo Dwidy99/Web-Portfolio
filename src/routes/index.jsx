@@ -48,12 +48,14 @@ import ProductsEdit from "../views/Admin/Products/Edit";
 import PhotosIndex from "../views/Admin/Photos/Index";
 import PhotosCreate from "../views/Admin/Photos/Create";
 import PhotosEdit from "../views/Admin/Photos/Edit";
-// import Sliders
-import SlidersIndex from "../views/Admin/Sliders/Index";
 // import Experiences
 import ExperiencesIndex from "../views/Admin/Experiences/Index";
 import ExperiencesCreate from "../views/Admin/Experiences/Create";
 import ExperiencesEdit from "../views/Admin/Experiences/Edit";
+// import Contacts
+import ContactsIndex from "../views/Admin/Contacts/Index";
+import ContactsCreate from "../views/Admin/Contacts/Create";
+import ContactsEdit from "../views/Admin/Contacts/Edit";
 
 //======================================================
 // view public
@@ -66,14 +68,14 @@ import Loader from "../components/general/Loader";
 
 // import Home
 import Home from "../views/Web/Home/Index";
-
 // import Blogs
 import BlogsIndex from "../views/Web/Post/Index";
 import BlogsShow from "../views/Web/Post/Show";
 import CategoryPostsIndex from "../views/Web/Post/CategoryPostsIndex";
-
 // import About
 import AboutIndex from "../views/Web/About/Index";
+// import Projects
+import ProjectsIndex from "../views/Web/Projects/Index";
 
 export default function RoutesIndex() {
   const [loading, setLoading] = useState(true);
@@ -339,16 +341,6 @@ export default function RoutesIndex() {
         }
       />
 
-      {/* route "/admin/sliders" */}
-      <Route
-        path="/admin/sliders"
-        element={
-          <PrivateRoutes>
-            <SlidersIndex />
-          </PrivateRoutes>
-        }
-      />
-
       {/* route "/admin/pages/experiences" */}
       <Route
         path="/admin/experiences"
@@ -379,6 +371,36 @@ export default function RoutesIndex() {
         }
       />
 
+      {/* route "/admin/contacts" */}
+      <Route
+        path="/admin/contacts"
+        element={
+          <PrivateRoutes>
+            <ContactsIndex />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/contacts/create" */}
+      <Route
+        path="/admin/contacts/create"
+        element={
+          <PrivateRoutes>
+            <ContactsCreate />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "admin/contacts/edit" */}
+      <Route
+        path="/admin/contacts/edit/:id"
+        element={
+          <PrivateRoutes>
+            <ContactsEdit />
+          </PrivateRoutes>
+        }
+      />
+
       {/* PUBLIC Route */}
 
       {/* route "/" */}
@@ -402,6 +424,9 @@ export default function RoutesIndex() {
 
       {/* route "/public/about" */}
       <Route path="/about" element={<AboutIndex />} />
+
+      {/* route "/public/projects" */}
+      <Route path="/projects" element={<ProjectsIndex />} />
     </Routes>
   );
 }
