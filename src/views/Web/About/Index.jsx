@@ -3,13 +3,16 @@ import LayoutWeb from "../../../layouts/Web";
 import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 import AccordionItem from "../../../components/general/AccordionItem";
+import DOMPurify from "dompurify";
 
 export default function Index() {
   const [profiles, setProfiles] = useState(null);
   const [experiences, setExperiences] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const [openIndex, setOpenIndex] = useState(0);
   const [loadingProfiles, setLoadingProfiles] = useState(false);
   const [loadingExperiences, setLoadingExperiences] = useState(false);
+  const [loadingContacts, setLoadingContacts] = useState(false);
 
   const toggle = (index) => {
     if (openIndex === index) {
@@ -65,9 +68,26 @@ export default function Index() {
     }
   };
 
+  const fetchDataContacts = async () => {
+    setLoadingContacts(true);
+    try {
+      const response = await Api.get(`/api/public/contacts`);
+      setContacts(response.data.data.data);
+    } catch (error) {
+      toast.error(`Failed to load contact data: ${error}`, {
+        // Perbaiki pesan error
+        position: "top-center",
+        duration: 5000,
+      });
+    } finally {
+      setLoadingContacts(false);
+    }
+  };
+
   useEffect(() => {
     fetchDataProfiles();
     fetchDataExperiences();
+    fetchDataContacts();
   }, []);
 
   // 👇 Tambahkan ini setelah useEffect di atas
@@ -77,7 +97,7 @@ export default function Index() {
     }
   }, [experiences]);
 
-  if (loadingProfiles || !profiles) {
+  if (loadingProfiles || !profiles || loadingContacts) {
     return (
       <LayoutWeb>
         <div className="container mt-20 text-center text-gray-600 dark:text-gray-300">
@@ -117,19 +137,40 @@ export default function Index() {
                 </div>
                 <h3 className="pt-4 text-2xl font-bold">{profiles.name}</h3>
                 <div className="text-gray-500">{profiles.title}</div>
-                <div className="mt-2 flex gap-3">
-                  {profiles.contacts?.map((contact, i) => (
-                    <a
-                      key={i}
-                      href={contact.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-gray-200"
-                    >
-                      {contact.icon}
-                    </a>
-                  ))}
-                </div>
+                <ul className="flex flex-row mt-2 justify-between">
+                  {contacts &&
+                  Array.isArray(contacts) &&
+                  contacts.length > 0 ? (
+                    contacts.map((contact, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center dark:text-gray-400"
+                      >
+                        {contact.image ? (
+                          <a
+                            href={contact.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline"
+                          >
+                            <img
+                              src={contact.image}
+                              alt={contact.name}
+                              className="w-10 h-10 object-cover mx-2 rounded-full"
+                            />
+                          </a>
+                        ) : (
+                          <span className="text-xs text-gray-400">
+                            No Image
+                          </span>
+                        )}
+                      </li>
+                    ))
+                  ) : (
+                    <p className="dark:text-gray-400">No contacts available.</p>
+                  )}
+                </ul>
+                {/* munculkan contact disini */}
               </div>
 
               {/* About & Experiences */}
@@ -139,13 +180,17 @@ export default function Index() {
                 </h2>
                 <p
                   className="my-6 text-lg dark:text-gray-500"
-                  dangerouslySetInnerHTML={{ __html: profiles.about }}
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(profiles.about),
+                  }}
                 ></p>
 
                 <h2 className="font-bold text-4xl">Why have this blog?</h2>
                 <p
                   className="my-6 text-lg dark:text-gray-500"
-                  dangerouslySetInnerHTML={{ __html: profiles.description }}
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(profiles.description),
+                  }}
                 ></p>
 
                 {profiles.blogPurpose?.map((text, i) => (
@@ -181,7 +226,7 @@ export default function Index() {
                 <p
                   className="my-6 text-lg dark:text-gray-500"
                   dangerouslySetInnerHTML={{
-                    __html: profiles.tech_description,
+                    __html: DOMPurify.sanitize(profiles.tech_description),
                   }}
                 ></p>
               </div>
