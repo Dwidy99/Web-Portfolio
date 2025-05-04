@@ -101,8 +101,8 @@ export default function Home() {
                 </div>
                 <div className="w-full xsm:order-1 xsm:p-5 lg:order-2">
                   <div>
-                    <h3 className="text-2xl font-semibold mb-2">
-                      {profile.title}
+                    <h3 className="text-xl font-semibold mb-2">
+                      Hi I am {profile.name} - {profile.caption}
                     </h3>
                     <p
                       className="mt-6 text-lg dark:text-gray-500"
