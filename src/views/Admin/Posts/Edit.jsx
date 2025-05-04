@@ -2,8 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 //import react-router-dom
 import { Link, useNavigate, useParams } from "react-router-dom";
-//import ReactQuil
-import ReactQuill from "react-quill";
 //quill CSS
 import "react-quill/dist/quill.snow.css";
 
@@ -18,6 +16,7 @@ import Cookies from "js-cookie";
 //import toast js
 import toast from "react-hot-toast";
 import SelectGroupTwo from "../../../components/general/SelectGroupTwo";
+import ReactQuillEditor from "./../../../components/general/ReactQuillEditor";
 
 export default function PostEdit() {
   document.title = "Edit Posts - Desa Digital";
@@ -189,15 +188,14 @@ export default function PostEdit() {
 
           {/* Content */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700">
               Content
             </label>
-            <ReactQuill
+            <ReactQuillEditor
               ref={quillRef}
-              theme="snow"
               value={content}
               onChange={setContent}
-              placeholder="Enter Post Content..."
+              placeholder="Enter Description..."
             />
             {errors.content && (
               <p className="text-red-500 text-xs mt-1">{errors.content[0]}</p>
