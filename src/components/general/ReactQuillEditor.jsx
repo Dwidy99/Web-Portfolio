@@ -4,29 +4,45 @@ import ReactQuill from "react-quill";
 import PropTypes from "prop-types";
 import "react-quill/dist/quill.snow.css";
 
+// Tambahkan fontSize dan color ke Quill jika diperlukan
 const ReactQuillEditor = forwardRef(
   ({ value, onChange, placeholder = "Enter text..." }, ref) => {
     const modules = {
       toolbar: [
-        [{ header: [1, 2, 3, false] }],
-        ["bold", "italic", "underline", "strike"],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        [{ font: [] }],
+        [{ size: ["small", false, "large", "huge"] }],
+        ["bold", "italic", "underline", "strike", "blockquote", "code-block"],
+        [{ color: [] }, { background: [] }],
+        [{ script: "sub" }, { script: "super" }],
         [{ list: "ordered" }, { list: "bullet" }],
-        ["link", "image", "code-block"],
+        [{ indent: "-1" }, { indent: "+1" }],
+        [{ align: [] }],
+        ["link", "image", "video"],
         ["clean"],
       ],
     };
 
     const formats = [
       "header",
+      "font",
+      "size",
       "bold",
       "italic",
       "underline",
       "strike",
+      "blockquote",
+      "code-block",
+      "color",
+      "background",
+      "script",
       "list",
       "bullet",
+      "indent",
+      "align",
       "link",
       "image",
-      "code-block",
+      "video",
     ];
 
     return (

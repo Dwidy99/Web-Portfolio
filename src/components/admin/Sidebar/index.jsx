@@ -24,6 +24,7 @@ import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaPhotoVideo, FaUserEdit, FaUsersCog } from "react-icons/fa";
 import { GrDashboard, GrInsecure, GrSecure } from "react-icons/gr";
 import { ImProfile } from "react-icons/im";
+import { TiContacts } from "react-icons/ti";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
@@ -236,59 +237,66 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           )}
 
           {/* MEDIA MANAGEMENT */}
-          {hasAnyPermission(["sliders.index"]) ||
-            (hasAnyPermission(["photos.index"]) && (
-              <>
-                <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2 flex items-center">
-                  <FaBarsProgress className="mr-2" /> MEDIA MANAGEMENT
-                </h3>
-                <ul className="mb-6 flex flex-col text-bodydark2 gap-1.5">
-                  {/* Media Link */}
-                  <SidebarLinkGroup
-                    activeCondition={activeRoute[2] === "dashboard"}
-                  >
-                    {(handleClick, open) => (
-                      <>
-                        <NavLink
-                          to="#"
-                          className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                            open ? "" : ""
+          {(hasAnyPermission(["sliders.index"]) ||
+            hasAnyPermission(["photos.index"]) ||
+            hasAnyPermission(["contacts.index"])) && (
+            <>
+              <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2 flex items-center">
+                <FaBarsProgress className="mr-2" /> MEDIA MANAGEMENT
+              </h3>
+              <ul className="mb-6 flex flex-col text-bodydark2 gap-1.5">
+                {/* Media Link */}
+                <SidebarLinkGroup
+                  activeCondition={activeRoute[2] === "dashboard"}
+                >
+                  {(handleClick, open) => (
+                    <>
+                      <NavLink
+                        to="#"
+                        className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          open ? "" : ""
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
+                        }}
+                      >
+                        <FaPhotoVideo />
+                        Media
+                        <FaCircleChevronDown
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                            open && "rotate-180"
                           }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
-                          }}
-                        >
-                          <FaPhotoVideo />
-                          Media
-                          <FaCircleChevronDown
-                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                              open && "rotate-180"
-                            }`}
-                          />
-                        </NavLink>
-                        <div
-                          className={`translate transform overflow-hidden ${
-                            !open && "hidden"
-                          }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-9">
-                            <li>
-                              <div className="flex items-center">
-                                <FaImages />
-                                {renderNavLink("/admin/photos", "Photos")}
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </>
-                    )}
-                  </SidebarLinkGroup>
-                </ul>
-              </>
-            ))}
+                        />
+                      </NavLink>
+                      <div
+                        className={`translate transform overflow-hidden ${
+                          !open && "hidden"
+                        }`}
+                      >
+                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-9">
+                          <li>
+                            <div className="flex items-center">
+                              <FaImages />
+                              {renderNavLink("/admin/photos", "Photos")}
+                            </div>
+                          </li>
+                          <li>
+                            <div className="flex items-center">
+                              <TiContacts />
+                              {renderNavLink("/admin/contacts", "Contacts")}
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
+                </SidebarLinkGroup>
+              </ul>
+            </>
+          )}
 
           {/* USERS MANAGEMENT */}
           <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2 flex items-center">
