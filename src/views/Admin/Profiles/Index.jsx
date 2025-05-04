@@ -15,7 +15,7 @@ import Api from "../../../services/Api";
 import Cookies from "js-cookie";
 //import toast js
 import toast from "react-hot-toast";
-import ReactQuill from "react-quill";
+import ReactQuillEditor from "../../../components/general/ReactQuillEditor";
 
 export default function ProfilesIndex() {
   document.title = "Edit Profile - My Portfolio";
@@ -29,6 +29,7 @@ export default function ProfilesIndex() {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [about, setAbout] = useState("");
+  const [caption, setCaption] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [tech_description, setTechDescription] = useState("");
@@ -60,6 +61,7 @@ export default function ProfilesIndex() {
         setTitle("No profile title available");
         setProfileImage(""); // Bisa diisi dengan placeholder image jika kosong
         setAbout("No about available.");
+        setCaption("No caption available.");
         setDescription("No description available.");
         setContent("No content available.");
         setTechDescription("No tech available.");
@@ -71,6 +73,7 @@ export default function ProfilesIndex() {
       setTitle(data.title || "Untitled");
       setProfileImage(data.image || ""); // Bisa diisi dengan placeholder image jika kosong
       setAbout(data.about || "No about available.");
+      setCaption(data.caption || "No caption available.");
       setDescription(data.description || "No description available.");
       setContent(data.content || "No content available.");
       setTechDescription(data.tech_description || "No tech available.");
@@ -103,6 +106,7 @@ export default function ProfilesIndex() {
       setTitle("No profile available");
       setProfileImage("");
       setAbout("No about available.");
+      setCaption("No caption available.");
       setDescription("No description available.");
       setContent("No content available.");
       setTechDescription("No tech available.");
@@ -116,6 +120,7 @@ export default function ProfilesIndex() {
     formData.append("title", title);
     formData.append("image", image);
     formData.append("about", about);
+    formData.append("caption", caption);
     formData.append("description", description);
     formData.append("content", content);
     formData.append("tech_description", tech_description);
@@ -146,6 +151,7 @@ export default function ProfilesIndex() {
     setTitle("");
     setImage("");
     setAbout("");
+    setCaption("");
     setDescription("");
     setContent("");
     setTechDescription("");
@@ -173,7 +179,7 @@ export default function ProfilesIndex() {
         </h3>
         <form ref={formRef} onSubmit={updateProfiles}>
           {/* Profile Title */}
-          <div className="grid grid-cols-2 gap-2 my-4 mb-6">
+          <div className="grid grid-cols-2 gap-2 my-4">
             <div className="basis-128">
               <label className="block text-sm font-bold text-gray-700">
                 Profile Name
@@ -206,26 +212,25 @@ export default function ProfilesIndex() {
             </div>
           </div>
 
+          <div className="basis-64">
+            {profileImage ? (
+              <div className="relative">
+                <img
+                  src={profileImage}
+                  alt={title}
+                  className="w-full h-auto rounded-lg shadow-md object-cover"
+                  style={{ maxWidth: "150px", maxHeight: "150px" }}
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-32 bg-gray-200 rounded-lg">
+                <p className="text-sm text-gray-600">No icon available</p>
+              </div>
+            )}
+          </div>
           {/* Profile Image */}
-          <div className="grid grid-cols-4 gap-2 my-4 mb-6">
-            <div className="basis-64">
-              {profileImage ? (
-                <div className="relative">
-                  <img
-                    src={profileImage}
-                    alt={title}
-                    className="w-full h-auto rounded-lg shadow-md object-cover"
-                    style={{ maxWidth: "150px", maxHeight: "150px" }}
-                  />
-                </div>
-              ) : (
-                <div className="flex items-center justify-center h-32 bg-gray-200 rounded-lg">
-                  <p className="text-sm text-gray-600">No icon available</p>
-                </div>
-              )}
-            </div>
-
-            <div className="basis-128 col-span-3">
+          <div className="grid grid-cols-2 gap-2 my-4">
+            <div className="basis-128">
               <label className="block text-sm font-bold text-gray-700">
                 Profile Image
               </label>
@@ -239,16 +244,30 @@ export default function ProfilesIndex() {
                 <p className="text-red-500 text-xs">{errors.image[0]}</p>
               )}
             </div>
+            <div className="basis-128">
+              <label className="block text-sm font-bold text-gray-700">
+                Caption
+              </label>
+              <input
+                type="text"
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+                placeholder="Enter Profile Title"
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500"
+              />
+              {errors.caption && (
+                <p className="text-red-500 text-xs">{errors.caption[0]}</p>
+              )}
+            </div>
           </div>
 
-          {/* Description */}
+          {/* About */}
           <div className="mb-6">
             <label className="block text-sm font-bold text-gray-700">
               About
             </label>
-            <ReactQuill
+            <ReactQuillEditor
               ref={quillRef}
-              theme="snow"
               value={about}
               onChange={setAbout}
               placeholder="Enter Description..."
@@ -257,14 +276,14 @@ export default function ProfilesIndex() {
               <p className="text-red-500 text-xs mt-1">{errors.about[0]}</p>
             )}
           </div>
+
           {/* Description */}
           <div className="mb-6">
             <label className="block text-sm font-bold text-gray-700">
               Description
             </label>
-            <ReactQuill
+            <ReactQuillEditor
               ref={quillRef}
-              theme="snow"
               value={description}
               onChange={setDescription}
               placeholder="Enter Description..."
@@ -275,13 +294,13 @@ export default function ProfilesIndex() {
               </p>
             )}
           </div>
+
           <div className="mb-6">
             <label className="block text-sm font-bold text-gray-700">
               Content
             </label>
-            <ReactQuill
+            <ReactQuillEditor
               ref={quillRef}
-              theme="snow"
               value={content}
               onChange={setContent}
               placeholder="Enter Description..."
@@ -290,16 +309,16 @@ export default function ProfilesIndex() {
               <p className="text-red-500 text-xs mt-1">{errors.content[0]}</p>
             )}
           </div>
+
           <div className="mb-6">
             <label className="block text-sm font-bold text-gray-700">
               Tech Description
             </label>
-            <ReactQuill
+            <ReactQuillEditor
               ref={quillRef}
-              theme="snow"
               value={tech_description}
               onChange={setTechDescription}
-              placeholder="Enter your technology stack, tools, or tech-related description..."
+              placeholder="Enter Tech Description..."
             />
             {errors.tech_description && (
               <p className="text-red-500 text-xs mt-1">
