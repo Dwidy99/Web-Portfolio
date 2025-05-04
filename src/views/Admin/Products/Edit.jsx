@@ -12,7 +12,7 @@ import Api from "../../../services/Api";
 import Cookies from "js-cookie";
 //import toast js
 import toast from "react-hot-toast";
-import ReactQuill from "react-quill";
+import ReactQuillEditor from "../../../components/general/ReactQuillEditor";
 
 export default function ProductsEdit() {
   //page title
@@ -133,7 +133,7 @@ export default function ProductsEdit() {
           {/* Post Title */}
           <div className="grid grid-cols-2 gap-2 my-4 mb-6">
             <div className="basis-128">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-bold text-gray-700">
                 Product Title
               </label>
               <input
@@ -149,7 +149,7 @@ export default function ProductsEdit() {
             </div>
 
             <div className="basis-128">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-bold text-gray-700">
                 Price
               </label>
               <input
@@ -184,7 +184,7 @@ export default function ProductsEdit() {
             </div>
 
             <div className="basis-128 col-span-3 mt-5">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-bold text-gray-700">
                 Product Image
               </label>
               <input
@@ -202,7 +202,7 @@ export default function ProductsEdit() {
           {/* Post Image */}
           <div className="grid grid-cols-6 gap-2 my-4 mb-6">
             <div className="basis-128 col-span-3">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-bold text-gray-700">
                 Phone
               </label>
               <input
@@ -218,7 +218,7 @@ export default function ProductsEdit() {
             </div>
 
             <div className="basis-128 col-span-3">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-bold text-gray-700">
                 Owner
               </label>
               <input
@@ -237,7 +237,7 @@ export default function ProductsEdit() {
           <div className="mb-3">
             <label
               htmlFor="address"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-bold text-gray-700"
             >
               Address
             </label>
@@ -257,15 +257,14 @@ export default function ProductsEdit() {
 
           {/* Content */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-bold text-gray-700">
               Content
             </label>
-            <ReactQuill
+            <ReactQuillEditor
               ref={quillRef}
-              theme="snow"
               value={content}
               onChange={setContent}
-              placeholder="Enter Post Content..."
+              placeholder="Enter Description..."
             />
             {errors.content && (
               <p className="text-red-500 text-xs mt-1">{errors.content[0]}</p>

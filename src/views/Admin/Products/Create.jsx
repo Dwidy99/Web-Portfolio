@@ -12,7 +12,7 @@ import LayoutAdmin from "../../../layouts/Admin";
 import toast from "react-hot-toast";
 // import Cookies js
 import Cookies from "js-cookie";
-import ReactQuill from "react-quill";
+import ReactQuillEditor from "./../../../components/general/ReactQuillEditor";
 
 export default function ProductsCreate() {
   //page title
@@ -215,12 +215,11 @@ export default function ProductsCreate() {
             <label className="block text-sm font-medium text-gray-700">
               Content
             </label>
-            <ReactQuill
+            <ReactQuillEditor
               ref={quillRef}
-              theme="snow"
               value={content}
               onChange={setContent}
-              placeholder="Enter Post Content..."
+              placeholder="Enter Description..."
             />
             {errors.content && (
               <p className="text-red-500 text-xs mt-1">{errors.content[0]}</p>
