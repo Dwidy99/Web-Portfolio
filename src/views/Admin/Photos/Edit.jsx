@@ -25,6 +25,8 @@ export default function PostEdit() {
   const formRef = useRef(null);
 
   const { id } = useParams();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [link, setLink] = useState("");
   const [caption, setCaption] = useState("");
@@ -38,6 +40,8 @@ export default function PostEdit() {
     await Api.get(`/api/admin/photos/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then((response) => {
+      setTitle(response.data.data.title);
+      setDescription(response.data.data.description);
       setCaption(response.data.data.caption);
       setPhotoImage(response.data.data.image);
       setLink(response.data.data.link);
@@ -51,6 +55,8 @@ export default function PostEdit() {
   const updatePhotos = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
     formData.append("image", image);
     formData.append("link", link);
     formData.append("caption", caption);
@@ -76,6 +82,8 @@ export default function PostEdit() {
 
   const handleReset = () => {
     if (formRef.current) formRef.current.reset();
+    setTitle("");
+    setDescription("");
     setCaption("");
     setImage("");
     setLink("");
@@ -92,8 +100,21 @@ export default function PostEdit() {
       </Link>
 
       <div className="rounded-lg border bg-white shadow-md mt-8 p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Edit Post</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">Edit Photo</h3>
         <form ref={formRef} onSubmit={updatePhotos}>
+          <div className="my-2">
+            <label className="my-3 block text-black">Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter  title.."
+              className="w-full rounded-lg border border-stroke py-3 px-5 text-black outline-none transition focus:border-primary"
+            />
+            {errors.title && (
+              <p className="text-sm text-red-600">{errors.title[0]}</p>
+            )}
+          </div>
           <div className="basis-64">
             {photoImage ? (
               <div className="relative">
@@ -131,13 +152,31 @@ export default function PostEdit() {
                 type="text"
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
-                placeholder="Enter post link.."
+                placeholder="Enter link.."
                 className="w-full rounded-lg border border-stroke py-3 px-5 text-black outline-none transition focus:border-primary"
               />
               {errors.link && (
                 <p className="text-sm text-red-600">{errors.link[0]}</p>
               )}
             </div>
+          </div>
+
+          {/* Description */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700">
+              Description
+            </label>
+            <ReactQuillEditor
+              ref={quillRef}
+              value={description}
+              onChange={setDescription}
+              placeholder="Enter Caption..."
+            />
+            {errors.description && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.description[0]}
+              </p>
+            )}
           </div>
 
           {/* Caption */}

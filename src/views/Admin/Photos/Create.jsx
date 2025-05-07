@@ -17,6 +17,8 @@ export default function PhotosCreate(props) {
   const quillRef = useRef(null);
 
   //define state "photo"
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [link, setLink] = useState("");
   const [caption, setCaption] = useState("");
@@ -34,6 +36,8 @@ export default function PhotosCreate(props) {
     const formData = new FormData();
 
     //append data to formData
+    formData.append("title", title);
+    formData.append("description", description);
     formData.append("image", image);
     formData.append("link", link);
     formData.append("caption", caption);
@@ -61,6 +65,9 @@ export default function PhotosCreate(props) {
 
         // Reset error messages
         setErrors("");
+
+        setTitle("");
+        setDescription("");
         setImage("");
         setLink("");
         setCaption("");
@@ -74,6 +81,8 @@ export default function PhotosCreate(props) {
     if (formRef.current) {
       formRef.current.reset(); // Reset form fields
     }
+    setTitle(""); // Reset Title state
+    setDescription(""); // Reset Description state
     setImage(""); // Reset image state
     setLink(""); // Reset link state
     setCaption(""); // Reset caption state
@@ -89,6 +98,19 @@ export default function PhotosCreate(props) {
       </div>
       <div className="flex flex-col gap-5.5 p-6.5">
         <form onSubmit={storePhoto}>
+          <div className="my-2">
+            <label className="mb-3 font-bold">Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter title.."
+              className="w-full rounded-lg border border-stroke py-3 px-5 outline-none transition focus:border-primary"
+            />
+            {errors.title && (
+              <p className="text-sm text-red-600">{errors.title[0]}</p>
+            )}
+          </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="my-3">
               <label className="mb-3 font-bold">Image</label>
@@ -122,7 +144,21 @@ export default function PhotosCreate(props) {
             </div>
           </div>
 
-          <div className="mb-6">
+          <div className="my-4">
+            <label className="mb-3 font-bold">Description</label>
+            <ReactQuillEditor
+              ref={quillRef}
+              value={description}
+              onChange={setDescription}
+              placeholder="Enter Caption..."
+            />
+            {errors.description && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.description[0]}
+              </p>
+            )}
+          </div>
+          <div className="my-4">
             <label className="mb-3 font-bold">Caption</label>
             <ReactQuillEditor
               ref={quillRef}
