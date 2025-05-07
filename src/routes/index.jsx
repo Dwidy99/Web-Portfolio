@@ -9,7 +9,11 @@ import "../assets/admin/css/satoshi.css";
 
 //import view login
 import Login from "../views/Auth/Login";
+//import view Forgot
+import Forgot from "../views/Auth/Forgot";
 //import view forbidden
+import ResetPassword from "../views/Auth/ResetPassword";
+
 import Forbidden from "../views/Auth/Forbidden";
 //import privateRoute
 import PrivateRoutes from "./PrivateRoutes";
@@ -97,6 +101,10 @@ export default function RoutesIndex() {
     <Routes>
       {/* route "/login" */}
       <Route path="/login" element={<Login />} />
+      {/* route "/Forgot" */}
+      <Route path="/forgot-password" element={<Forgot />} />
+      {/* route "/Reset" */}
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
 
       {/* route "/forbidden" */}
       <Route path="/forbidden" element={<Forbidden />} />

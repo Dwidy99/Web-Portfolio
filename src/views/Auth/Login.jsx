@@ -20,7 +20,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 
 export default function Login() {
   // Title page
-  document.title = "Login - Admin Desa";
+  document.title = "Login - Admin CMS Portfolio";
 
   // Navigate
   const navigate = useNavigate();
@@ -145,9 +145,9 @@ export default function Login() {
                   )}
                 </div>
 
-                <div className="flex">
+                <div className="flex justify-between">
                   <NavLink className="w-1/2" to="/">
-                    <h4 className="mt-3 text-blue-600">Back to home page</h4>
+                    <h4 className="mt-4 text-blue-600">Back to home page</h4>
                   </NavLink>
                   <button
                     className="w-1/2 min-h-[40px] bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
@@ -155,6 +155,15 @@ export default function Login() {
                   >
                     Login
                   </button>
+                </div>
+
+                <div className="text-right">
+                  <NavLink
+                    to="/forgot-password"
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Forgot your password?
+                  </NavLink>
                 </div>
               </form>
             </div>
