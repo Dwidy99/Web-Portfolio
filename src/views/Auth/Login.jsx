@@ -53,7 +53,7 @@ export default function Login() {
 
         // Show toast
         toast.success("Login Successfully!", {
-          position: "top-right",
+          position: "top-center",
           duration: 4000,
         });
 
