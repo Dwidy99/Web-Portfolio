@@ -20,11 +20,12 @@ import Cookies from "js-cookie";
 //import toast js
 import toast from "react-hot-toast";
 import { MdPersonSearch } from "react-icons/md";
-import { FaCirclePlus } from "react-icons/fa6";
+import { FaCirclePlus, FaTrash } from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
 
 export default function UsersIndex() {
   // title page
-  document.title = "Users - Desa Digital";
+  document.title = "Users - My Portfolio";
 
   //define state "users"
   const [users, setUsers] = useState("");
@@ -131,7 +132,7 @@ export default function UsersIndex() {
           <div className="w-full basis-1/4 sm:w-auto">
             {hasAnyPermissions(["roles.create"]) && (
               <Link
-                to="/admin/roles/create"
+                to="/admin/users/create"
                 className="mx-2 inline-flex items-center justify-center rounded-md bg-meta-5 py-3.5 px-2 text-center text-md font-medium text-white hover:bg-opacity-90 sm:text-xs"
                 type="button"
               >
@@ -222,20 +223,24 @@ export default function UsersIndex() {
                     ))}
                   </td>
                   <td className="py-5 px-2 text-center text-lg font-medium text-black dark:text-white border border-stroke dark:border-strokedark lg:table-cell">
-                    <Link
-                      to={`/admin/users/edit/${user.id}`}
-                      className="inline-flex mx-2.5 items-center justify-center font-medium text-black"
-                    >
-                      <i className="fa fa-edit"></i>
-                    </Link>
-                    {hasAnyPermissions(["users.delete"]) && (
-                      <button
-                        onClick={() => deleteUser(user.id)}
-                        className="inline-flex mx-2.5 items-center justify-center font-medium text-black"
+                    <div className="flex justify-center items-center">
+                      <Link
+                        to={`/admin/users/edit/${user.id}`}
+                        className="inline-flex items-center justify-center text-blue-500 hover:text-blue-700 mr-2"
+                        title="Edit"
                       >
-                        <i className="fa fa-trash"></i>
-                      </button>
-                    )}
+                        <FaEdit className="h-5 w-5" />
+                      </Link>
+                      {hasAnyPermissions(["users.delete"]) && (
+                        <button
+                          onClick={() => deleteUser(user.id)}
+                          className="inline-flex items-center justify-center text-red-500 hover:text-red-700"
+                          title="Delete"
+                        >
+                          <FaTrash className="h-5 w-5" />
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))
