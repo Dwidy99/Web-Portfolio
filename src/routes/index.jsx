@@ -44,10 +44,6 @@ import PostEdit from "../views/Admin/Posts/Edit";
 import PagesIndex from "../views/Admin/Pages/Index";
 import PagesCreate from "../views/Admin/Pages/Create";
 import PagesEdit from "../views/Admin/Pages/Edit";
-// import Products
-import ProductsIndex from "../views/Admin/Products/Index";
-import ProductsCreate from "../views/Admin/Products/Create";
-import ProductsEdit from "../views/Admin/Products/Edit";
 // import Photos
 import PhotosIndex from "../views/Admin/Photos/Index";
 import PhotosCreate from "../views/Admin/Photos/Create";
@@ -285,36 +281,6 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <PagesEdit />
-          </PrivateRoutes>
-        }
-      />
-
-      {/* route "/admin/pages/products" */}
-      <Route
-        path="/admin/products"
-        element={
-          <PrivateRoutes>
-            <ProductsIndex />
-          </PrivateRoutes>
-        }
-      />
-
-      {/* route "/admin/products/create" */}
-      <Route
-        path="/admin/products/create"
-        element={
-          <PrivateRoutes>
-            <ProductsCreate />
-          </PrivateRoutes>
-        }
-      />
-
-      {/* route "admin/products/edit" */}
-      <Route
-        path="/admin/products/edit/:id"
-        element={
-          <PrivateRoutes>
-            <ProductsEdit />
           </PrivateRoutes>
         }
       />

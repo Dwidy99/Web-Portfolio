@@ -20,7 +20,6 @@ import {
 } from "react-icons/fa6";
 import PropTypes from "prop-types";
 import { GoFileDiff } from "react-icons/go";
-import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaPhotoVideo, FaUserEdit, FaUsersCog } from "react-icons/fa";
 import { GrDashboard, GrInsecure, GrSecure } from "react-icons/gr";
 import { ImProfile } from "react-icons/im";
@@ -218,14 +217,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           )}
                           {hasAnyPermission(["pages.index"]) && (
                             <li>{renderNavLink("/admin/pages", "Pages")}</li>
-                          )}
-                          {hasAnyPermission(["products.index"]) && (
-                            <li>
-                              <div className="flex items-center">
-                                <MdOutlineProductionQuantityLimits />
-                                {renderNavLink("/admin/products", "Products")}
-                              </div>
-                            </li>
                           )}
                         </ul>
                       </div>

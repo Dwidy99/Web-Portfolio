@@ -17,7 +17,7 @@ export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState({
     categories: 0,
     posts: 0,
-    products: 0,
+    experiences: 0,
     aparaturs: 0,
   });
   const [loading, setLoading] = useState(true);
@@ -35,7 +35,7 @@ export default function Dashboard() {
         });
         setDashboardData(response.data.data);
       } catch (err) {
-        setError("Failed to load data. Please try again.");
+        setError(`Failed to load data. Please try again: ${err}`);
       } finally {
         setLoading(false);
       }
@@ -61,8 +61,8 @@ export default function Dashboard() {
       icon: <LuSignpostBig className="text-xl text-primary dark:text-white" />,
     },
     {
-      title: "Total Products",
-      total: dashboardData.products,
+      title: "Total Experiences",
+      total: dashboardData.experiences,
       rate: "2.59%",
       levelUp: true,
       icon: (

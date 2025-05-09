@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Header from "../components/admin/Header";
 import Sidebar from "../components/admin/Sidebar/index";
+import PropTypes from "prop-types";
 
 export default function Admin({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -34,3 +35,7 @@ export default function Admin({ children }) {
     </div>
   );
 }
+
+Admin.propTypes = {
+  children: PropTypes.node.isRequired,
+};

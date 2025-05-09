@@ -38,7 +38,6 @@ export default function SidebarIndex() {
             "categories.index",
             "posts.index",
             "pages.index",
-            "products.index",
           ]) && (
             <Sidebar.Collapse label="Content Management" icon={HiPencil}>
               {hasAnyPermission(["categories.index"]) && (
@@ -66,15 +65,6 @@ export default function SidebarIndex() {
                   active={pathname === "/admin/pages"}
                 >
                   Pages
-                </Sidebar.Item>
-              )}
-              {hasAnyPermission(["products.index"]) && (
-                <Sidebar.Item
-                  as={Link}
-                  to="/admin/products"
-                  active={pathname === "/admin/products"}
-                >
-                  Products
                 </Sidebar.Item>
               )}
             </Sidebar.Collapse>
