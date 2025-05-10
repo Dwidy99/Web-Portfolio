@@ -19,7 +19,7 @@ import Forbidden from "../views/Auth/Forbidden";
 import PrivateRoutes from "./PrivateRoutes";
 
 //import Dashboard
-import Dashboard from "../views/Admin/Dashboard";
+import Dashboard from "../views/Admin/Dashboard/Index";
 //import Permissions
 import PermissionsIndex from "../views/Admin/Permissions/Index";
 // import RolesIndex
