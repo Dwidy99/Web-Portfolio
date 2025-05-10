@@ -16,18 +16,18 @@ import Cookies from "js-cookie";
 import hasAnyPermissions from "../../../utils/Permissions";
 
 //import component create
-import PhotosCreate from "./Create";
+import ProjectsCreate from "./Create";
 import { confirmAlert } from "react-confirm-alert";
 import toast from "react-hot-toast";
 import { MdDeleteForever, MdPersonSearch } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 
-export default function PhotosIndex() {
+export default function ProjectsIndex() {
   //page title
-  document.title = "Photos - My Portfolio";
+  document.title = "Projects - My Portfolio";
 
-  //define state "photos"
-  const [photos, setPhotos] = useState([]);
+  //define state "projects"
+  const [projects, setProjects] = useState([]);
 
   //define state "pagination"
   const [pagination, setPagination] = useState({
@@ -45,7 +45,7 @@ export default function PhotosIndex() {
   //finction "fetchData"
   const fetchData = async (pageNumber = 1, keywords = "") => {
     const page = pageNumber ? pageNumber : pagination.currentPage;
-    await Api.get(`/api/admin/photos?search${keywords}&page=${page}`, {
+    await Api.get(`/api/admin/projects?search${keywords}&page=${page}`, {
       //header
       headers: {
         //header + token
@@ -53,7 +53,7 @@ export default function PhotosIndex() {
       },
     }).then((response) => {
       //set data response to state "setPosts"
-      setPhotos(response.data.data.data);
+      setProjects(response.data.data.data);
 
       //set data response to state "pagination"
       setPagination(() => ({
@@ -88,7 +88,7 @@ export default function PhotosIndex() {
         {
           label: "YES",
           onClick: async () => {
-            await Api.delete(`/api/admin/photos/${id}`, {
+            await Api.delete(`/api/admin/projects/${id}`, {
               //header
               headers: {
                 //header + token
@@ -123,13 +123,13 @@ export default function PhotosIndex() {
     <LayoutAdmin>
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div>
-          {hasAnyPermissions(["photos.create"]) && (
-            <PhotosCreate fetchData={fetchData} />
+          {hasAnyPermissions(["projects.create"]) && (
+            <ProjectsCreate fetchData={fetchData} />
           )}
         </div>
 
         <h4 className="mt-6 mb-1 text-xl font-semibold text-black dark:text-white">
-          Post Lists
+          Project Lists
         </h4>
 
         <div className="w-full basis-1/2 my-4">
@@ -168,15 +168,15 @@ export default function PhotosIndex() {
                 </tr>
               </thead>
               <tbody>
-                {photos.length > 0 ? (
-                  photos.map((photo, index) => (
+                {projects.length > 0 ? (
+                  projects.map((project, index) => (
                     <tr
                       className={`${
-                        index === photos.length - 1
+                        index === projects.length - 1
                           ? ""
                           : "border-b border-stroke dark:border-strokedark"
                       }`}
-                      key={photo.id}
+                      key={project.id}
                     >
                       <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
                         {index + 1}
@@ -184,21 +184,21 @@ export default function PhotosIndex() {
                       <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
                         {/* Adjusted image styling */}
                         <img
-                          src={photo.image}
+                          src={project.image}
                           className="w-12 h-12 object-cover rounded-full mx-auto" // Smaller size and consistent scaling
                         />
                       </td>
                       <td className="py-5 px-4 pl-9 border border-stroke dark:border-strokedark xl:pl-11">
                         <Link
-                          to={`/admin/photos/edit/${photo.id}`}
+                          to={`/admin/projects/edit/${project.id}`}
                           className="inline-flex items-center justify-center rounded-md py-2 px-4  font-medium text-white"
                         >
                           <FaUserEdit className="mr-2 text-xl text-primary dark:text-white" />
                         </Link>
                         {/* Delete Button */}
-                        {hasAnyPermissions(["photos.delete"]) && (
+                        {hasAnyPermissions(["projects.delete"]) && (
                           <button
-                            onClick={() => deletePhoto(photo.id)}
+                            onClick={() => deletePhoto(project.id)}
                             className="inline-flex rounded-md py-2 px-4  font-medium text-white"
                           >
                             <MdDeleteForever className="mr-2 text-xl text-danger dark:text-white" />

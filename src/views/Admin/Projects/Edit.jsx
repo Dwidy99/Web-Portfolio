@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import ReactQuillEditor from "../../../components/general/ReactQuillEditor";
 
-export default function PostEdit() {
+export default function ProjectEdit() {
   document.title = "Edit Posts - My Portfolio";
 
   const navigate = useNavigate();
@@ -33,26 +33,26 @@ export default function PostEdit() {
 
   const [errors, setErrors] = useState([]);
 
-  const [photoImage, setPhotoImage] = useState("");
+  const [projectImage, setProjectImage] = useState("");
   const token = Cookies.get("token");
 
-  const fetchDataPhoto = async () => {
-    await Api.get(`/api/admin/photos/${id}`, {
+  const fetchDataProject = async () => {
+    await Api.get(`/api/admin/projects/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then((response) => {
       setTitle(response.data.data.title);
       setDescription(response.data.data.description);
       setCaption(response.data.data.caption);
-      setPhotoImage(response.data.data.image);
+      setProjectImage(response.data.data.image);
       setLink(response.data.data.link);
     });
   };
 
   useEffect(() => {
-    fetchDataPhoto();
+    fetchDataProject();
   }, []);
 
-  const updatePhotos = async (e) => {
+  const updateProjects = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
@@ -62,7 +62,7 @@ export default function PostEdit() {
     formData.append("caption", caption);
     formData.append("_method", "PUT");
 
-    await Api.post(`/api/admin/photos/${id}`, formData, {
+    await Api.post(`/api/admin/projects/${id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         "content-type": "multipart/form-data",
@@ -73,7 +73,7 @@ export default function PostEdit() {
           position: "top-center",
           duration: 6000,
         });
-        navigate("/admin/photos");
+        navigate("/admin/projects");
       })
       .catch((error) => {
         setErrors(error.response.data);
@@ -93,15 +93,17 @@ export default function PostEdit() {
   return (
     <LayoutAdmin>
       <Link
-        to="/admin/photos/"
+        to="/admin/projects/"
         className="inline-flex items-center justify-center rounded-md bg-meta-4 text-white py-2 px-6 text-sm font-medium hover:bg-lime-400 focus:outline-none"
       >
         <i className="fa-solid fa-arrow-left mr-2"></i> Back
       </Link>
 
       <div className="rounded-lg border bg-white shadow-md mt-8 p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Edit Photo</h3>
-        <form ref={formRef} onSubmit={updatePhotos}>
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+          Edit Project
+        </h3>
+        <form ref={formRef} onSubmit={updateProjects}>
           <div className="my-2">
             <label className="my-3 block text-black">Title</label>
             <input
@@ -116,10 +118,10 @@ export default function PostEdit() {
             )}
           </div>
           <div className="basis-64">
-            {photoImage ? (
+            {projectImage ? (
               <div className="relative">
                 <img
-                  src={photoImage}
+                  src={projectImage}
                   className="w-full h-auto rounded-lg shadow-md object-cover"
                   style={{ maxWidth: "150px", maxHeight: "150px" }}
                 />
@@ -134,7 +136,7 @@ export default function PostEdit() {
           {/* Post Image */}
           <div className="grid grid-cols-2 gap-2">
             <div className="my-2">
-              <label className="mb-3 block text-black">Photo</label>
+              <label className="mb-3 block text-black">Project</label>
               <input
                 type="file"
                 accept="image/*"

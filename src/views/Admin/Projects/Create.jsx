@@ -12,11 +12,11 @@ import ReactQuillEditor from "../../../components/general/ReactQuillEditor";
 
 import PropTypes from "prop-types";
 
-export default function PhotosCreate(props) {
+export default function ProjectsCreate(props) {
   const formRef = useRef(null);
   const quillRef = useRef(null);
 
-  //define state "photo"
+  //define state "project"
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -29,7 +29,7 @@ export default function PhotosCreate(props) {
   //token
   const token = Cookies.get("token");
 
-  const storePhoto = async (e) => {
+  const storeProject = async (e) => {
     e.preventDefault();
 
     //define formData
@@ -42,7 +42,7 @@ export default function PhotosCreate(props) {
     formData.append("link", link);
     formData.append("caption", caption);
 
-    await Api.post(`/api/admin/photos`, formData, {
+    await Api.post(`/api/admin/projects`, formData, {
       //header
       headers: {
         //header + token
@@ -93,11 +93,11 @@ export default function PhotosCreate(props) {
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
         <h3 className="font-bold text-black dark:text-white">
-          File upload Photo
+          File upload Project
         </h3>
       </div>
       <div className="flex flex-col gap-5.5 p-6.5">
-        <form onSubmit={storePhoto}>
+        <form onSubmit={storeProject}>
           <div className="my-2">
             <label className="mb-3 font-bold">Title</label>
             <input
@@ -191,6 +191,6 @@ export default function PhotosCreate(props) {
   );
 }
 
-PhotosCreate.propTypes = {
+ProjectsCreate.propTypes = {
   fetchData: PropTypes.func, // fetchData harus function dan wajib diisi
 };
