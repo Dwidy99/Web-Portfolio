@@ -1,12 +1,12 @@
 //import routes
-import Routes from "./routes/index";
+import RoutesIndex from "./routes/index";
 
 import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <>
-      <Routes />
+      <RoutesIndex />
       <Toaster />
     </>
   );
