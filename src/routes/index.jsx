@@ -93,15 +93,8 @@ export default function RoutesIndex() {
     <Loader />
   ) : (
     <Routes>
-      {/* route "/login" */}
-      <Route path="/login" element={<Login />} />
-      {/* route "/Forgot" */}
-      <Route path="/forgot-password" element={<Forgot />} />
-      {/* route "/Reset" */}
-      <Route path="/reset-password/:token" element={<ResetPassword />} />
-
-      {/* route "/forbidden" */}
-      <Route path="/forbidden" element={<Forbidden />} />
+      {/* route "/" */}
+      <Route path="/" element={<Home />} />
 
       {/* route "/admin/dashboard" */}
       <Route
@@ -343,11 +336,6 @@ export default function RoutesIndex() {
         }
       />
 
-      {/* PUBLIC Route */}
-
-      {/* route "/" */}
-      <Route path="/" element={<Home />} />
-
       {/* route "/admin/categories/edit/:id" */}
       <Route
         path="/admin/categories/edit/:id"
@@ -357,6 +345,18 @@ export default function RoutesIndex() {
           </PrivateRoutes>
         }
       />
+
+      {/* PUBLIC Route */}
+
+      {/* route "/login" */}
+      <Route path="/login" element={<Login />} />
+      {/* route "/Forgot" */}
+      <Route path="/forgot-password" element={<Forgot />} />
+      {/* route "/Reset" */}
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+      {/* route "/forbidden" */}
+      <Route path="/forbidden" element={<Forbidden />} />
 
       {/* route "/public/blog" */}
       <Route path="/blog" element={<BlogsIndex />} />
