@@ -135,8 +135,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <FaGaugeHigh className="mr-3" /> Dashboard
           </NavLink>
           {/* CONTENT MANAGEMENT */}
-          {(hasAnyPermission(["photos.index"]) ||
-            hasAnyPermission(["sliders.index"])) && (
+          {(hasAnyPermission(["projects.index"]) ||
+            hasAnyPermission(["experiences.index"])) && (
             <>
               <NavLink>
                 <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2 flex items-center">
@@ -215,9 +215,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               </div>
                             </li>
                           )}
-                          {hasAnyPermission(["pages.index"]) && (
-                            <li>{renderNavLink("/admin/pages", "Pages")}</li>
-                          )}
                         </ul>
                       </div>
                     </>
@@ -228,8 +225,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           )}
 
           {/* MEDIA MANAGEMENT */}
-          {(hasAnyPermission(["sliders.index"]) ||
-            hasAnyPermission(["photos.index"]) ||
+          {(hasAnyPermission(["projects.index"]) ||
             hasAnyPermission(["contacts.index"])) && (
             <>
               <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2 flex items-center">
@@ -271,7 +267,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           <li>
                             <div className="flex items-center">
                               <FaImages />
-                              {renderNavLink("/admin/photos", "Photos")}
+                              {renderNavLink("/admin/projects", "Projects")}
                             </div>
                           </li>
                           <li>
