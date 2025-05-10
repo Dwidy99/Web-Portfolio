@@ -3,6 +3,9 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import "../assets/admin/css/style.css";
 import "../assets/admin/css/satoshi.css";
 
+import { useEffect, useState } from "react";
+import Loader from "../components/general/Loader";
+
 //======================================================
 // view admin
 //======================================================
@@ -58,9 +61,6 @@ import ContactsEdit from "../views/Admin/Contacts/Edit";
 //======================================================
 // PUBLIC
 // import Home
-
-import { useEffect, useState } from "react";
-import Loader from "../components/general/Loader";
 
 // import Home
 import Home from "../views/Web/Home/Index";
