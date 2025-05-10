@@ -14,7 +14,7 @@ export default function CardProjects({
         <img
           src={image}
           alt="image project"
-          className="w-full h-48 object-cover"
+          className="w-full h-120 object-cover"
         />
       )}
       <div className="p-6 flex flex-col flex-grow">

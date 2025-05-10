@@ -7,29 +7,29 @@ import toast from "react-hot-toast";
 import CardProjects from "../../../components/general/CardProjects";
 
 export default function Index() {
-  const [photos, setPosts] = useState([]);
-  const [loadingPosts, setLoadingPosts] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const [loadingProjects, setLoadingProjects] = useState(false);
   const [fetchError, setFetchError] = useState(null);
 
-  // fetch data photos dari API
-  const fetchDataPosts = async () => {
-    setLoadingPosts(true);
+  // fetch data projects dari API
+  const fetchDataProjects = async () => {
+    setLoadingProjects(true);
     setFetchError(null); // Reset error state
 
     try {
-      const response = await Api.get(`/api/public/photos`);
+      const response = await Api.get(`/api/public/projects`);
 
-      setPosts(response.data.data.data);
+      setProjects(response.data.data.data);
     } catch (error) {
       toast.error(`Failed to load articles. Please try again later. ${error}`);
       setFetchError(true); // Set error state
     } finally {
-      setLoadingPosts(false);
+      setLoadingProjects(false);
     }
   };
 
   useEffect(() => {
-    fetchDataPosts();
+    fetchDataProjects();
   }, []);
 
   return (
@@ -48,7 +48,7 @@ export default function Index() {
 
         {/* 📦 List Artikel */}
         <div className="grid lg:mx-22 grid-cols-1 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4">
-          {loadingPosts ? (
+          {loadingProjects ? (
             <LoadingTailwind />
           ) : fetchError ? (
             <div className="col-span-full text-center text-red-500">
@@ -56,23 +56,23 @@ export default function Index() {
               again.
               {/* Anda bisa menambahkan tombol "Coba Lagi" di sini */}
             </div>
-          ) : photos.length > 0 ? (
-            photos.map((photo) => (
+          ) : projects.length > 0 ? (
+            projects.map((project) => (
               <CardProjects
-                key={photo.id}
-                image={photo.image}
-                title={photo.title || "No title available"}
-                description={photo.description || "No description available"}
-                caption={photo.caption || "No caption available"}
+                key={project.id}
+                image={project.image}
+                title={project.title || "No title available"}
+                description={project.description || "No description available"}
+                caption={project.caption || "No caption available"}
               >
                 <p className="text-sm font-medium text-right text-blue-600 hover:underline">
-                  <Link to={`/blog/${photo.slug}`}>Learn more →</Link>
+                  <Link to={`/blog/${project.slug}`}>Learn more →</Link>
                 </p>
               </CardProjects>
             ))
           ) : (
             <div className="col-span-full text-center text-gray-500">
-              No photos available.
+              No projects available.
             </div>
           )}
         </div>
