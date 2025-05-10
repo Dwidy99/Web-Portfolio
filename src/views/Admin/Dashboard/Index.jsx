@@ -71,7 +71,7 @@ export default function Index() {
     },
     {
       title: "Total Photos",
-      total: dashboardData.photos,
+      total: dashboardData.projects,
       rate: "0.95%",
       levelDown: true,
       icon: <SlPicture className="text-xl text-primary dark:text-white" />,
