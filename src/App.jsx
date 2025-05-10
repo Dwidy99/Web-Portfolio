@@ -1,5 +1,5 @@
 //import routes
-import Routes from "./routes";
+import Routes from "./routes/index";
 
 import { Toaster } from "react-hot-toast";
 
