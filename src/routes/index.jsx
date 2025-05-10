@@ -10,14 +10,6 @@ import Loader from "../components/general/Loader";
 // view admin
 //======================================================
 
-//import view login
-import Login from "../views/Auth/Login";
-//import view Forgot
-import Forgot from "../views/Auth/Forgot";
-//import view forbidden
-import ResetPassword from "../views/Auth/ResetPassword";
-
-import Forbidden from "../views/Auth/Forbidden";
 //import privateRoute
 import PrivateRoutes from "./PrivateRoutes";
 
@@ -60,7 +52,15 @@ import ContactsEdit from "../views/Admin/Contacts/Edit";
 // view public
 //======================================================
 // PUBLIC
-// import Home
+
+//import view login
+import Login from "../views/Auth/Login";
+//import view Forgot
+import Forgot from "../views/Auth/Forgot";
+//import view forbidden
+import ResetPassword from "../views/Auth/ResetPassword";
+
+import Forbidden from "../views/Auth/Forbidden";
 
 // import Home
 import Home from "../views/Web/Home/Index";
