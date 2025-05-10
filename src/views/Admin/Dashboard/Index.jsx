@@ -9,7 +9,7 @@ import { LuSignpostBig } from "react-icons/lu";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { SlPicture } from "react-icons/sl";
 
-export default function Dashboard() {
+export default function Index() {
   // Set title page
   document.title = "Dashboard - Desa Digital";
 
