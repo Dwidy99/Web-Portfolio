@@ -40,14 +40,10 @@ import CategoriesEdit from "../views/Admin/Categories/Edit";
 import PostsIndex from "../views/Admin/Posts/Index";
 import PostsCreate from "../views/Admin/Posts/Create";
 import PostEdit from "../views/Admin/Posts/Edit";
-// import Pages
-import PagesIndex from "../views/Admin/Pages/Index";
-import PagesCreate from "../views/Admin/Pages/Create";
-import PagesEdit from "../views/Admin/Pages/Edit";
-// import Photos
-import PhotosIndex from "../views/Admin/Photos/Index";
-import PhotosCreate from "../views/Admin/Photos/Create";
-import PhotosEdit from "../views/Admin/Photos/Edit";
+// import Projects
+import ProjectsIndex from "../views/Admin/Projects/Index";
+import ProjectsCreate from "../views/Admin/Projects/Create";
+import ProjectsEdit from "../views/Admin/Projects/Edit";
 // import Experiences
 import ExperiencesIndex from "../views/Admin/Experiences/Index";
 import ExperiencesCreate from "../views/Admin/Experiences/Create";
@@ -75,7 +71,7 @@ import CategoryPostsIndex from "../views/Web/Post/CategoryPostsIndex";
 // import About
 import AboutIndex from "../views/Web/About/Index";
 // import Projects
-import ProjectsIndex from "../views/Web/Projects/Index";
+import ProjectsHome from "../views/Web/Projects/Index";
 
 export default function RoutesIndex() {
   const [loading, setLoading] = useState(true);
@@ -255,62 +251,32 @@ export default function RoutesIndex() {
         }
       />
 
-      {/* route "/admin/pages" */}
+      {/* route "/admin/projects" */}
       <Route
-        path="/admin/pages"
+        path="/admin/projects"
         element={
           <PrivateRoutes>
-            <PagesIndex />
+            <ProjectsIndex />
           </PrivateRoutes>
         }
       />
 
-      {/* route "/admin/pages/create" */}
+      {/* route /admin/projects/create" */}
       <Route
-        path="/admin/pages/create"
+        path="/admin/projects/create"
         element={
           <PrivateRoutes>
-            <PagesCreate />
+            <ProjectsCreate />
           </PrivateRoutes>
         }
       />
 
-      {/* route "/admin/pages/edit/:id" */}
+      {/* route /admin/projects/edit/:id" */}
       <Route
-        path="/admin/pages/edit/:id"
+        path="/admin/projects/edit/:id"
         element={
           <PrivateRoutes>
-            <PagesEdit />
-          </PrivateRoutes>
-        }
-      />
-
-      {/* route "/admin/photos" */}
-      <Route
-        path="/admin/photos"
-        element={
-          <PrivateRoutes>
-            <PhotosIndex />
-          </PrivateRoutes>
-        }
-      />
-
-      {/* route /admin/photos/create" */}
-      <Route
-        path="/admin/photos/create"
-        element={
-          <PrivateRoutes>
-            <PhotosCreate />
-          </PrivateRoutes>
-        }
-      />
-
-      {/* route /admin/photos/edit/:id" */}
-      <Route
-        path="/admin/photos/edit/:id"
-        element={
-          <PrivateRoutes>
-            <PhotosEdit />
+            <ProjectsEdit />
           </PrivateRoutes>
         }
       />
@@ -400,7 +366,7 @@ export default function RoutesIndex() {
       <Route path="/about" element={<AboutIndex />} />
 
       {/* route "/public/projects" */}
-      <Route path="/projects" element={<ProjectsIndex />} />
+      <Route path="/projects" element={<ProjectsHome />} />
     </Routes>
   );
 }
