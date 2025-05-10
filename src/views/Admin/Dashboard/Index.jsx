@@ -70,7 +70,7 @@ export default function Index() {
       ),
     },
     {
-      title: "Total Photos",
+      title: "Total Projects",
       total: dashboardData.projects,
       rate: "0.95%",
       levelDown: true,
