@@ -18,17 +18,21 @@ export default function Index() {
   const [searchTerm, setSearchTerm] = useState("");
   const [fetchError, setFetchError] = useState(null);
 
-  // fetch data posts dari API
+  // Update fetchDataPosts untuk handle abort controller
   const fetchDataPosts = async (pageNumber = 1, query = "") => {
-    setLoadingPosts(true);
-    setFetchError(null); // Reset error state
-
-    const page = pageNumber || pagination.currentPage;
+    const abortController = new AbortController();
 
     try {
-      const response = await Api.get(
-        `/api/public/posts?page=${page}&q=${encodeURIComponent(query)}`
-      );
+      setLoadingPosts(true);
+      setFetchError(null);
+
+      const response = await Api.get(`/api/public/posts`, {
+        params: {
+          page: pageNumber || pagination.currentPage,
+          q: query,
+        },
+        signal: abortController.signal,
+      });
 
       setPosts(response.data.data.data);
       setPagination({
@@ -37,12 +41,17 @@ export default function Index() {
         total: response.data.data.total,
       });
     } catch (error) {
-      console.error("Failed to fetch posts:", error);
-      toast.error("Failed to load articles. Please try again later.");
-      setFetchError(true); // Set error state
+      if (error.name !== "AbortError") {
+        toast.error(`Failed to load articles: ${error.message}`);
+        setFetchError(true);
+      }
     } finally {
-      setLoadingPosts(false);
+      if (!abortController.signal.aborted) {
+        setLoadingPosts(false);
+      }
     }
+
+    return () => abortController.abort();
   };
 
   const handlePageChange = (pageNumber) => {
