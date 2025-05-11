@@ -2,9 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Inter", sans-serif;
+/* Font Face untuk Inter */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../../admin/fonts/Satoshi-Black.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
 }
+
+@font-face {
+  font-family: 'Satoshi Black Italic';
+  src: url('../../admin/fonts/Satoshi-BlackItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi Bold';
+  src: url('../../admin/fonts/Satoshi-Bold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+
+
+/* Base Styles */
+body {
+  font-family: "Satoshi Black Italic", sans-serif;
+}
+
 
 .navbar-fixed {
   @apply fixed z-[9999] bg-white bg-opacity-70 backdrop-blur-sm;

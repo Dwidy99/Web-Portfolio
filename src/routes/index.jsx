@@ -79,8 +79,6 @@ export default function RoutesIndex() {
 
   // Reset scroll position on route change
   useEffect(() => {
-    console.log("Current path:", pathname);
-
     window.scrollTo(0, 0);
   }, [pathname]);
 
