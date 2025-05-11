@@ -14,6 +14,8 @@ export default function Index() {
   const [loadingExperiences, setLoadingExperiences] = useState(false);
   const [loadingContacts, setLoadingContacts] = useState(false);
 
+  document.title = "About | Dwi's Blogs";
+
   const toggle = (index) => {
     if (openIndex === index) {
       // Close currently open item

@@ -16,6 +16,8 @@ export default function Home() {
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [loadingPosts, setLoadingPosts] = useState(true);
 
+  document.title = "Dwi's Blogs";
+
   const fetchDataPosts = async () => {
     setLoadingPosts(true);
 

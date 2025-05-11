@@ -11,6 +11,8 @@ export default function Index() {
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [fetchError, setFetchError] = useState(null);
 
+  document.title = "Projects | Dwi's Blogs";
+
   // fetch data projects dari API
   const fetchDataProjects = async () => {
     setLoadingProjects(true);
