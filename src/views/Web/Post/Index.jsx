@@ -18,6 +18,8 @@ export default function Index() {
   const [searchTerm, setSearchTerm] = useState("");
   const [fetchError, setFetchError] = useState(null);
 
+  document.title = "Posts | Dwi's Blogs";
+
   // Update fetchDataPosts untuk handle abort controller
   const fetchDataPosts = async (pageNumber = 1, query = "") => {
     const abortController = new AbortController();
@@ -97,7 +99,7 @@ export default function Index() {
           />
           <button
             type="submit"
-            className="px-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-purple-700 dark:hover:bg-purple-600"
           >
             Search
           </button>
@@ -120,6 +122,7 @@ export default function Index() {
               title={post.title}
               category={post.category}
               content={post.content || "No description available"}
+              slug={post.slug}
               image={post.image}
             >
               <p className="text-sm font-medium text-right text-blue-600 hover:underline">
