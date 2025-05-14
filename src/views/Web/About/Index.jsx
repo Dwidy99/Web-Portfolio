@@ -3,7 +3,7 @@ import LayoutWeb from "../../../layouts/Web";
 import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 import AccordionItem from "../../../components/general/AccordionItem";
-import DOMPurify from "dompurify";
+import SanitizedHTML from "../../../components/general/SanitizedHTML";
 
 export default function Index() {
   const [profiles, setProfiles] = useState(null);
@@ -180,20 +180,16 @@ export default function Index() {
                 <h2 className="mt-4 font-bold text-4xl">
                   Hello, folks! 👋 I am {profiles.name}
                 </h2>
-                <p
-                  className="my-6 text-lg dark:text-gray-500"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(profiles.about),
-                  }}
-                ></p>
+                <SanitizedHTML
+                  html={profiles.about}
+                  className="custom-content-style" // Optional additional classes
+                />
 
                 <h2 className="font-bold text-4xl">Why have this blog?</h2>
-                <p
-                  className="my-6 text-lg dark:text-gray-500"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(profiles.description),
-                  }}
-                ></p>
+                <SanitizedHTML
+                  html={profiles.description}
+                  className="custom-content-style" // Optional additional classes
+                />
 
                 {profiles.blogPurpose?.map((text, i) => (
                   <p key={i}>{text}</p>
@@ -225,12 +221,10 @@ export default function Index() {
 
                 <hr className="my-4" />
                 <h2 className="text-4xl font-bold">Tech stack</h2>
-                <p
-                  className="my-6 text-lg dark:text-gray-500"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(profiles.tech_description),
-                  }}
-                ></p>
+                <SanitizedHTML
+                  html={profiles.tech_description}
+                  className="custom-content-style" // Optional additional classes
+                />
               </div>
             </div>
           </div>

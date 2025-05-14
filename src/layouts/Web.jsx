@@ -12,20 +12,12 @@ import PropTypes from "prop-types";
 
 export default function Web({ children }) {
   return (
-    <div
-      style={{
-        userSelect: "none",
-        WebkitUserSelect: "none",
-        MozUserSelect: "none",
-        msUserSelect: "none",
-      }}
-      onContextMenu={(e) => e.preventDefault()}
-    >
+    <>
       <Navbar />
       <SnowEffect />
       {children ?? <p>Children are missing</p>}
       <Footer />
-    </div>
+    </>
   );
 }
 

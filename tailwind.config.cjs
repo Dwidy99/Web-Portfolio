@@ -20,10 +20,7 @@ module.exports = {
       "3xl": "2000px",
       ...defaultTheme.screens,
       tablet: "640px",
-      // => @media (min-width: 640px) { ... }
-
       desktop: "1280px",
-      // => @media (min-width: 1280px) { ... }
     },
     extend: {
       colors: {
@@ -214,8 +211,8 @@ module.exports = {
         35: "8.75rem",
         70: "17.5rem",
         90: "22.5rem",
-        550: "34.375rem",
         300: "18.75rem",
+        550: "34.375rem",
       },
       minWidth: {
         22.5: "5.625rem",
@@ -224,13 +221,13 @@ module.exports = {
         75: "18.75rem",
       },
       zIndex: {
-        999999: "999999",
-        99999: "99999",
-        9999: "9999",
-        999: "999",
-        99: "99",
-        9: "9",
         1: "1",
+        9: "9",
+        99: "99",
+        999: "999",
+        9999: "9999",
+        99999: "99999",
+        999999: "999999",
       },
       opacity: {
         65: ".65",
@@ -241,7 +238,10 @@ module.exports = {
       content: {
         "icon-copy": 'url("../images/icon/icon-copy-alt.svg")',
       },
-      transitionProperty: { width: "width", stroke: "stroke" },
+      transitionProperty: {
+        width: "width",
+        stroke: "stroke",
+      },
       borderWidth: {
         6: "6px",
       },
@@ -278,7 +278,19 @@ module.exports = {
         "spin-2": "spin 2s linear infinite",
         "spin-3": "spin 3s linear infinite",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: "none", // Remove prose max-width
+            img: {
+              borderRadius: "0.5rem",
+              marginTop: "1rem",
+              marginBottom: "1rem",
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };

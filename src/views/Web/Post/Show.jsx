@@ -6,10 +6,10 @@ import LoadingTailwind from "../../../components/general/LoadingTailwind";
 import { FaCalendarAlt, FaUserEdit } from "react-icons/fa";
 import DateID from "../../../utils/DateID";
 import toast from "react-hot-toast";
+import SanitizedHTML from "../../../components/general/SanitizedHTML"; // Import the new component
 
 export default function Show() {
-  // init state for post details
-  const [post, setPost] = useState(null); // Changed from {} to null for better null checking
+  const [post, setPost] = useState(null);
   const [loadingPost, setLoadingPost] = useState(true);
   const [posts, setPosts] = useState([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
@@ -21,11 +21,10 @@ export default function Show() {
     try {
       setLoadingPost(true);
       const response = await Api.get(`/api/public/posts/${slug}`);
-
-      setPost(response.data.data || null); // Ensure we set null if data is empty
+      setPost(response.data.data || null);
     } catch (error) {
       console.error("Error fetching post details:", error);
-      setPost(null); // Explicitly set to null on error
+      setPost(null);
     } finally {
       setLoadingPost(false);
     }
@@ -35,7 +34,6 @@ export default function Show() {
     try {
       setLoadingPosts(true);
       const response = await Api.get(`/api/public/posts_home`);
-
       setPosts(response.data.data || []);
     } catch (error) {
       if (error.name !== "AbortError") {
@@ -51,7 +49,6 @@ export default function Show() {
     fetchAllPosts();
   }, [slug]);
 
-  // Show loading or error state
   if (loadingPost) {
     return (
       <LayoutWeb>
@@ -62,7 +59,6 @@ export default function Show() {
     );
   }
 
-  // Show error if post not found
   if (!post) {
     return (
       <LayoutWeb>
@@ -114,10 +110,12 @@ export default function Show() {
                       </Link>
                     </span>
                   )}
-                  <div
-                    className="mt-6 text-xl/8 dark:text-gray-500"
-                    dangerouslySetInnerHTML={{ __html: post.content }}
-                  />
+                  <div className="mt-6">
+                    <SanitizedHTML
+                      html={post.content}
+                      className="custom-content-style" // Optional additional classes
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -134,32 +132,38 @@ export default function Show() {
                 ) : (
                   <div>
                     {Array.isArray(posts) &&
-                      posts.map((post, index) => (
-                        <div key={index} className="mt-6">
-                          <div className="flex items-center">
-                            {post.image && (
-                              <img
-                                src={post.image}
-                                alt={post.title}
-                                className="rounded-lg bg-transparent w-20 h-20 mr-4"
-                              />
-                            )}
-                            <div>
-                              <Link to={`/blog/${post.slug}`}>
-                                <h3 className="text-xl font-semibold text-gray-700 dark:text-slate-400">
-                                  {post.title?.length > 30
-                                    ? `${post.title.slice(0, 30)}...`
-                                    : post.title}
-                                </h3>
-                              </Link>
-                              <span className="dark:text-gray-500">
-                                {post.created_at &&
-                                  DateID(new Date(post.created_at))}
-                              </span>
+                      posts
+                        .filter(
+                          (p) =>
+                            !(p.title === post.title && p.slug === post.slug)
+                        )
+                        .map((p, index) => (
+                          <div key={index} className="mt-6">
+                            <div className="flex items-center">
+                              {p.image && (
+                                <img
+                                  src={p.image}
+                                  alt={p.title}
+                                  className="rounded-lg bg-transparent w-20 h-20 mr-4"
+                                  loading="lazy"
+                                />
+                              )}
+                              <div>
+                                <Link to={`/blog/${p.slug}`}>
+                                  <h3 className="text-xl font-semibold text-gray-700 dark:text-slate-400">
+                                    {p.title?.length > 30
+                                      ? `${p.title.slice(0, 30)}...`
+                                      : p.title}
+                                  </h3>
+                                </Link>
+                                <span className="dark:text-gray-500">
+                                  {p.created_at &&
+                                    DateID(new Date(p.created_at))}
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
                   </div>
                 )}
               </div>

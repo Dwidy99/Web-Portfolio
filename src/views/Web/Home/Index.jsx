@@ -7,6 +7,7 @@ import RandomColors from "../../../utils/RandomColors"; // Import RandomColors
 import CardPost from "../../../components/general/CardPost";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import SanitizedHTML from "../../../components/general/SanitizedHTML";
 
 export default function Home() {
   const [profiles, setProfiles] = useState([]);
@@ -106,10 +107,10 @@ export default function Home() {
                     <h3 className="text-xl font-semibold mb-2">
                       Hi I am {profile.name} - {profile.caption}
                     </h3>
-                    <p
-                      className="mt-6 text-lg dark:text-gray-500"
-                      dangerouslySetInnerHTML={{ __html: profile.content }}
-                    ></p>
+                    <SanitizedHTML
+                      html={profile.content}
+                      className="custom-content-style" // Optional additional classes
+                    />
                   </div>
                   <div className="grid grid-cols-2 gap-6 font-semibold my-4">
                     <div>
