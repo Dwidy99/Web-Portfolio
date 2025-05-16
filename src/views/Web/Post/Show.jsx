@@ -123,9 +123,9 @@ export default function Show() {
             {/* Latest Posts Section */}
             <div className="lg:pr-1 sm:overflow-hidden">
               <div className="lg:max-w-lg p-4 rounded-xl dark:bg-gray-800">
-                <h3 className="mt-2 text-2xl font-semibold tracking-tight text-pretty text-gray-700 dark:text-slate-400 sm:text-5xl">
+                <h2 className="mt-2 text-xl font-medium text-gray-700 dark:text-slate-400 sm:text-2xl">
                   Update News
-                </h3>
+                </h2>
                 <hr className="mb-8.5 border-slate-300 dark:border-slate-700 my-4" />
                 {loadingPosts ? (
                   <LoadingTailwind />
@@ -146,6 +146,7 @@ export default function Show() {
                                   alt={p.title}
                                   className="rounded-lg bg-transparent w-20 h-20 mr-4"
                                   loading="lazy"
+                                  decoding="async"
                                 />
                               )}
                               <div>
