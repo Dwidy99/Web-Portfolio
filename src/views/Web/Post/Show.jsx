@@ -7,6 +7,7 @@ import { FaCalendarAlt, FaUserEdit } from "react-icons/fa";
 import DateID from "../../../utils/DateID";
 import toast from "react-hot-toast";
 import SanitizedHTML from "../../../components/general/SanitizedHTML"; // Import the new component
+import SEO from "../../../components/general/SEO";
 
 export default function Show() {
   const [post, setPost] = useState(null);
@@ -77,6 +78,7 @@ export default function Show() {
 
   return (
     <LayoutWeb>
+      <SEO />
       <div className="container">
         <div className="lg:mx-18.5 overflow-hidden pt-24 sm:py-32 lg:overflow-visible lg:px-0">
           <div className="mx-auto grid gap-x-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:items-start lg:gap-y-10 sm:grid-cols-1">

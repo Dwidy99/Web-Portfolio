@@ -5,6 +5,7 @@ import LoadingTailwind from "../../../components/general/LoadingTailwind";
 import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 import CardProjects from "../../../components/general/CardProjects";
+import SEO from "../../../components/general/SEO";
 
 export default function Index() {
   const [projects, setProjects] = useState([]);
@@ -36,6 +37,7 @@ export default function Index() {
 
   return (
     <LayoutWeb>
+      <SEO />
       <div className="container">
         <div className="mt-16 lg:mx-22 xsm:mt-22.5">
           {" "}

@@ -8,6 +8,7 @@ import CardPost from "../../../components/general/CardPost";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import SanitizedHTML from "../../../components/general/SanitizedHTML";
+import SEO from "../../../components/general/SEO";
 
 export default function Home() {
   const [profiles, setProfiles] = useState([]);
@@ -77,6 +78,7 @@ export default function Home() {
 
   return (
     <LayoutWeb>
+      <SEO />
       <div className="container">
         <h4 className="flex items-center text-center font-bold lg:my-22.5 xsm:mt-22.5 lg:mx-25.5">
           <strong className="text-slate-600 dark:text-sky-700 xsm:text-5xl lg:text-7xl">

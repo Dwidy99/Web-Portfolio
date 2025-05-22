@@ -47,6 +47,8 @@ import ExperiencesEdit from "../views/Admin/Experiences/Edit";
 import ContactsIndex from "../views/Admin/Contacts/Index";
 import ContactsCreate from "../views/Admin/Contacts/Create";
 import ContactsEdit from "../views/Admin/Contacts/Edit";
+// import Configurations
+import ConfigurationsIndex from "../views/Admin/Configurations/Index";
 
 //======================================================
 // view public
@@ -340,6 +342,16 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <CategoriesEdit />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* route "/admin/configurations" */}
+      <Route
+        path="/admin/configurations"
+        element={
+          <PrivateRoutes>
+            <ConfigurationsIndex />
           </PrivateRoutes>
         }
       />

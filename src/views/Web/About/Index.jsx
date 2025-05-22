@@ -4,6 +4,7 @@ import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 import AccordionItem from "../../../components/general/AccordionItem";
 import SanitizedHTML from "../../../components/general/SanitizedHTML";
+import SEO from "../../../components/general/SEO";
 
 export default function Index() {
   const [profiles, setProfiles] = useState(null);
@@ -111,6 +112,7 @@ export default function Index() {
 
   return (
     <LayoutWeb>
+      <SEO />
       <div className="container">
         <main className="mb-auto mt-20 lg:mx-25.5">
           <div className="about divide-y divide-gray-200 dark:divide-gray-700">

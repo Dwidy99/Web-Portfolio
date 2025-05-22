@@ -24,6 +24,7 @@ import { FaPhotoVideo, FaUserEdit, FaUsersCog } from "react-icons/fa";
 import { GrDashboard, GrInsecure, GrSecure } from "react-icons/gr";
 import { ImProfile } from "react-icons/im";
 import { TiContacts } from "react-icons/ti";
+import { FcDataConfiguration } from "react-icons/fc";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
@@ -226,7 +227,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
           {/* MEDIA MANAGEMENT */}
           {(hasAnyPermission(["projects.index"]) ||
-            hasAnyPermission(["contacts.index"])) && (
+            hasAnyPermission(["contacts.index"]) ||
+            hasAnyPermission(["configurations.update"])) && (
             <>
               <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2 flex items-center">
                 <FaBarsProgress className="mr-2" /> MEDIA MANAGEMENT
@@ -274,6 +276,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             <div className="flex items-center">
                               <TiContacts />
                               {renderNavLink("/admin/contacts", "Contacts")}
+                            </div>
+                          </li>
+                          <li>
+                            <div className="flex items-center">
+                              <FcDataConfiguration />
+                              {renderNavLink(
+                                "/admin/configurations",
+                                "Configurations"
+                              )}
                             </div>
                           </li>
                         </ul>

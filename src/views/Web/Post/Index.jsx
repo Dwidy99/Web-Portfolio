@@ -6,6 +6,7 @@ import LoadingTailwind from "../../../components/general/LoadingTailwind";
 import Api from "../../../services/Api";
 import Pagination from "../../../components/general/Pagination";
 import toast from "react-hot-toast";
+import SEO from "../../../components/general/SEO";
 
 export default function Index() {
   const [posts, setPosts] = useState([]);
@@ -75,6 +76,7 @@ export default function Index() {
 
   return (
     <LayoutWeb>
+      <SEO />
       <div className="container mt-16 xsm:mt-22.5 mx-7.5">
         {" "}
         {/* Penyesuaian margin dan padding container */}

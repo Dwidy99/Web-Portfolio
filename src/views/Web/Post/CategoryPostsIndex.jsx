@@ -6,6 +6,7 @@ import CardBlog from "../../../components/general/CardBlog";
 import LoadingTailwind from "../../../components/general/LoadingTailwind";
 import Pagination from "../../../components/general/Pagination";
 import toast from "react-hot-toast";
+import SEO from "../../../components/general/SEO";
 
 export default function CategoryPostsIndex() {
   const [posts, setPosts] = useState([]);
@@ -77,6 +78,7 @@ export default function CategoryPostsIndex() {
 
   return (
     <LayoutWeb>
+      <SEO />
       <div className="container mt-22.5 mx-7.5">
         <h1 className="text-3xl font-bold tracking-tight mb-2">
           Posts in Category: {category?.name || "Loading..."}
