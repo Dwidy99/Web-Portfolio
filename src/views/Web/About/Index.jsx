@@ -1,10 +1,10 @@
-import React, { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 import AccordionItem from "../../../components/general/AccordionItem";
 import SanitizedHTML from "../../../components/general/SanitizedHTML";
 import SEO from "../../../components/general/SEO";
-const LayoutWeb = React.lazy(() => import("../../../layouts/Web"));
+import LayoutWeb from "../../../layouts/Web";
 
 export default function Index() {
   const [profiles, setProfiles] = useState(null);
@@ -201,8 +201,10 @@ export default function Index() {
                   <p key={i}>{text}</p>
                 ))}
 
-                <div className="flex items-center justify-between mt-8">
-                  <h2 className="text-4xl font-bold">My Career</h2>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+                    My Career
+                  </h2>
                 </div>
 
                 {/* Experiences */}
