@@ -20,7 +20,7 @@ export default function CategoryPostsIndex() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  document.title = "Category Posts | Dwi's Blogs";
+  document.title = "Category Posts | Blogs";
 
   const fetchPostsByCategory = async (page = 1) => {
     try {

@@ -10,7 +10,7 @@ export default function SEO({ description, keywords, canonical, ogUrl }) {
 
   useEffect(() => {
     const fetchConfig = async () => {
-      const toastId = toast.loading("Fetching site configuration...");
+      // const toastId = toast.loading("Fetching site configuration...");
       try {
         const response = await Api.get("/api/public/configurations");
         const data = response.data.data;
@@ -34,7 +34,7 @@ export default function SEO({ description, keywords, canonical, ogUrl }) {
           logo: data.logo || null,
         });
 
-        toast.success("Configuration loaded successfully", { id: toastId });
+        // toast.success("Configuration loaded successfully", { id: toastId });
       } catch (error) {
         toast.error(`Error: ${error.message}`, { id: toastId });
       }

@@ -16,7 +16,7 @@ export default function Show() {
   const [loadingPosts, setLoadingPosts] = useState(true);
   const { slug } = useParams();
 
-  document.title = "Show Post | Dwi's Blogs";
+  document.title = "Show Post Dwi's | Blogs";
 
   const fetchDetailDataPost = async () => {
     try {

@@ -19,7 +19,7 @@ export default function Index() {
   const [searchTerm, setSearchTerm] = useState("");
   const [fetchError, setFetchError] = useState(null);
 
-  document.title = "Posts | Dwi's Blogs";
+  document.title = "Posts Dwi's | Blogs";
 
   // Update fetchDataPosts untuk handle abort controller
   const fetchDataPosts = async (pageNumber = 1, query = "") => {

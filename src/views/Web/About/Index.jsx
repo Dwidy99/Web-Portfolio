@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import LayoutWeb from "../../../layouts/Web";
+import React, { useState, useEffect, Suspense } from "react";
 import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 import AccordionItem from "../../../components/general/AccordionItem";
 import SanitizedHTML from "../../../components/general/SanitizedHTML";
 import SEO from "../../../components/general/SEO";
+const LayoutWeb = React.lazy(() => import("../../../layouts/Web"));
 
 export default function Index() {
   const [profiles, setProfiles] = useState(null);
@@ -15,7 +15,7 @@ export default function Index() {
   const [loadingExperiences, setLoadingExperiences] = useState(false);
   const [loadingContacts, setLoadingContacts] = useState(false);
 
-  document.title = "About | Dwi's Blogs";
+  document.title = "About Dwi | Blogs";
 
   const toggle = (index) => {
     if (openIndex === index) {
@@ -139,7 +139,9 @@ export default function Index() {
                     src={profiles.image}
                   />
                 </div>
-                <h3 className="pt-4 text-2xl font-bold">{profiles.name}</h3>
+                <h3 className="pt-4 text-2xl text-gray-900 dark:text-gray-100">
+                  {profiles.name}
+                </h3>
                 <div className="text-gray-500">{profiles.title}</div>
                 <ul className="flex flex-row mt-2 justify-between">
                   {contacts &&
@@ -179,7 +181,7 @@ export default function Index() {
 
               {/* About & Experiences */}
               <div className="prose max-w-none pb-8 xl:col-span-2">
-                <h2 className="mt-4 font-bold text-4xl">
+                <h2 className="mt-4 font-bold text-4xl text-gray-900 dark:text-gray-100">
                   Hello, folks! 👋 I am {profiles.name}
                 </h2>
                 <SanitizedHTML
@@ -187,7 +189,9 @@ export default function Index() {
                   className="custom-content-style" // Optional additional classes
                 />
 
-                <h2 className="font-bold text-4xl">Why have this blog?</h2>
+                <h2 className="font-bold text-4xl text-gray-900 dark:text-gray-100">
+                  Why have this blog?
+                </h2>
                 <SanitizedHTML
                   html={profiles.description}
                   className="custom-content-style" // Optional additional classes
@@ -222,7 +226,9 @@ export default function Index() {
                 )}
 
                 <hr className="my-4" />
-                <h2 className="text-4xl font-bold">Tech stack</h2>
+                <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+                  Tech stack
+                </h2>
                 <SanitizedHTML
                   html={profiles.tech_description}
                   className="custom-content-style" // Optional additional classes
