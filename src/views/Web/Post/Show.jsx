@@ -7,8 +7,7 @@ import { FaCalendarAlt, FaUserEdit } from "react-icons/fa";
 import DateID from "../../../utils/DateID";
 import toast from "react-hot-toast";
 import SEO from "../../../components/general/SEO";
-// Import SnowEffect component (conditionally disable it)
-import SnowEffect from "../../../components/general/SnowEffect";
+import SanitizedHTML from "../../../components/general/SanitizedHTML"; // ✅ Tambahkan ini
 
 export default function Show() {
   const [post, setPost] = useState(null);
@@ -19,9 +18,6 @@ export default function Show() {
 
   document.title = "Show Post Dwi's | Blogs";
 
-  const isShowPage = false;
-
-  // Fetch post details based on slug
   const fetchDetailDataPost = useCallback(async () => {
     try {
       setLoadingPost(true);
@@ -29,13 +25,12 @@ export default function Show() {
       setPost(response.data.data || null);
     } catch (error) {
       console.error("Error fetching post details:", error);
-      setPost(null); // Display "Post not found" if error
+      setPost(null);
     } finally {
       setLoadingPost(false);
     }
   }, [slug]);
 
-  // Fetch all posts for latest posts section
   const fetchAllPosts = useCallback(async () => {
     try {
       setLoadingPosts(true);
@@ -55,7 +50,6 @@ export default function Show() {
     fetchAllPosts();
   }, [slug, fetchDetailDataPost, fetchAllPosts]);
 
-  // If post is loading, show loading spinner
   if (loadingPost) {
     return (
       <LayoutWeb>
@@ -66,7 +60,6 @@ export default function Show() {
     );
   }
 
-  // If post not found, show error message
   if (!post) {
     return (
       <LayoutWeb>
@@ -90,16 +83,10 @@ export default function Show() {
         description={post.excerpt}
         keywords={post.tags?.join(",")}
       />
-      {/* Conditionally render SnowEffect */}
-      {isShowPage && (
-        <SnowEffect snowSpeedFactor={0.1} isShowPage={isShowPage} />
-      )}
-      {/* Adjust speed if needed */}
-      <div className="container px-4 sm:px-6 md:px-8 py-6">
+      <div className="container mx-8 mt-22.5 sm:px-6 md:px-8">
         <div className="lg:grid lg:grid-cols-3 gap-8">
-          {/* Post Details Section */}
           <div className="lg:col-span-2">
-            <div className="bg-gray-800 text-white rounded-lg shadow-lg p-6">
+            <div className="rounded-lg shadow-lg p-6 bg-slate-200 text-slate-700">
               <div className="flex justify-start mt-2">
                 {post.user && (
                   <span className="text-gray-300">
@@ -127,15 +114,14 @@ export default function Show() {
                 </span>
               )}
               <div className="mt-6">
-                <div
+                <SanitizedHTML
+                  html={post.content}
                   className="custom-content-style"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
                 />
               </div>
             </div>
           </div>
 
-          {/* Latest Posts Section */}
           <div className="lg:col-span-1">
             <div className="bg-gray-800 text-white rounded-lg shadow-lg p-6">
               <h2 className="text-xl font-medium text-gray-300 sm:text-2xl">

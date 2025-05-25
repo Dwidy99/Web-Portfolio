@@ -24,7 +24,7 @@ export default function Navbar() {
     <>
       {/* Navbar */}
       <header
-        className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 shadow-lg dark:bg-meta-14 ${
+        className={`w-full fixed top-0 left-0 transition-all duration-300 shadow-lg  ${
           isFixed ? "bg-transparent navbar-fixed dark:bg-transparent" : ""
         }`}
       >
@@ -51,7 +51,7 @@ export default function Navbar() {
               <button
                 ref={buttonRef}
                 type="button"
-                className={`block absolute right-4 lg:hidden ${isOpen ? "hamburger-active" : ""}`}
+                className={`block absolute right-4 z-50 lg:hidden ${isOpen ? "hamburger-active" : ""}`}
                 aria-label="hamburger"
                 onClick={toggleMenu}
               >
@@ -66,9 +66,9 @@ export default function Navbar() {
                 excludeRef={buttonRef}
               >
                 <nav
-                  className={`absolute rounded-lg py-4 dark:bg-dark dark:text-slate-800 lg:static lg:block lg:max-w-full lg:rounded-none lg:bg-transparent lg:shadow-none lg:dark:bg-transparent ${
+                  className={`absolute rounded-lg py-4 dark:text-slate-800 lg:static lg:block lg:max-w-full lg:rounded-none lg:bg-transparent lg:shadow-none lg:dark:bg-transparent ${
                     isOpen
-                      ? "block bg-white drop-shadow-xl border-spacing-1 right-4 top-full w-full max-w-[250px]"
+                      ? "block bg-slate-100 drop-shadow-xl border-spacing-1 right-4 top-full w-full max-w-[250px]"
                       : "hidden"
                   }`}
                 >
@@ -76,7 +76,7 @@ export default function Navbar() {
                     <li className="group">
                       <Link
                         to="/blog"
-                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
+                        className="text-base text-slate-700 py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                       >
                         Blog
                       </Link>
@@ -84,7 +84,7 @@ export default function Navbar() {
                     <li className="group">
                       <Link
                         to="/projects"
-                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
+                        className="text-base text-slate-700 py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                       >
                         Projects
                       </Link>
@@ -92,7 +92,7 @@ export default function Navbar() {
                     <li className="group">
                       <Link
                         to="/about"
-                        className="text-base text-dark py-2 mx-8 group-hover:text-primary dark:text-slate-300"
+                        className="text-base text-slate-700 py-2 mx-8 group-hover:text-primary dark:text-slate-300"
                       >
                         About
                       </Link>
