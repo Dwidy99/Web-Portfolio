@@ -7,7 +7,6 @@ import RandomColors from "../../../utils/RandomColors"; // Import RandomColors
 import CardPost from "../../../components/general/CardPost";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import SanitizedHTML from "../../../components/general/SanitizedHTML";
 import SEO from "../../../components/general/SEO";
 
 export default function Home() {
@@ -109,9 +108,9 @@ export default function Home() {
                     <h3 className="text-xl font-semibold mb-2">
                       Hi I am {profile.name} - {profile.caption}
                     </h3>
-                    <SanitizedHTML
-                      html={profile.content}
-                      className="custom-content-style" // Optional additional classes
+                    <div
+                      className="custom-content-style"
+                      dangerouslySetInnerHTML={{ __html: profile.content }}
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-6 font-semibold my-4">

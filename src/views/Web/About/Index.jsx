@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 import AccordionItem from "../../../components/general/AccordionItem";
-import SanitizedHTML from "../../../components/general/SanitizedHTML";
 import SEO from "../../../components/general/SEO";
 import LayoutWeb from "../../../layouts/Web";
 
@@ -184,17 +183,17 @@ export default function Index() {
                 <h2 className="mt-4 font-bold text-4xl text-gray-900 dark:text-gray-100">
                   Hello, folks! 👋 I am {profiles.name}
                 </h2>
-                <SanitizedHTML
-                  html={profiles.about}
-                  className="custom-content-style" // Optional additional classes
+                <div
+                  className="custom-content-style"
+                  dangerouslySetInnerHTML={{ __html: profiles.about }}
                 />
 
                 <h2 className="font-bold text-4xl text-gray-900 dark:text-gray-100">
                   Why have this blog?
                 </h2>
-                <SanitizedHTML
-                  html={profiles.description}
-                  className="custom-content-style" // Optional additional classes
+                <div
+                  className="custom-content-style"
+                  dangerouslySetInnerHTML={{ __html: profiles.description }}
                 />
 
                 {profiles.blogPurpose?.map((text, i) => (
@@ -231,9 +230,11 @@ export default function Index() {
                 <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
                   Tech stack
                 </h2>
-                <SanitizedHTML
-                  html={profiles.tech_description}
-                  className="custom-content-style" // Optional additional classes
+                <div
+                  className="custom-content-style"
+                  dangerouslySetInnerHTML={{
+                    __html: profiles.tech_description,
+                  }}
                 />
               </div>
             </div>

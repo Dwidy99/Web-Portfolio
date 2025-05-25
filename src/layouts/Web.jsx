@@ -7,9 +7,15 @@ import SnowEffect from "../components/general/SnowEffect";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet-async";
 
-export default function Web({ children, pageTitle, pageDescription }) {
+export default function Web({
+  children,
+  pageTitle,
+  pageDescription,
+  disableSnow,
+}) {
   return (
     <>
+      {!disableSnow && <SnowEffect />}
       <Helmet>
         <title>
           {pageTitle || "Dwi's Portfolio | Web Developer & Tech Enthusiast"}
@@ -24,7 +30,6 @@ export default function Web({ children, pageTitle, pageDescription }) {
         <meta property="og:type" content="website" />
         <link rel="canonical" href={window.location.href} />
       </Helmet>
-      <SnowEffect snowSpeedFactor={0.5} />
       <div
         className="site-wrapper"
         itemScope
@@ -71,4 +76,5 @@ Web.propTypes = {
   children: PropTypes.node,
   pageTitle: PropTypes.string,
   pageDescription: PropTypes.string,
+  disableSnow: PropTypes.bool,
 };
