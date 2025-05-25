@@ -52,6 +52,26 @@ body {
   @apply scale-0;
 }
 
+.quill-viewer .ql-editor {
+  padding: 0;
+  color: #374151; /* gray-700 */
+  max-width: none;
+  line-height: 1.625;
+  font-size: 1rem;
+}
+
+.dark .quill-viewer .ql-editor {
+  color: #e5e7eb; /* slate-200 */
+}
+
+.quill-viewer .ql-editor h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 800;
+}
+
+/* Tambahkan styling lainnya sesuai kebutuhan */
+
 /* Add to your global CSS */
 footer {
   contain: content;  /* 👈 Limits browser recalculations */

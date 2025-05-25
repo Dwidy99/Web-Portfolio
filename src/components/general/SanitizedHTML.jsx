@@ -1,104 +1,112 @@
-import { useMemo, useEffect, useRef } from "react";
-import DOMPurify from "dompurify";
+import { Suspense, lazy } from "react";
 import PropTypes from "prop-types";
+import DOMPurify from "dompurify";
+import LoadingTailwind from "./LoadingTailwind";
 
-/**
- * Component to render sanitized HTML content safely.
- * Automatically lazy loads images using IntersectionObserver.
- */
-export default function SanitizedHTML({ html = "", className = "" }) {
-  const contentRef = useRef();
+// Lazy load ReactQuill
+const ReactQuill = lazy(() => import("react-quill"));
 
-  const sanitizedHtml = useMemo(() => {
-    return DOMPurify.sanitize(html, {
-      USE_PROFILES: { html: true },
-      ALLOWED_TAGS: [
-        "h1",
-        "h2",
-        "h3",
-        "h4",
-        "h5",
-        "h6",
-        "p",
-        "br",
-        "strong",
-        "em",
-        "u",
-        "s",
-        "ol",
-        "ul",
-        "li",
-        "a",
-        "img",
-        "blockquote",
-        "pre",
-        "code",
-        "span",
-        "div",
-        "table",
-        "thead",
-        "tbody",
-        "tr",
-        "th",
-        "td",
-      ],
-      ALLOWED_ATTR: [
-        "href",
-        "src",
-        "alt",
-        "title",
-        "class",
-        "style",
-        "color",
-        "width",
-        "height",
-        "border",
-        "cellpadding",
-        "cellspacing",
-      ],
-      FORBID_TAGS: ["style", "script", "iframe", "frame"],
-      FORBID_ATTR: ["onload", "onerror"],
-    });
-  }, [html]);
-
-  useEffect(() => {
-    const container = contentRef.current;
-    if (!container) return;
-
-    const images = container.querySelectorAll("img[data-src]");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            observer.unobserve(img);
-          }
-        });
-      },
-      { rootMargin: "200px" }
-    );
-
-    images.forEach((img) => {
-      img.dataset.src = img.src;
-      img.src =
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=";
-      observer.observe(img);
-    });
-
-    return () => observer.disconnect();
-  }, [sanitizedHtml]);
+// SanitizedHTML Component
+const SanitizedHTML = ({ html, className }) => {
+  const sanitizedHtml = DOMPurify.sanitize(html || "", {
+    USE_PROFILES: { html: true },
+    ALLOWED_TAGS: [
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+      "p",
+      "br",
+      "strong",
+      "em",
+      "u",
+      "s",
+      "ol",
+      "ul",
+      "li",
+      "a",
+      "img",
+      "blockquote",
+      "pre",
+      "code",
+      "span",
+      "div",
+      "table",
+      "thead",
+      "tbody",
+      "tr",
+      "th",
+      "td",
+    ],
+    ALLOWED_ATTR: [
+      "href",
+      "src",
+      "alt",
+      "title",
+      "class",
+      "style",
+      "color",
+      "width",
+      "height",
+      "border",
+      "cellpadding",
+      "cellspacing",
+    ],
+  });
 
   return (
     <div
-      ref={contentRef}
-      className={`sanitized-content ${className}`}
+      className={`prose dark:prose-invert max-w-none ${className}`}
       dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
     />
   );
-}
-
-SanitizedHTML.propTypes = {
-  html: PropTypes.string.isRequired,
-  className: PropTypes.string,
 };
+
+// QuillViewer Component
+const QuillViewer = ({ content, className }) => (
+  <Suspense fallback={<LoadingTailwind />}>
+    <ReactQuill
+      value={content}
+      readOnly={true}
+      modules={{ toolbar: false }}
+      formats={[
+        "header",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "blockquote",
+        "list",
+        "bullet",
+        "link",
+        "indent",
+        "image",
+        "code-block",
+        "color",
+      ]}
+      theme="bubble"
+      className={`quill-viewer ${className}`}
+    />
+  </Suspense>
+);
+
+// Main ContentRenderer Component
+const ContentRenderer = ({ content, className, isQuillContent = false }) => {
+  const isQuill = isQuillContent || content?.includes("ql-editor");
+
+  return isQuill ? (
+    <QuillViewer content={content} className={className} />
+  ) : (
+    <SanitizedHTML html={content} className={className} />
+  );
+};
+
+ContentRenderer.propTypes = {
+  content: PropTypes.string,
+  className: PropTypes.string,
+  isQuillContent: PropTypes.bool,
+};
+
+export default ContentRenderer;

@@ -1,6 +1,10 @@
 import "../assets/web/css/index.css";
 import "../assets/web/css/tailwind.css";
 import "../assets/web/js/script.js";
+// Di index.js atau App.js
+import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
+
 import Navbar from "../components/web/Navbar.jsx";
 import Footer from "../components/web/Footer.jsx";
 import SnowEffect from "../components/general/SnowEffect";

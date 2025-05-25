@@ -7,7 +7,7 @@ import { FaCalendarAlt, FaUserEdit } from "react-icons/fa";
 import DateID from "../../../utils/DateID";
 import toast from "react-hot-toast";
 import SEO from "../../../components/general/SEO";
-import SanitizedHTML from "../../../components/general/SanitizedHTML"; // ✅ Tambahkan ini
+import ContentRenderer from "../../../components/general/SanitizedHTML";
 
 export default function Show() {
   const [post, setPost] = useState(null);
@@ -89,12 +89,12 @@ export default function Show() {
             <div className="rounded-lg shadow-lg p-6 bg-slate-200 text-slate-700">
               <div className="flex justify-start mt-2">
                 {post.user && (
-                  <span className="text-gray-300">
+                  <span className="dark:text-gray-300 ">
                     <FaUserEdit className="inline mr-2" />
                     {post.user.name}
                   </span>
                 )}
-                <span className="ml-5 text-gray-300">
+                <span className="ml-5 dark:text-gray-300 ">
                   <FaCalendarAlt className="inline mr-2" />
                   {DateID(new Date(post.created_at))}
                 </span>
@@ -104,7 +104,7 @@ export default function Show() {
               </h1>
               <hr className="border-gray-700 my-4" />
               {post.category && (
-                <span className="text-gray-300">
+                <span className="dark:text-gray-300 ">
                   <Link
                     to={`/blog/category/${post.category.slug}`}
                     className="bg-gray-700 text-white py-1 px-3 rounded-md"
@@ -114,17 +114,18 @@ export default function Show() {
                 </span>
               )}
               <div className="mt-6">
-                <SanitizedHTML
-                  html={post.content}
-                  className="custom-content-style"
+                <ContentRenderer
+                  content={post.content}
+                  className="custom-styles"
+                  isQuillContent={true} // Opsional jika ingin memaksa menggunakan Quill
                 />
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-gray-800 text-white rounded-lg shadow-lg p-6">
-              <h2 className="text-xl font-medium text-gray-300 sm:text-2xl">
+            <div className="dark:bg-gray-800 bg-slate-200 dark:text-white rounded-lg shadow-lg p-6">
+              <h2 className="text-xl font-medium dark:text-gray-300 sm:text-2xl">
                 Update News
               </h2>
               <hr className="border-gray-700 my-4" />
@@ -150,7 +151,7 @@ export default function Show() {
                           )}
                           <div>
                             <Link to={`/blog/${p.slug}`}>
-                              <h3 className="text-xl font-semibold text-gray-300">
+                              <h3 className="text-xl font-semibold dark:text-gray-300">
                                 {p.title?.length > 30
                                   ? `${p.title.slice(0, 30)}...`
                                   : p.title}
