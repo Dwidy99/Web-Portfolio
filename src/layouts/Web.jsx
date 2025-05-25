@@ -1,10 +1,9 @@
-import { lazy } from "react";
 import "../assets/web/css/index.css";
 import "../assets/web/css/tailwind.css";
 import "../assets/web/js/script.js";
 import Navbar from "../components/web/Navbar.jsx";
 import Footer from "../components/web/Footer.jsx";
-const SnowEffect = lazy(() => import("../components/general/SnowEffect"));
+import SnowEffect from "../components/general/SnowEffect";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet-async";
 
@@ -25,7 +24,7 @@ export default function Web({ children, pageTitle, pageDescription }) {
         <meta property="og:type" content="website" />
         <link rel="canonical" href={window.location.href} />
       </Helmet>
-
+      <SnowEffect snowSpeedFactor={0.5} />
       <div
         className="site-wrapper"
         itemScope
@@ -45,7 +44,6 @@ export default function Web({ children, pageTitle, pageDescription }) {
           role="main"
           className="min-h-[calc(100vh-160px)]"
         >
-          <SnowEffect />
           {children ?? (
             <section aria-labelledby="missing-content-heading">
               <h1 id="missing-content-heading" className="sr-only">
