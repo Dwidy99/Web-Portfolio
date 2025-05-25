@@ -1,6 +1,8 @@
 import { useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 
-const SnowEffect = () => {
+const SnowEffect = ({ snowSpeedFactor = 1 }) => {
+  // snowSpeedFactor untuk kontrol kecepatan
   const canvasRef = useRef(null);
   const snowflakesRef = useRef([]);
   const animationRef = useRef(null);
@@ -14,8 +16,8 @@ const SnowEffect = () => {
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         opacity: Math.random(),
-        speedX: Math.random() * 1 - 0.5,
-        speedY: Math.random() * 1 + 0.5,
+        speedX: (Math.random() * 1 - 0.5) * snowSpeedFactor, // Menggunakan snowSpeedFactor
+        speedY: (Math.random() * 1 + 0.5) * snowSpeedFactor, // Menggunakan snowSpeedFactor
         radius: Math.random() * 2 + 1,
       });
     }
@@ -96,6 +98,11 @@ const SnowEffect = () => {
       style={{ pointerEvents: "none" }}
     ></canvas>
   );
+};
+
+// Validasi propTypes
+SnowEffect.propTypes = {
+  snowSpeedFactor: PropTypes.number, // Mengatur kecepatan salju (default = 1)
 };
 
 export default SnowEffect;
