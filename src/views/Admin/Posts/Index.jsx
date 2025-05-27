@@ -162,11 +162,11 @@ export default function PostsIndex() {
         </div>
 
         <div className="rounded-lg border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="max-w-full overflow-x-auto">
-            <table className="w-full text-center items-center table-auto border-collapse border border-stroke dark:border-strokedark">
+          <div className="overflow-x-auto">
+            <table className="min-w-full whitespace-nowrap">
               <thead>
                 <tr className="bg-gray-200 dark:bg-meta-4">
-                  <th className="min-w-[80px] py-4 px-4 dark:text-white">
+                  <th className="min-w-[70px] py-4 px-4 dark:text-white">
                     <h5 className="uppercase">No.</h5>
                   </th>
                   <th className="min-w-[115px] py-4 px-4 dark:text-white">
