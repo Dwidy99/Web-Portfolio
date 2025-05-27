@@ -166,7 +166,7 @@ export default function PostsIndex() {
             <table className="w-full text-center items-center table-auto border-collapse border border-stroke dark:border-strokedark">
               <thead>
                 <tr className="bg-gray-200 dark:bg-meta-4">
-                  <th className="min-w-[100px] py-4 px-4 dark:text-white">
+                  <th className="min-w-[80px] py-4 px-4 dark:text-white">
                     <h5 className="uppercase">No.</h5>
                   </th>
                   <th className="min-w-[115px] py-4 px-4 dark:text-white">
