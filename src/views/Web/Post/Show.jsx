@@ -7,7 +7,7 @@ import { FaCalendarAlt, FaUserEdit } from "react-icons/fa";
 import DateID from "../../../utils/DateID";
 import toast from "react-hot-toast";
 import SEO from "../../../components/general/SEO";
-import ContentRenderer from "../../../components/general/SanitizedHTML";
+import ContentRenderer from "../../../components/general/SanitizedHTML"; // Assuming this is your custom component
 
 export default function Show() {
   const [post, setPost] = useState(null);
@@ -83,52 +83,72 @@ export default function Show() {
         description={post.excerpt}
         keywords={post.tags?.join(",")}
       />
-      <div className="container mx-8 mt-22.5 sm:px-6 md:px-8">
+      <div className="container mx-auto px-4 mt-22.5 sm:px-6 md:px-8">
+        {" "}
+        {/* Adjusted container to mx-auto and added px-4 */}
         <div className="lg:grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <div className="rounded-lg shadow-lg p-6 bg-slate-200 text-slate-700">
+            <div className="rounded-lg shadow-lg p-6 bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+              {" "}
+              {/* Adjusted for dark mode background/text */}
               <div className="flex justify-start mt-2">
                 {post.user && (
-                  <span className="dark:text-gray-300 ">
+                  <span className="text-gray-600 dark:text-gray-400">
+                    {" "}
+                    {/* Adjusted for dark mode text */}
                     <FaUserEdit className="inline mr-2" />
                     {post.user.name}
                   </span>
                 )}
-                <span className="ml-5 dark:text-gray-300 ">
+                <span className="ml-5 text-gray-600 dark:text-gray-400">
+                  {" "}
+                  {/* Adjusted for dark mode text */}
                   <FaCalendarAlt className="inline mr-2" />
                   {DateID(new Date(post.created_at))}
                 </span>
               </div>
-              <h1 className="mt-2 text-4xl font-semibold tracking-tight text-pretty sm:text-5xl">
+              <h1 className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-800 dark:text-gray-100 sm:text-5xl">
+                {" "}
+                {/* Adjusted for dark mode text */}
                 {post.title}
               </h1>
-              <hr className="border-gray-700 my-4" />
+              <hr className="border-gray-300 dark:border-gray-700 my-4" />{" "}
+              {/* Adjusted for dark mode border */}
               {post.category && (
-                <span className="dark:text-gray-300 ">
+                <span className="text-gray-600">
+                  {" "}
+                  {/* Removed dark:text-gray-600 here as it conflicts with the button color */}
                   <Link
                     to={`/blog/category/${post.category.slug}`}
-                    className="bg-gray-700 text-white py-1 px-3 rounded-md"
+                    className="bg-gray-700 text-white py-1 px-3 rounded-md hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-500" // Added dark mode and hover for category button
                   >
                     #{post.category.name}
                   </Link>
                 </span>
               )}
-              <div className="mt-6">
+              <div className="mt-6 text-gray-800 dark:text-gray-300">
+                {" "}
+                {/* Adjusted for dark mode text */}
                 <ContentRenderer
                   content={post.content}
-                  className="custom-styles"
-                  isQuillContent={true} // Opsional jika ingin memaksa menggunakan Quill
+                  className="custom-styles" // Remove dark:text-gray-600 here, let the ContentRenderer handle its internal styles or let the parent div dictate it.
+                  isQuillContent={true}
                 />
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-1">
-            <div className="dark:bg-gray-800 bg-slate-200 dark:text-white rounded-lg shadow-lg p-6">
-              <h2 className="text-xl font-medium dark:text-gray-300 sm:text-2xl">
+            <div className="bg-white text-gray-700 rounded-lg shadow-lg p-6 dark:bg-gray-800 dark:text-gray-300">
+              {" "}
+              {/* Adjusted for dark mode background/text */}
+              <h2 className="text-xl font-medium text-gray-800 dark:text-gray-100 sm:text-2xl">
+                {" "}
+                {/* Adjusted for dark mode text */}
                 Update News
               </h2>
-              <hr className="border-gray-700 my-4" />
+              <hr className="border-gray-300 dark:border-gray-700 my-4" />{" "}
+              {/* Adjusted for dark mode border */}
               {loadingPosts ? (
                 <LoadingTailwind />
               ) : (
@@ -151,13 +171,17 @@ export default function Show() {
                           )}
                           <div>
                             <Link to={`/blog/${p.slug}`}>
-                              <h3 className="text-xl font-semibold dark:text-gray-300">
+                              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                {" "}
+                                {/* Adjusted for dark mode text */}
                                 {p.title?.length > 30
                                   ? `${p.title.slice(0, 30)}...`
                                   : p.title}
                               </h3>
                             </Link>
-                            <span className="text-gray-500">
+                            <span className="text-gray-500 dark:text-gray-400">
+                              {" "}
+                              {/* Adjusted for dark mode text */}
                               {p.created_at && DateID(new Date(p.created_at))}
                             </span>
                           </div>
