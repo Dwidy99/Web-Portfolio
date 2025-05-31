@@ -207,7 +207,7 @@ export default function Index() {
               </div>
 
               {/* About & Experiences */}
-              <div className="prose max-w-none pb-8 xl:col-span-2 text-gray-800 dark:text-gray-300">
+              <div className="prose max-w-none xl:col-span-2 text-gray-800 dark:text-gray-300">
                 {" "}
                 {/* Applied base text color for the whole section */}
                 <h2 className="mt-4 font-bold text-4xl text-gray-900 dark:text-gray-100">
@@ -230,7 +230,7 @@ export default function Index() {
                 />
                 {/* Assuming blogPurpose is an array of strings, apply text color to paragraphs */}
                 {profiles.blogPurpose?.map((text, i) => (
-                  <p key={i} className="mb-2">
+                  <p key={i} className="">
                     {text}
                   </p> // Added mb-2 for spacing
                 ))}
@@ -249,7 +249,7 @@ export default function Index() {
                     Loading experiences...
                   </div>
                 ) : (
-                  <ul className="mt-6 space-y-4">
+                  <ul className="space-y-4">
                     {experiences.map((exp, index) => (
                       <AccordionItem
                         key={index}
@@ -263,7 +263,7 @@ export default function Index() {
                     ))}
                   </ul>
                 )}
-                <hr className="my-4 border-gray-300 dark:border-gray-700" />{" "}
+                <hr className="border-gray-300 dark:border-gray-700" />{" "}
                 {/* Dark mode border */}
                 <div className="text-gray-800 dark:text-gray-200">
                   {" "}
