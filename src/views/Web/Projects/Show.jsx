@@ -11,7 +11,6 @@ import ContentRenderer from "../../../components/general/SanitizedHTML"; // Assu
 
 export default function Show() {
   const [project, setProject] = useState(null);
-  const [projects, setProjects] = useState([]);
   const [loadingProject, setLoadingProject] = useState(true);
   const { slug } = useParams();
 
