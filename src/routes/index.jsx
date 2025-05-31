@@ -74,6 +74,7 @@ import CategoryPostsIndex from "../views/Web/Post/CategoryPostsIndex";
 import AboutIndex from "../views/Web/About/Index";
 // import Projects
 import ProjectsHome from "../views/Web/Projects/Index";
+import ProjectShow from "../views/Web/Projects/Show";
 
 export default function RoutesIndex() {
   const [loading, setLoading] = useState(true);
@@ -379,6 +380,7 @@ export default function RoutesIndex() {
 
       {/* route "/public/projects" */}
       <Route path="/projects" element={<ProjectsHome />} />
+      <Route path="/projects/:slug" element={<ProjectShow />} />
     </Routes>
   );
 }

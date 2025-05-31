@@ -70,7 +70,7 @@ export default function Index() {
                 caption={project.caption || "No caption available"}
               >
                 <p className="text-sm font-medium text-right text-blue-600 hover:underline">
-                  <Link to={`/blog/${project.slug}`}>Learn more →</Link>
+                  <Link to={`/projects/${project.slug}`}>Learn more →</Link>
                 </p>
               </CardProjects>
             ))
