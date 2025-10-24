@@ -3,9 +3,8 @@ import LayoutWeb from "../../../layouts/Web";
 import Api from "../../../services/Api";
 import { Link, useParams } from "react-router-dom";
 import LoadingTailwind from "../../../components/general/LoadingTailwind";
-import { FaCalendarAlt, FaUserEdit } from "react-icons/fa";
+import { FaCalendarAlt } from "react-icons/fa";
 import DateID from "../../../utils/DateID";
-import toast from "react-hot-toast";
 import SEO from "../../../components/general/SEO";
 import ContentRenderer from "../../../components/general/SanitizedHTML"; // Assuming this is your custom component
 
