@@ -1,42 +1,42 @@
-//import axios
+// import axios
 import axios from "axios";
 
-//import Cookies
+// import Cookies
 import Cookies from "js-cookie";
 
-const Api = axios.create({
-  //set endpoint Api
-  baseURL: "http://127.0.0.1:8000",
+// ambil baseURL dari .env
+const baseURL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV
+    ? "http://127.0.0.1:8000"
+    : "https://api.dwiyulianto.my.id/api");
 
-  //set header axios
-  header: {
+// buat instance axios
+const Api = axios.create({
+  baseURL: baseURL,
+  headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
   },
 });
 
-//handle unauthentcated
+// handle unauthenticated & forbidden
 Api.interceptors.response.use(
-  function (response) {
-    //return response
+  (response) => {
     return response;
   },
   (error) => {
-    //check if response unauthenticated
-    if (401 === error.response.status) {
-      //remove token
+    const status = error?.response?.status;
+
+    if (status === 401) {
+      // remove all cookies
       Cookies.remove("token");
-      //remove user
       Cookies.remove("user");
-      //remove permissions
       Cookies.remove("permissions");
-      //redirect "/"
       window.location = "/";
-    } else if (403 === error.response.status) {
-      //redirect "/forbidden"
+    } else if (status === 403) {
       window.location = "/forbidden";
     } else {
-      //reject promise error
       return Promise.reject(error);
     }
   }
