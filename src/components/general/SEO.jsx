@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import toast from "react-hot-toast";
 import Api from "../../services/Api";
 import DynamicFavicon from "./DynamicFavicon";
 
@@ -10,14 +9,12 @@ export default function SEO({ description, keywords, canonical, ogUrl }) {
 
   useEffect(() => {
     const fetchConfig = async () => {
-      // const toastId = toast.loading("Fetching site configuration...");
       try {
         const response = await Api.get("/api/public/configurations");
         const data = response.data.data;
 
         if (!data) throw new Error("No configuration data found");
 
-        // Pastikan keywords array
         const parsedKeywords = data.keywords
           ? data.keywords.split(",").map((k) => k.trim())
           : ["default", "keywords"];
@@ -33,10 +30,8 @@ export default function SEO({ description, keywords, canonical, ogUrl }) {
           icon: data.icon || null,
           logo: data.logo || null,
         });
-
-        // toast.success("Configuration loaded successfully", { id: toastId });
       } catch (error) {
-        toast.error(`Error: ${error.message}`, { id: toastId });
+        console.log("Error loading configuration:", error);
       }
     };
 

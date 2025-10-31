@@ -10,25 +10,25 @@ export default function CardProjects({
 }) {
   return (
     <div className="bg-gray-100 border border-gray-300 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full">
+      {/* Gambar Project */}
       {image && (
         <img
           src={image}
-          alt="image project"
-          className="w-full h-120 object-cover"
+          alt={title || "Project image"}
+          className="w-full h-60 object-cover"
         />
       )}
+
+      {/* Konten Project */}
       <div className="p-6 flex flex-col flex-grow">
-        {title && <h3 className="text-lg font-bold text-gray-800">{title}</h3>}
-        {description && (
-          <p
-            className="my-6 text-lg dark:text-gray-500"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(description),
-            }}
-          ></p>
+        {/* Judul */}
+        {title && (
+          <h3 className="text-lg font-bold text-gray-800 mb-2">{title}</h3>
         )}
+
+        {/* Caption (Tech Stack, dsb) */}
         {caption && (
-          <div className="flex items-start gap-x-2 text-lg text-gray-800 mb-4">
+          <div className="flex items-start gap-x-2 text-sm text-gray-700 mb-4">
             <span className="font-semibold whitespace-nowrap">Built with:</span>
             <span
               dangerouslySetInnerHTML={{
@@ -37,6 +37,18 @@ export default function CardProjects({
             />
           </div>
         )}
+
+        {/* Deskripsi Singkat */}
+        {description && (
+          <p
+            className="text-gray-600 text-base mb-4 leading-relaxed"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(description),
+            }}
+          ></p>
+        )}
+
+        {/* Tombol / Child Elements */}
         <div className="mt-auto text-right">{children}</div>
       </div>
     </div>

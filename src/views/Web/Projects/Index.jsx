@@ -1,7 +1,6 @@
 import LayoutWeb from "../../../layouts/Web";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import LoadingTailwind from "../../../components/general/LoadingTailwind";
 import Api from "../../../services/Api";
 import toast from "react-hot-toast";
 import CardProjects from "../../../components/general/CardProjects";
@@ -9,25 +8,20 @@ import SEO from "../../../components/general/SEO";
 
 export default function Index() {
   const [projects, setProjects] = useState([]);
-  const [loadingProjects, setLoadingProjects] = useState(false);
   const [fetchError, setFetchError] = useState(null);
 
   document.title = "Projects Dwi's | Blogs";
 
-  // fetch data projects dari API
+  // 🔹 Fetch Projects from API
   const fetchDataProjects = async () => {
-    setLoadingProjects(true);
-    setFetchError(null); // Reset error state
-
+    setFetchError(null);
     try {
       const response = await Api.get(`/api/public/projects`);
-
       setProjects(response.data.data.data);
     } catch (error) {
-      toast.error(`Failed to load articles. Please try again later. ${error}`);
-      setFetchError(true); // Set error state
-    } finally {
-      setLoadingProjects(false);
+      console.error("Error fetching projects:", error);
+      toast.error("Failed to load projects. Please try again later.");
+      setFetchError(true);
     }
   };
 
@@ -35,39 +29,44 @@ export default function Index() {
     fetchDataProjects();
   }, []);
 
+  // 🔹 Helper: truncate description safely
+  const truncateText = (text, maxLength = 155) => {
+    if (!text) return "No description available.";
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
+  };
+
   return (
     <LayoutWeb>
       <SEO />
+
       <div className="container">
+        {/* 🔹 Header Section */}
         <div className="mt-16 lg:mx-22 xsm:mt-22.5">
-          {" "}
-          {/* Penyesuaian margin dan padding */}
-          <h2 className="text-3xl font-bold text-gray-500">Projects</h2>
-          <p className="tracking-tight mb-2">
-            My open-source side projects and stuff that I built with my
-            colleagues at work
+          <h2 className="text-3xl font-bold text-gray-700">Projects</h2>
+          <p className="tracking-tight mb-2 text-gray-500">
+            A collection of my open-source projects, prototypes, and client
+            collaborations.
           </p>
-          <hr className="my-8" />
+          <hr className="my-8 border-gray-200" />
         </div>
 
-        {/* 📦 List Artikel */}
-        <div className="grid lg:mx-22 grid-cols-1 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4">
-          {loadingProjects ? (
-            <LoadingTailwind />
-          ) : fetchError ? (
+        {/* 🔹 Project Grid */}
+        <div className="grid lg:mx-22 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+          {fetchError ? (
             <div className="col-span-full text-center text-red-500">
-              Failed to load articles. Please check your connection and try
+              Failed to load projects. Please check your connection and try
               again.
-              {/* Anda bisa menambahkan tombol "Coba Lagi" di sini */}
             </div>
           ) : projects.length > 0 ? (
             projects.map((project) => (
               <CardProjects
                 key={project.id}
                 image={project.image}
-                title={project.title || "No title available"}
-                description={project.description || "No description available"}
-                caption={project.caption || "No caption available"}
+                title={project.title || "Untitled Project"}
+                caption={project.caption}
+                description={truncateText(project.description)} // ✅ fix typo
               >
                 <p className="text-sm font-medium text-right text-blue-600 hover:underline">
                   <Link to={`/projects/${project.slug}`}>Learn more →</Link>
